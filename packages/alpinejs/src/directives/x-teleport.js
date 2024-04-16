@@ -1,12 +1,13 @@
-import { skipDuringClone } from "../clone"
-import { directive } from "../directives"
-import { initTree } from "../lifecycle"
-import { mutateDom } from "../mutation"
-import { addScopeToNode } from "../scope"
-import { warn } from "../utils/warn"
+import { skipDuringClone } from '../clone'
+import { directive } from '../directives'
+import { initTree } from '../lifecycle'
+import { mutateDom } from '../mutation'
+import { addScopeToNode } from '../scope'
+import { warn } from '../utils/warn'
 
 directive('teleport', (el, { modifiers, expression }, { cleanup }) => {
-    if (el.tagName.toLowerCase() !== 'template') warn('x-teleport can only be used on a <template> tag', el)
+    if (el.tagName.toLowerCase() !== 'template')
+        warn('x-teleport can only be used on a <template> tag', el)
 
     let target = getTarget(expression)
 
@@ -22,8 +23,8 @@ directive('teleport', (el, { modifiers, expression }, { cleanup }) => {
 
     // Forward event listeners:
     if (el._x_forwardEvents) {
-        el._x_forwardEvents.forEach(eventName => {
-            clone.addEventListener(eventName, e => {
+        el._x_forwardEvents.forEach((eventName) => {
+            clone.addEventListener(eventName, (e) => {
                 e.stopPropagation()
 
                 el.dispatchEvent(new e.constructor(e.type, e))
@@ -68,13 +69,16 @@ directive('teleport', (el, { modifiers, expression }, { cleanup }) => {
 let teleportContainerDuringClone = document.createElement('div')
 
 function getTarget(expression) {
-    let target = skipDuringClone(() => {
-        return document.querySelector(expression)
-    }, () => {
-        return teleportContainerDuringClone
-    })()
+    let target = skipDuringClone(
+        () => {
+            return document.querySelector(expression)
+        },
+        () => {
+            return teleportContainerDuringClone
+        }
+    )()
 
-    if (! target) warn(`Cannot find x-teleport element for selector: "${expression}"`)
+    if (!target) warn(`Cannot find x-teleport element for selector: "${expression}"`)
 
     return target
 }

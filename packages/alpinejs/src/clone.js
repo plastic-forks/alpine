@@ -1,11 +1,11 @@
-import { effect, release, overrideEffect } from "./reactivity"
-import { initTree, isRoot } from "./lifecycle"
-import { walk } from "./utils/walk"
+import { effect, release, overrideEffect } from './reactivity'
+import { initTree, isRoot } from './lifecycle'
+import { walk } from './utils/walk'
 
 export let isCloning = false
 
 export function skipDuringClone(callback, fallback = () => {}) {
-    return (...args) => isCloning ? fallback(...args) : callback(...args)
+    return (...args) => (isCloning ? fallback(...args) : callback(...args))
 }
 
 export function onlyDuringClone(callback) {
@@ -18,9 +18,8 @@ export function interceptClone(callback) {
     interceptors.push(callback)
 }
 
-export function cloneNode(from, to)
-{
-    interceptors.forEach(i => i(from, to))
+export function cloneNode(from, to) {
+    interceptors.forEach((i) => i(from, to))
 
     isCloning = true
 
@@ -42,7 +41,7 @@ export let isCloningLegacy = false
 
 /** deprecated */
 export function clone(oldEl, newEl) {
-    if (! newEl._x_dataStack) newEl._x_dataStack = oldEl._x_dataStack
+    if (!newEl._x_dataStack) newEl._x_dataStack = oldEl._x_dataStack
 
     isCloning = true
     isCloningLegacy = true

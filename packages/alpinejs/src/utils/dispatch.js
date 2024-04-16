@@ -1,4 +1,3 @@
-
 export function dispatch(el, name, detail = {}) {
     el.dispatchEvent(
         new CustomEvent(name, {

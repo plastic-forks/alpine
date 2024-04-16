@@ -1,4 +1,3 @@
-
 import { scheduler } from './scheduler'
 
 let reactive, effect, release, raw
@@ -15,17 +14,22 @@ export function disableEffectScheduling(callback) {
 export function setReactivityEngine(engine) {
     reactive = engine.reactive
     release = engine.release
-    effect = (callback) => engine.effect(callback, { scheduler: task => {
-        if (shouldSchedule) {
-            scheduler(task)
-        } else {
-            task()
-        }
-    } })
+    effect = (callback) =>
+        engine.effect(callback, {
+            scheduler: (task) => {
+                if (shouldSchedule) {
+                    scheduler(task)
+                } else {
+                    task()
+                }
+            },
+        })
     raw = engine.raw
 }
 
-export function overrideEffect(override) { effect = override }
+export function overrideEffect(override) {
+    effect = override
+}
 
 export function elementBoundEffect(el) {
     let cleanup = () => {}
@@ -33,11 +37,13 @@ export function elementBoundEffect(el) {
     let wrappedEffect = (callback) => {
         let effectReference = effect(callback)
 
-        if (! el._x_effects) {
-            el._x_effects = new Set
+        if (!el._x_effects) {
+            el._x_effects = new Set()
 
             // Livewire depends on el._x_runEffects.
-            el._x_runEffects = () => { el._x_effects.forEach(i => i()) }
+            el._x_runEffects = () => {
+                el._x_effects.forEach((i) => i())
+            }
         }
 
         el._x_effects.add(effectReference)
@@ -53,7 +59,12 @@ export function elementBoundEffect(el) {
         return effectReference
     }
 
-    return [wrappedEffect, () => { cleanup() }]
+    return [
+        wrappedEffect,
+        () => {
+            cleanup()
+        },
+    ]
 }
 
 export function watch(getter, callback) {
@@ -67,7 +78,7 @@ export function watch(getter, callback) {
         // JSON.stringify touches every single property at any level enabling deep watching
         JSON.stringify(value)
 
-        if (! firstTime) {
+        if (!firstTime) {
             // We have to queue this watcher as a microtask so that
             // the watcher doesn't pick up its own dependencies.
             queueMicrotask(() => {
@@ -85,9 +96,4 @@ export function watch(getter, callback) {
     return () => release(effectReference)
 }
 
-export {
-    release,
-    reactive,
-    effect,
-    raw,
-}
+export { release, reactive, effect, raw }

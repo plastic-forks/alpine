@@ -1,4 +1,4 @@
-import { attributesOnly, directives } from "./directives"
+import { attributesOnly, directives } from './directives'
 
 let binds = {}
 
@@ -21,7 +21,7 @@ export function injectBindingProviders(obj) {
                 return (...args) => {
                     return callback(...args)
                 }
-            }
+            },
         })
     })
 
@@ -44,8 +44,8 @@ export function applyBindingsObject(el, obj, original) {
     let staticAttributes = attributesOnly(attributes)
 
     // Handle binding normal HTML attributes (non-Alpine directives).
-    attributes = attributes.map(attribute => {
-        if (staticAttributes.find(attr => attr.name === attribute.name)) {
+    attributes = attributes.map((attribute) => {
+        if (staticAttributes.find((attr) => attr.name === attribute.name)) {
             return {
                 name: `x-bind:${attribute.name}`,
                 value: `"${attribute.value}"`,
@@ -55,7 +55,7 @@ export function applyBindingsObject(el, obj, original) {
         return attribute
     })
 
-    directives(el, attributes, original).map(handle => {
+    directives(el, attributes, original).map((handle) => {
         cleanupRunners.push(handle.runCleanups)
 
         handle()

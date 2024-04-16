@@ -19,7 +19,7 @@ export function dontAutoEvaluateFunctions(callback) {
 export function evaluate(el, expression, extras = {}) {
     let result
 
-    evaluateLater(el, expression)(value => result = value, extras)
+    evaluateLater(el, expression)((value) => (result = value), extras)
 
     return result
 }
@@ -41,9 +41,10 @@ export function normalEvaluator(el, expression) {
 
     let dataStack = [overriddenMagics, ...closestDataStack(el)]
 
-    let evaluator = (typeof expression === 'function')
-        ? generateEvaluatorFromFunction(dataStack, expression)
-        : generateEvaluatorFromString(dataStack, expression, el)
+    let evaluator =
+        typeof expression === 'function'
+            ? generateEvaluatorFromFunction(dataStack, expression)
+            : generateEvaluatorFromString(dataStack, expression, el)
 
     return tryCatch.bind(null, el, expression, evaluator)
 }
@@ -63,33 +64,34 @@ function generateFunctionFromString(expression, el) {
         return evaluatorMemo[expression]
     }
 
-    let AsyncFunction = Object.getPrototypeOf(async function(){}).constructor
+    let AsyncFunction = Object.getPrototypeOf(async function () {}).constructor
 
     // Some expressions that are useful in Alpine are not valid as the right side of an expression.
     // Here we'll detect if the expression isn't valid for an assignment and wrap it in a self-
     // calling function so that we don't throw an error AND a "return" statement can b e used.
-    let rightSideSafeExpression = 0
+    let rightSideSafeExpression =
+        0 ||
         // Support expressions starting with "if" statements like: "if (...) doSomething()"
-        || /^[\n\s]*if.*\(.*\)/.test(expression.trim())
+        /^[\n\s]*if.*\(.*\)/.test(expression.trim()) ||
         // Support expressions starting with "let/const" like: "let foo = 'bar'"
-        || /^(let|const)\s/.test(expression.trim())
+        /^(let|const)\s/.test(expression.trim())
             ? `(async()=>{ ${expression} })()`
             : expression
 
     const safeAsyncFunction = () => {
         try {
             let func = new AsyncFunction(
-                ["__self", "scope"],
+                ['__self', 'scope'],
                 `with (scope) { __self.result = ${rightSideSafeExpression} }; __self.finished = true; return __self.result;`
             )
-            
-            Object.defineProperty(func, "name", {
+
+            Object.defineProperty(func, 'name', {
                 value: `[Alpine] ${expression}`,
             })
-            
+
             return func
-        } catch ( error ) {
-            handleError( error, el, expression )
+        } catch (error) {
+            handleError(error, el, expression)
             return Promise.resolve()
         }
     }
@@ -109,10 +111,12 @@ function generateEvaluatorFromString(dataStack, expression, el) {
 
         // Run the function.
 
-        let completeScope = mergeProxies([ scope, ...dataStack ])
+        let completeScope = mergeProxies([scope, ...dataStack])
 
-        if (typeof func === 'function' ) {
-            let promise = func(func, completeScope).catch((error) => handleError(error, el, expression))
+        if (typeof func === 'function') {
+            let promise = func(func, completeScope).catch((error) =>
+                handleError(error, el, expression)
+            )
 
             // Check if the function ran synchronously,
             if (func.finished) {
@@ -125,10 +129,12 @@ function generateEvaluatorFromString(dataStack, expression, el) {
                 func.result = undefined
             } else {
                 // If not, return the result when the promise resolves.
-                promise.then(result => {
-                    runIfTypeOfFunction(receiver, result, completeScope, params, el)
-                }).catch( error => handleError( error, el, expression ) )
-                .finally( () => func.result = undefined )
+                promise
+                    .then((result) => {
+                        runIfTypeOfFunction(receiver, result, completeScope, params, el)
+                    })
+                    .catch((error) => handleError(error, el, expression))
+                    .finally(() => (func.result = undefined))
             }
         }
     }
@@ -139,12 +145,14 @@ export function runIfTypeOfFunction(receiver, value, scope, params, el) {
         let result = value.apply(scope, params)
 
         if (result instanceof Promise) {
-            result.then(i => runIfTypeOfFunction(receiver, i, scope, params)).catch( error => handleError( error, el, value ) )
+            result
+                .then((i) => runIfTypeOfFunction(receiver, i, scope, params))
+                .catch((error) => handleError(error, el, value))
         } else {
             receiver(result)
         }
     } else if (typeof value === 'object' && value instanceof Promise) {
-        value.then(i => receiver(i))
+        value.then((i) => receiver(i))
     } else {
         receiver(value)
     }

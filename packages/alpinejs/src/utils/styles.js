@@ -1,4 +1,3 @@
-
 export function setStyles(el, value) {
     if (typeof value === 'object' && value !== null) {
         return setStylesFromObject(el, value)
@@ -17,8 +16,8 @@ function setStylesFromObject(el, value) {
         // syntax but when we use setProperty, we need the css format
         // so we need to convert camelCase to kebab-case.
         // In case key is a CSS variable, leave it as it is.
-        if (! key.startsWith('--')) {
-            key = kebabCase(key);
+        if (!key.startsWith('--')) {
+            key = kebabCase(key)
         }
 
         el.style.setProperty(key, value)
@@ -46,5 +45,5 @@ function setStylesFromString(el, value) {
 }
 
 function kebabCase(subject) {
-    return subject.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()
+    return subject.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 }

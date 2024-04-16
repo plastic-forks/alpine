@@ -1,11 +1,11 @@
-import { interceptClone } from "../clone"
-import { directive } from "../directives"
+import { interceptClone } from '../clone'
+import { directive } from '../directives'
 import { setIdRoot } from '../ids'
 
 directive('id', (el, { expression }, { evaluate }) => {
     let names = evaluate(expression)
 
-    names.forEach(name => setIdRoot(el, name))
+    names.forEach((name) => setIdRoot(el, name))
 })
 
 interceptClone((from, to) => {
@@ -16,4 +16,3 @@ interceptClone((from, to) => {
         to._x_ids = from._x_ids
     }
 })
-

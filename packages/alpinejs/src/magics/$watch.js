@@ -7,7 +7,7 @@ magic('watch', (el, { evaluateLater, cleanup }) => (key, callback) => {
     let getter = () => {
         let value
 
-        evaluate(i => value = i)
+        evaluate((i) => (value = i))
 
         return value
     }

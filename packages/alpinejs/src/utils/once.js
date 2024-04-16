@@ -1,9 +1,8 @@
-
 export function once(callback, fallback = () => {}) {
     let called = false
 
     return function () {
-        if (! called) {
+        if (!called) {
             called = true
 
             callback.apply(this, arguments)

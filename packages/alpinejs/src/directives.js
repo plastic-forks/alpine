@@ -21,12 +21,14 @@ export function directive(name, callback) {
     return {
         before(directive) {
             if (!directiveHandlers[directive]) {
-                console.warn(String.raw`Cannot find directive \`${directive}\`. \`${name}\` will use the default order of execution`);
-                return;
+                console.warn(
+                    String.raw`Cannot find directive \`${directive}\`. \`${name}\` will use the default order of execution`
+                )
+                return
             }
-            const pos = directiveOrder.indexOf(directive);
-            directiveOrder.splice(pos >= 0 ? pos : directiveOrder.indexOf('DEFAULT'), 0, name);
-        }
+            const pos = directiveOrder.indexOf(directive)
+            directiveOrder.splice(pos >= 0 ? pos : directiveOrder.indexOf('DEFAULT'), 0, name)
+        },
     }
 }
 
@@ -34,13 +36,16 @@ export function directives(el, attributes, originalAttributeOverride) {
     attributes = Array.from(attributes)
 
     if (el._x_virtualDirectives) {
-        let vAttributes = Object.entries(el._x_virtualDirectives).map(([name, value]) => ({ name, value }))
+        let vAttributes = Object.entries(el._x_virtualDirectives).map(([name, value]) => ({
+            name,
+            value,
+        }))
 
         let staticAttributes = attributesOnly(vAttributes)
 
         // Handle binding normal HTML attributes (non-Alpine directives).
-        vAttributes = vAttributes.map(attribute => {
-            if (staticAttributes.find(attr => attr.name === attribute.name)) {
+        vAttributes = vAttributes.map((attribute) => {
+            if (staticAttributes.find((attr) => attr.name === attribute.name)) {
                 return {
                     name: `x-bind:${attribute.name}`,
                     value: `"${attribute.value}"`,
@@ -56,12 +61,16 @@ export function directives(el, attributes, originalAttributeOverride) {
     let transformedAttributeMap = {}
 
     let directives = attributes
-        .map(toTransformedAttributes((newName, oldName) => transformedAttributeMap[newName] = oldName))
+        .map(
+            toTransformedAttributes(
+                (newName, oldName) => (transformedAttributeMap[newName] = oldName)
+            )
+        )
         .filter(outNonAlpineAttributes)
         .map(toParsedDirectives(transformedAttributeMap, originalAttributeOverride))
         .sort(byPriority)
 
-    return directives.map(directive => {
+    return directives.map((directive) => {
         return getDirectiveHandler(el, directive)
     })
 }
@@ -69,11 +78,11 @@ export function directives(el, attributes, originalAttributeOverride) {
 export function attributesOnly(attributes) {
     return Array.from(attributes)
         .map(toTransformedAttributes())
-        .filter(attr => ! outNonAlpineAttributes(attr))
+        .filter((attr) => !outNonAlpineAttributes(attr))
 }
 
 let isDeferringHandlers = false
-let directiveHandlerStacks = new Map
+let directiveHandlerStacks = new Map()
 let currentHandlerStackKey = Symbol()
 
 export function deferHandlingDirectives(callback) {
@@ -91,7 +100,10 @@ export function deferHandlingDirectives(callback) {
         directiveHandlerStacks.delete(key)
     }
 
-    let stopDeferring = () => { isDeferringHandlers = false; flushHandlers() }
+    let stopDeferring = () => {
+        isDeferringHandlers = false
+        flushHandlers()
+    }
 
     callback(flushHandlers)
 
@@ -101,7 +113,7 @@ export function deferHandlingDirectives(callback) {
 export function getElementBoundUtilities(el) {
     let cleanups = []
 
-    let cleanup = callback => cleanups.push(callback)
+    let cleanup = (callback) => cleanups.push(callback)
 
     let [effect, cleanupEffect] = elementBoundEffect(el)
 
@@ -115,7 +127,7 @@ export function getElementBoundUtilities(el) {
         evaluate: evaluate.bind(evaluate, el),
     }
 
-    let doCleanup = () => cleanups.forEach(i => i())
+    let doCleanup = () => cleanups.forEach((i) => i())
 
     return [utilities, doCleanup]
 }
@@ -136,7 +148,9 @@ export function getDirectiveHandler(el, directive) {
 
         handler = handler.bind(handler, el, directive, utilities)
 
-        isDeferringHandlers ? directiveHandlerStacks.get(currentHandlerStackKey).push(handler) : handler()
+        isDeferringHandlers
+            ? directiveHandlerStacks.get(currentHandlerStackKey).push(handler)
+            : handler()
     }
 
     fullHandler.runCleanups = cleanup
@@ -144,19 +158,24 @@ export function getDirectiveHandler(el, directive) {
     return fullHandler
 }
 
-export let startingWith = (subject, replacement) => ({ name, value }) => {
-    if (name.startsWith(subject)) name = name.replace(subject, replacement)
+export let startingWith =
+    (subject, replacement) =>
+    ({ name, value }) => {
+        if (name.startsWith(subject)) name = name.replace(subject, replacement)
 
-    return { name, value }
-}
+        return { name, value }
+    }
 
-export let into = i => i
+export let into = (i) => i
 
 function toTransformedAttributes(callback = () => {}) {
     return ({ name, value }) => {
-        let { name: newName, value: newValue } = attributeTransformers.reduce((carry, transform) => {
-            return transform(carry)
-        }, { name, value })
+        let { name: newName, value: newValue } = attributeTransformers.reduce(
+            (carry, transform) => {
+                return transform(carry)
+            },
+            { name, value }
+        )
 
         if (newName !== name) callback(newName, name)
 
@@ -174,7 +193,7 @@ function outNonAlpineAttributes({ name }) {
     return alpineAttributeRegex().test(name)
 }
 
-let alpineAttributeRegex = () => (new RegExp(`^${prefixAsString}([^:^.]+)\\b`))
+let alpineAttributeRegex = () => new RegExp(`^${prefixAsString}([^:^.]+)\\b`)
 
 function toParsedDirectives(transformedAttributeMap, originalAttributeOverride) {
     return ({ name, value }) => {
@@ -186,7 +205,7 @@ function toParsedDirectives(transformedAttributeMap, originalAttributeOverride) 
         return {
             type: typeMatch ? typeMatch[1] : null,
             value: valueMatch ? valueMatch[1] : null,
-            modifiers: modifiers.map(i => i.replace('.', '')),
+            modifiers: modifiers.map((i) => i.replace('.', '')),
             expression: value,
             original,
         }

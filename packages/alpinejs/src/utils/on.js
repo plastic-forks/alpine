@@ -1,10 +1,10 @@
 import { debounce } from './debounce'
 import { throttle } from './throttle'
 
-export default function on (el, event, modifiers, callback) {
+export default function on(el, event, modifiers, callback) {
     let listenerTarget = el
 
-    let handler = e => callback(e)
+    let handler = (e) => callback(e)
 
     let options = {}
 
@@ -12,7 +12,7 @@ export default function on (el, event, modifiers, callback) {
     // handler more flexibly in a "middleware" style.
     let wrapHandler = (callback, wrapper) => (e) => wrapper(callback, e)
 
-    if (modifiers.includes("dot")) event = dotSyntax(event)
+    if (modifiers.includes('dot')) event = dotSyntax(event)
     if (modifiers.includes('camel')) event = camelCase(event)
     if (modifiers.includes('passive')) options.passive = true
     if (modifiers.includes('capture')) options.capture = true
@@ -23,21 +23,36 @@ export default function on (el, event, modifiers, callback) {
     // throttled/debounced, only the user's callback is. This way, if the user expects
     // `e.preventDefault()` to happen, it'll still happen even if their callback gets throttled.
     if (modifiers.includes('debounce')) {
-        let nextModifier = modifiers[modifiers.indexOf('debounce')+1] || 'invalid-wait'
-        let wait = isNumeric(nextModifier.split('ms')[0]) ? Number(nextModifier.split('ms')[0]) : 250
+        let nextModifier = modifiers[modifiers.indexOf('debounce') + 1] || 'invalid-wait'
+        let wait = isNumeric(nextModifier.split('ms')[0])
+            ? Number(nextModifier.split('ms')[0])
+            : 250
 
         handler = debounce(handler, wait)
     }
     if (modifiers.includes('throttle')) {
-        let nextModifier = modifiers[modifiers.indexOf('throttle')+1] || 'invalid-wait'
-        let wait = isNumeric(nextModifier.split('ms')[0]) ? Number(nextModifier.split('ms')[0]) : 250
+        let nextModifier = modifiers[modifiers.indexOf('throttle') + 1] || 'invalid-wait'
+        let wait = isNumeric(nextModifier.split('ms')[0])
+            ? Number(nextModifier.split('ms')[0])
+            : 250
 
         handler = throttle(handler, wait)
     }
 
-    if (modifiers.includes('prevent')) handler = wrapHandler(handler, (next, e) => { e.preventDefault(); next(e) })
-    if (modifiers.includes('stop')) handler = wrapHandler(handler, (next, e) => { e.stopPropagation(); next(e) })
-    if (modifiers.includes('self')) handler = wrapHandler(handler, (next, e) => { e.target === el && next(e) })
+    if (modifiers.includes('prevent'))
+        handler = wrapHandler(handler, (next, e) => {
+            e.preventDefault()
+            next(e)
+        })
+    if (modifiers.includes('stop'))
+        handler = wrapHandler(handler, (next, e) => {
+            e.stopPropagation()
+            next(e)
+        })
+    if (modifiers.includes('self'))
+        handler = wrapHandler(handler, (next, e) => {
+            e.target === el && next(e)
+        })
 
     if (modifiers.includes('away') || modifiers.includes('outside')) {
         listenerTarget = document
@@ -84,21 +99,23 @@ export default function on (el, event, modifiers, callback) {
 }
 
 function dotSyntax(subject) {
-    return subject.replace(/-/g, ".")
+    return subject.replace(/-/g, '.')
 }
 
 function camelCase(subject) {
     return subject.toLowerCase().replace(/-(\w)/g, (match, char) => char.toUpperCase())
 }
 
-function isNumeric(subject){
-    return ! Array.isArray(subject) && ! isNaN(subject)
+function isNumeric(subject) {
+    return !Array.isArray(subject) && !isNaN(subject)
 }
 
 function kebabCase(subject) {
-    if ([' ','_'].includes(subject
-    )) return subject
-    return subject.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[_\s]/, '-').toLowerCase()
+    if ([' ', '_'].includes(subject)) return subject
+    return subject
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .replace(/[_\s]/, '-')
+        .toLowerCase()
 }
 
 function isKeyEvent(event) {
@@ -106,18 +123,24 @@ function isKeyEvent(event) {
 }
 
 function isListeningForASpecificKeyThatHasntBeenPressed(e, modifiers) {
-    let keyModifiers = modifiers.filter(i => {
-        return ! ['window', 'document', 'prevent', 'stop', 'once', 'capture'].includes(i)
+    let keyModifiers = modifiers.filter((i) => {
+        return !['window', 'document', 'prevent', 'stop', 'once', 'capture'].includes(i)
     })
 
     if (keyModifiers.includes('debounce')) {
         let debounceIndex = keyModifiers.indexOf('debounce')
-        keyModifiers.splice(debounceIndex, isNumeric((keyModifiers[debounceIndex+1] || 'invalid-wait').split('ms')[0]) ? 2 : 1)
+        keyModifiers.splice(
+            debounceIndex,
+            isNumeric((keyModifiers[debounceIndex + 1] || 'invalid-wait').split('ms')[0]) ? 2 : 1
+        )
     }
 
     if (keyModifiers.includes('throttle')) {
         let debounceIndex = keyModifiers.indexOf('throttle')
-        keyModifiers.splice(debounceIndex, isNumeric((keyModifiers[debounceIndex+1] || 'invalid-wait').split('ms')[0]) ? 2 : 1)
+        keyModifiers.splice(
+            debounceIndex,
+            isNumeric((keyModifiers[debounceIndex + 1] || 'invalid-wait').split('ms')[0]) ? 2 : 1
+        )
     }
 
     // If no modifier is specified, we'll call it a press.
@@ -128,12 +151,14 @@ function isListeningForASpecificKeyThatHasntBeenPressed(e, modifiers) {
 
     // The user is listening for key combinations.
     const systemKeyModifiers = ['ctrl', 'shift', 'alt', 'meta', 'cmd', 'super']
-    const selectedSystemKeyModifiers = systemKeyModifiers.filter(modifier => keyModifiers.includes(modifier))
+    const selectedSystemKeyModifiers = systemKeyModifiers.filter((modifier) =>
+        keyModifiers.includes(modifier)
+    )
 
-    keyModifiers = keyModifiers.filter(i => ! selectedSystemKeyModifiers.includes(i))
+    keyModifiers = keyModifiers.filter((i) => !selectedSystemKeyModifiers.includes(i))
 
     if (selectedSystemKeyModifiers.length > 0) {
-        const activelyPressedKeyModifiers = selectedSystemKeyModifiers.filter(modifier => {
+        const activelyPressedKeyModifiers = selectedSystemKeyModifiers.filter((modifier) => {
             // Alias "cmd" and "super" to "meta"
             if (modifier === 'cmd' || modifier === 'super') modifier = 'meta'
 
@@ -152,30 +177,32 @@ function isListeningForASpecificKeyThatHasntBeenPressed(e, modifiers) {
 }
 
 function keyToModifiers(key) {
-    if (! key) return []
+    if (!key) return []
 
     key = kebabCase(key)
 
     let modifierToKeyMap = {
-        'ctrl': 'control',
-        'slash': '/',
-        'space': ' ',
-        'spacebar': ' ',
-        'cmd': 'meta',
-        'esc': 'escape',
-        'up': 'arrow-up',
-        'down': 'arrow-down',
-        'left': 'arrow-left',
-        'right': 'arrow-right',
-        'period': '.',
-        'equal': '=',
-        'minus': '-',
-        'underscore': '_',
+        ctrl: 'control',
+        slash: '/',
+        space: ' ',
+        spacebar: ' ',
+        cmd: 'meta',
+        esc: 'escape',
+        up: 'arrow-up',
+        down: 'arrow-down',
+        left: 'arrow-left',
+        right: 'arrow-right',
+        period: '.',
+        equal: '=',
+        minus: '-',
+        underscore: '_',
     }
 
     modifierToKeyMap[key] = key
 
-    return Object.keys(modifierToKeyMap).map(modifier => {
-        if (modifierToKeyMap[modifier] === key) return modifier
-    }).filter(modifier => modifier)
+    return Object.keys(modifierToKeyMap)
+        .map((modifier) => {
+            if (modifierToKeyMap[modifier] === key) return modifier
+        })
+        .filter((modifier) => modifier)
 }

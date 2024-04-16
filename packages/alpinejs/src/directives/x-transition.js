@@ -19,12 +19,24 @@ function registerTransitionsFromClassString(el, classString, stage) {
     registerTransitionObject(el, setClasses, '')
 
     let directiveStorageMap = {
-        'enter': (classes) => { el._x_transition.enter.during = classes },
-        'enter-start': (classes) => { el._x_transition.enter.start = classes },
-        'enter-end': (classes) => { el._x_transition.enter.end = classes },
-        'leave': (classes) => { el._x_transition.leave.during = classes },
-        'leave-start': (classes) => { el._x_transition.leave.start = classes },
-        'leave-end': (classes) => { el._x_transition.leave.end = classes },
+        enter: (classes) => {
+            el._x_transition.enter.during = classes
+        },
+        'enter-start': (classes) => {
+            el._x_transition.enter.start = classes
+        },
+        'enter-end': (classes) => {
+            el._x_transition.enter.end = classes
+        },
+        leave: (classes) => {
+            el._x_transition.leave.during = classes
+        },
+        'leave-start': (classes) => {
+            el._x_transition.leave.start = classes
+        },
+        'leave-end': (classes) => {
+            el._x_transition.leave.end = classes
+        },
     }
 
     directiveStorageMap[stage](classString)
@@ -33,19 +45,19 @@ function registerTransitionsFromClassString(el, classString, stage) {
 function registerTransitionsFromHelper(el, modifiers, stage) {
     registerTransitionObject(el, setStyles)
 
-    let doesntSpecify = (! modifiers.includes('in') && ! modifiers.includes('out')) && ! stage
+    let doesntSpecify = !modifiers.includes('in') && !modifiers.includes('out') && !stage
     let transitioningIn = doesntSpecify || modifiers.includes('in') || ['enter'].includes(stage)
     let transitioningOut = doesntSpecify || modifiers.includes('out') || ['leave'].includes(stage)
 
-    if (modifiers.includes('in') && ! doesntSpecify) {
+    if (modifiers.includes('in') && !doesntSpecify) {
         modifiers = modifiers.filter((i, index) => index < modifiers.indexOf('out'))
     }
 
-    if (modifiers.includes('out') && ! doesntSpecify) {
+    if (modifiers.includes('out') && !doesntSpecify) {
         modifiers = modifiers.filter((i, index) => index > modifiers.indexOf('out'))
     }
 
-    let wantsAll = ! modifiers.includes('opacity') && ! modifiers.includes('scale')
+    let wantsAll = !modifiers.includes('opacity') && !modifiers.includes('scale')
     let wantsOpacity = wantsAll || modifiers.includes('opacity')
     let wantsScale = wantsAll || modifiers.includes('scale')
     let opacityValue = wantsOpacity ? 0 : 1
@@ -99,27 +111,40 @@ function registerTransitionsFromHelper(el, modifiers, stage) {
 }
 
 function registerTransitionObject(el, setFunction, defaultValue = {}) {
-    if (! el._x_transition) el._x_transition = {
-        enter: { during: defaultValue, start: defaultValue, end: defaultValue },
+    if (!el._x_transition)
+        el._x_transition = {
+            enter: { during: defaultValue, start: defaultValue, end: defaultValue },
 
-        leave: { during: defaultValue, start: defaultValue, end: defaultValue },
+            leave: { during: defaultValue, start: defaultValue, end: defaultValue },
 
-        in(before = () => {}, after = () => {}) {
-            transition(el, setFunction, {
-                during: this.enter.during,
-                start: this.enter.start,
-                end: this.enter.end,
-            }, before, after)
-        },
+            in(before = () => {}, after = () => {}) {
+                transition(
+                    el,
+                    setFunction,
+                    {
+                        during: this.enter.during,
+                        start: this.enter.start,
+                        end: this.enter.end,
+                    },
+                    before,
+                    after
+                )
+            },
 
-        out(before = () => {}, after = () => {}) {
-            transition(el, setFunction, {
-                during: this.leave.during,
-                start: this.leave.start,
-                end: this.leave.end,
-            }, before, after)
-        },
-    }
+            out(before = () => {}, after = () => {}) {
+                transition(
+                    el,
+                    setFunction,
+                    {
+                        during: this.leave.during,
+                        start: this.leave.start,
+                        end: this.leave.end,
+                    },
+                    before,
+                    after
+                )
+            },
+        }
 }
 
 window.Element.prototype._x_toggleAndCascadeWithTransitions = function (el, value, show, hide) {
@@ -131,21 +156,22 @@ window.Element.prototype._x_toggleAndCascadeWithTransitions = function (el, valu
     // it keeps running in background. setTimeout has a lower priority in the
     // event loop so it would skip nested transitions but when the tab is
     // hidden, it's not relevant.
-    const nextTick = document.visibilityState === 'visible' ? requestAnimationFrame : setTimeout;
-    let clickAwayCompatibleShow = () => nextTick(show);
+    const nextTick = document.visibilityState === 'visible' ? requestAnimationFrame : setTimeout
+    let clickAwayCompatibleShow = () => nextTick(show)
 
     if (value) {
         if (el._x_transition && (el._x_transition.enter || el._x_transition.leave)) {
             // This fixes a bug where if you are only transitioning OUT and you are also using @click.outside
             // the element when shown immediately starts transitioning out. There is a test in the manual
             // transition test file for this: /tests/cypress/manual-transition-test.html
-            (el._x_transition.enter && (Object.entries(el._x_transition.enter.during).length || Object.entries(el._x_transition.enter.start).length || Object.entries(el._x_transition.enter.end).length))
+            el._x_transition.enter &&
+            (Object.entries(el._x_transition.enter.during).length ||
+                Object.entries(el._x_transition.enter.start).length ||
+                Object.entries(el._x_transition.enter.end).length)
                 ? el._x_transition.in(show)
                 : clickAwayCompatibleShow()
         } else {
-            el._x_transition
-                ? el._x_transition.in(show)
-                : clickAwayCompatibleShow()
+            el._x_transition ? el._x_transition.in(show) : clickAwayCompatibleShow()
         }
 
         return
@@ -154,22 +180,28 @@ window.Element.prototype._x_toggleAndCascadeWithTransitions = function (el, valu
     // Livewire depends on el._x_hidePromise.
     el._x_hidePromise = el._x_transition
         ? new Promise((resolve, reject) => {
-            el._x_transition.out(() => {}, () => resolve(hide))
+              el._x_transition.out(
+                  () => {},
+                  () => resolve(hide)
+              )
 
-            el._x_transitioning && el._x_transitioning.beforeCancel(() => reject({ isFromCancelledTransition: true }))
-        })
+              el._x_transitioning &&
+                  el._x_transitioning.beforeCancel(() =>
+                      reject({ isFromCancelledTransition: true })
+                  )
+          })
         : Promise.resolve(hide)
 
     queueMicrotask(() => {
         let closest = closestHide(el)
 
         if (closest) {
-            if (! closest._x_hideChildren) closest._x_hideChildren = []
+            if (!closest._x_hideChildren) closest._x_hideChildren = []
 
             closest._x_hideChildren.push(el)
         } else {
             nextTick(() => {
-                let hideAfterChildren = el => {
+                let hideAfterChildren = (el) => {
                     let carry = Promise.all([
                         el._x_hidePromise,
                         ...(el._x_hideChildren || []).map(hideAfterChildren),
@@ -182,7 +214,7 @@ window.Element.prototype._x_toggleAndCascadeWithTransitions = function (el, valu
                 }
 
                 hideAfterChildren(el).catch((e) => {
-                    if (! e.isFromCancelledTransition) throw e
+                    if (!e.isFromCancelledTransition) throw e
                 })
             })
         }
@@ -192,17 +224,28 @@ window.Element.prototype._x_toggleAndCascadeWithTransitions = function (el, valu
 function closestHide(el) {
     let parent = el.parentNode
 
-    if (! parent) return
+    if (!parent) return
 
     return parent._x_hidePromise ? parent : closestHide(parent)
 }
 
-export function transition(el, setFunction, { during, start, end } = {}, before = () => {}, after = () => {}) {
+export function transition(
+    el,
+    setFunction,
+    { during, start, end } = {},
+    before = () => {},
+    after = () => {}
+) {
     if (el._x_transitioning) el._x_transitioning.cancel()
 
-    if (Object.keys(during).length === 0 && Object.keys(start).length === 0 && Object.keys(end).length === 0) {
+    if (
+        Object.keys(during).length === 0 &&
+        Object.keys(start).length === 0 &&
+        Object.keys(end).length === 0
+    ) {
         // Execute right away if there is no transition.
-        before(); after()
+        before()
+        after()
         return
     }
 
@@ -239,9 +282,9 @@ export function performTransition(el, stages) {
         mutateDom(() => {
             interrupted = true
 
-            if (! reachedBefore) stages.before()
+            if (!reachedBefore) stages.before()
 
-            if (! reachedEnd) {
+            if (!reachedEnd) {
                 stages.end()
 
                 releaseNextTicks()
@@ -258,8 +301,15 @@ export function performTransition(el, stages) {
 
     el._x_transitioning = {
         beforeCancels: [],
-        beforeCancel(callback) { this.beforeCancels.push(callback) },
-        cancel: once(function () { while (this.beforeCancels.length) { this.beforeCancels.shift()() }; finish(); }),
+        beforeCancel(callback) {
+            this.beforeCancels.push(callback)
+        },
+        cancel: once(function () {
+            while (this.beforeCancels.length) {
+                this.beforeCancels.shift()()
+            }
+            finish()
+        }),
         finish,
     }
 
@@ -275,10 +325,15 @@ export function performTransition(el, stages) {
 
         // Note: Safari's transitionDuration property will list out comma separated transition durations
         // for every single transition property. Let's grab the first one and call it a day.
-        let duration = Number(getComputedStyle(el).transitionDuration.replace(/,.*/, '').replace('s', '')) * 1000
-        let delay = Number(getComputedStyle(el).transitionDelay.replace(/,.*/, '').replace('s', '')) * 1000
+        let duration =
+            Number(getComputedStyle(el).transitionDuration.replace(/,.*/, '').replace('s', '')) *
+            1000
+        let delay =
+            Number(getComputedStyle(el).transitionDelay.replace(/,.*/, '').replace('s', '')) *
+            1000
 
-        if (duration === 0) duration = Number(getComputedStyle(el).animationDuration.replace('s', '')) * 1000
+        if (duration === 0)
+            duration = Number(getComputedStyle(el).animationDuration.replace('s', '')) * 1000
 
         mutateDom(() => {
             stages.before()
@@ -309,7 +364,7 @@ export function modifierValue(modifiers, key, fallback) {
     // If it IS present, grab the value after it: x-show.transition.duration.500ms
     const rawValue = modifiers[modifiers.indexOf(key) + 1]
 
-    if (! rawValue) return fallback
+    if (!rawValue) return fallback
 
     if (key === 'scale') {
         // Check if the very next value is NOT a number and return the fallback.
@@ -326,7 +381,11 @@ export function modifierValue(modifiers, key, fallback) {
 
     if (key === 'origin') {
         // Support chaining origin directions: x-show.transition.top.right
-        if (['top', 'right', 'left', 'center', 'bottom'].includes(modifiers[modifiers.indexOf(key) + 2])) {
+        if (
+            ['top', 'right', 'left', 'center', 'bottom'].includes(
+                modifiers[modifiers.indexOf(key) + 2]
+            )
+        ) {
             return [rawValue, modifiers[modifiers.indexOf(key) + 2]].join(' ')
         }
     }

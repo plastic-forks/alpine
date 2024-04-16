@@ -1,4 +1,3 @@
-
 let datas = {}
 
 export function data(name, callback) {

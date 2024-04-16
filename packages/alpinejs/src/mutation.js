@@ -1,4 +1,4 @@
-import { destroyTree } from "./lifecycle"
+import { destroyTree } from './lifecycle'
 
 let onAttributeAddeds = []
 let onElRemoveds = []
@@ -10,7 +10,7 @@ export function onElAdded(callback) {
 
 export function onElRemoved(el, callback) {
     if (typeof callback === 'function') {
-        if (! el._x_cleanups) el._x_cleanups = []
+        if (!el._x_cleanups) el._x_cleanups = []
         el._x_cleanups.push(callback)
     } else {
         callback = el
@@ -23,18 +23,18 @@ export function onAttributesAdded(callback) {
 }
 
 export function onAttributeRemoved(el, name, callback) {
-    if (! el._x_attributeCleanups) el._x_attributeCleanups = {}
-    if (! el._x_attributeCleanups[name]) el._x_attributeCleanups[name] = []
+    if (!el._x_attributeCleanups) el._x_attributeCleanups = {}
+    if (!el._x_attributeCleanups[name]) el._x_attributeCleanups[name] = []
 
     el._x_attributeCleanups[name].push(callback)
 }
 
 export function cleanupAttributes(el, names) {
-    if (! el._x_attributeCleanups) return
+    if (!el._x_attributeCleanups) return
 
     Object.entries(el._x_attributeCleanups).forEach(([name, value]) => {
         if (names === undefined || names.includes(name)) {
-            value.forEach(i => i())
+            value.forEach((i) => i())
 
             delete el._x_attributeCleanups[name]
         }
@@ -52,7 +52,12 @@ let observer = new MutationObserver(onMutate)
 let currentlyObserving = false
 
 export function startObservingMutations() {
-    observer.observe(document, { subtree: true, childList: true, attributes: true, attributeOldValue: true })
+    observer.observe(document, {
+        subtree: true,
+        childList: true,
+        attributes: true,
+        attributeOldValue: true,
+    })
 
     currentlyObserving = true
 }
@@ -86,7 +91,7 @@ export function flushObserver() {
 }
 
 export function mutateDom(callback) {
-    if (! currentlyObserving) return callback()
+    if (!currentlyObserving) return callback()
 
     stopObservingMutations()
 
@@ -119,17 +124,19 @@ function onMutate(mutations) {
         return
     }
 
-    let addedNodes = new Set
-    let removedNodes = new Set
-    let addedAttributes = new Map
-    let removedAttributes = new Map
+    let addedNodes = new Set()
+    let removedNodes = new Set()
+    let addedAttributes = new Map()
+    let removedAttributes = new Map()
 
     for (let i = 0; i < mutations.length; i++) {
         if (mutations[i].target._x_ignoreMutationObserver) continue
 
         if (mutations[i].type === 'childList') {
-            mutations[i].addedNodes.forEach(node => node.nodeType === 1 && addedNodes.add(node))
-            mutations[i].removedNodes.forEach(node => node.nodeType === 1 && removedNodes.add(node))
+            mutations[i].addedNodes.forEach((node) => node.nodeType === 1 && addedNodes.add(node))
+            mutations[i].removedNodes.forEach(
+                (node) => node.nodeType === 1 && removedNodes.add(node)
+            )
         }
 
         if (mutations[i].type === 'attributes') {
@@ -138,13 +145,13 @@ function onMutate(mutations) {
             let oldValue = mutations[i].oldValue
 
             let add = () => {
-                if (! addedAttributes.has(el)) addedAttributes.set(el, [])
+                if (!addedAttributes.has(el)) addedAttributes.set(el, [])
 
-                addedAttributes.get(el).push({ name,  value: el.getAttribute(name) })
+                addedAttributes.get(el).push({ name, value: el.getAttribute(name) })
             }
 
             let remove = () => {
-                if (! removedAttributes.has(el)) removedAttributes.set(el, [])
+                if (!removedAttributes.has(el)) removedAttributes.set(el, [])
 
                 removedAttributes.get(el).push(name)
             }
@@ -152,11 +159,11 @@ function onMutate(mutations) {
             // New attribute.
             if (el.hasAttribute(name) && oldValue === null) {
                 add()
-            // Changed attribute.
+                // Changed attribute.
             } else if (el.hasAttribute(name)) {
                 remove()
                 add()
-            // Removed attribute.
+                // Removed attribute.
             } else {
                 remove()
             }
@@ -168,7 +175,7 @@ function onMutate(mutations) {
     })
 
     addedAttributes.forEach((attrs, el) => {
-        onAttributeAddeds.forEach(i => i(el, attrs))
+        onAttributeAddeds.forEach((i) => i(el, attrs))
     })
 
     for (let node of removedNodes) {
@@ -176,7 +183,7 @@ function onMutate(mutations) {
         // as both an "add" and "remove", so we want to skip those.
         if (addedNodes.has(node)) continue
 
-        onElRemoveds.forEach(i => i(node))
+        onElRemoveds.forEach((i) => i(node))
 
         destroyTree(node)
     }
@@ -197,11 +204,11 @@ function onMutate(mutations) {
         // If the node was eventually removed as part of one of his
         // parent mutations, skip it
         if (removedNodes.has(node)) continue
-        if (! node.isConnected) continue
+        if (!node.isConnected) continue
 
         delete node._x_ignoreSelf
         delete node._x_ignore
-        onElAddeds.forEach(i => i(node))
+        onElAddeds.forEach((i) => i(node))
         node._x_ignore = true
         node._x_ignoreSelf = true
     }

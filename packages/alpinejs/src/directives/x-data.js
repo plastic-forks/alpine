@@ -10,7 +10,7 @@ import { evaluate } from '../evaluator'
 
 addRootSelector(() => `[${prefix('data')}]`)
 
-directive('data', ((el, { expression }, { cleanup }) => {
+directive('data', (el, { expression }, { cleanup }) => {
     if (shouldSkipRegisteringDataDuringClone(el)) return
 
     expression = expression === '' ? '{}' : expression
@@ -40,7 +40,7 @@ directive('data', ((el, { expression }, { cleanup }) => {
 
         undo()
     })
-}))
+})
 
 interceptClone((from, to) => {
     // Transfer over existing runtime Alpine state from
@@ -60,7 +60,7 @@ interceptClone((from, to) => {
 // The reason a data context WOULD exist is that we graft root x-data state over
 // from the live tree before hydrating the clone tree.
 function shouldSkipRegisteringDataDuringClone(el) {
-    if (! isCloning) return false
+    if (!isCloning) return false
     if (isCloningLegacy) return true
 
     return el.hasAttribute('data-has-alpine-state')

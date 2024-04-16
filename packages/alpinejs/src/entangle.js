@@ -16,11 +16,14 @@ export function entangle({ get: outerGet, set: outerSet }, { get: innerGet, set:
             let outerHashLatest = JSON.stringify(outer)
             let innerHashLatest = JSON.stringify(inner)
 
-            if (outerHashLatest !== outerHash) { // If outer changed...
+            if (outerHashLatest !== outerHash) {
+                // If outer changed...
                 innerSet(cloneIfObject(outer))
-            } else if (outerHashLatest !== innerHashLatest) { // If inner changed...
+            } else if (outerHashLatest !== innerHashLatest) {
+                // If inner changed...
                 outerSet(cloneIfObject(inner))
-            } else { // If nothing changed...
+            } else {
+                // If nothing changed...
                 // Prevent an infinite loop...
             }
         }
@@ -35,7 +38,5 @@ export function entangle({ get: outerGet, set: outerSet }, { get: innerGet, set:
 }
 
 function cloneIfObject(value) {
-    return typeof value === 'object'
-        ? JSON.parse(JSON.stringify(value))
-        : value
+    return typeof value === 'object' ? JSON.parse(JSON.stringify(value)) : value
 }

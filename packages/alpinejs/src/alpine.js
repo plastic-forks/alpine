@@ -1,7 +1,33 @@
-import { setReactivityEngine, disableEffectScheduling, reactive, effect, release, raw, watch } from './reactivity'
+import {
+    setReactivityEngine,
+    disableEffectScheduling,
+    reactive,
+    effect,
+    release,
+    raw,
+    watch,
+} from './reactivity'
 import { mapAttributes, directive, setPrefix as prefix, prefix as prefixed } from './directives'
-import { start, addRootSelector, addInitSelector, closestRoot, findClosest, initTree, destroyTree, interceptInit } from './lifecycle'
-import { onElRemoved, onAttributeRemoved, onAttributesAdded, mutateDom, deferMutations, flushAndStopDeferringMutations, startObservingMutations, stopObservingMutations } from './mutation'
+import {
+    start,
+    addRootSelector,
+    addInitSelector,
+    closestRoot,
+    findClosest,
+    initTree,
+    destroyTree,
+    interceptInit,
+} from './lifecycle'
+import {
+    onElRemoved,
+    onAttributeRemoved,
+    onAttributesAdded,
+    mutateDom,
+    deferMutations,
+    flushAndStopDeferringMutations,
+    startObservingMutations,
+    stopObservingMutations,
+} from './mutation'
 import { mergeProxies, closestDataStack, addScopeToNode, scope as $data } from './scope'
 import { setEvaluator, evaluate, evaluateLater, dontAutoEvaluateFunctions } from './evaluator'
 import { transition } from './directives/x-transition'
@@ -21,10 +47,18 @@ import { bind } from './binds'
 import { data } from './datas'
 
 let Alpine = {
-    get reactive() { return reactive },
-    get release() { return release },
-    get effect() { return effect },
-    get raw() { return raw },
+    get reactive() {
+        return reactive
+    },
+    get release() {
+        return release
+    },
+    get effect() {
+        return effect
+    },
+    get raw() {
+        return raw
+    },
     version: ALPINE_VERSION,
     flushAndStopDeferringMutations,
     dontAutoEvaluateFunctions,

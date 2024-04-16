@@ -12,7 +12,8 @@ directive('for', (el, { expression }, { effect, cleanup }) => {
     let iteratorNames = parseForExpression(expression)
 
     let evaluateItems = evaluateLater(el, iteratorNames.items)
-    let evaluateKey = evaluateLater(el,
+    let evaluateKey = evaluateLater(
+        el,
         // the x-bind:key expression is stored for our use instead of evaluated.
         el._x_keyExpression || 'index'
     )
@@ -23,7 +24,7 @@ directive('for', (el, { expression }, { effect, cleanup }) => {
     effect(() => loop(el, iteratorNames, evaluateItems, evaluateKey))
 
     cleanup(() => {
-        Object.values(el._x_lookup).forEach(el => el.remove())
+        Object.values(el._x_lookup).forEach((el) => el.remove())
 
         delete el._x_prevKeys
         delete el._x_lookup
@@ -33,17 +34,17 @@ directive('for', (el, { expression }, { effect, cleanup }) => {
 let shouldFastRender = true
 
 function loop(el, iteratorNames, evaluateItems, evaluateKey) {
-    let isObject = i => typeof i === 'object' && ! Array.isArray(i)
+    let isObject = (i) => typeof i === 'object' && !Array.isArray(i)
     let templateEl = el
 
-    evaluateItems(items => {
+    evaluateItems((items) => {
         // Prepare yourself. There's a lot going on here. Take heart,
         // every bit of complexity in this function was added for
         // the purpose of making Alpine fast with large datas.
 
         // Support number literals. Ex: x-for="i in 100"
         if (isNumeric(items) && items >= 0) {
-            items = Array.from(Array(items).keys(), i => i + 1)
+            items = Array.from(Array(items).keys(), (i) => i + 1)
         }
 
         if (items === undefined) items = []
@@ -60,11 +61,14 @@ function loop(el, iteratorNames, evaluateItems, evaluateKey) {
             items = Object.entries(items).map(([key, value]) => {
                 let scope = getIterationScopeVariables(iteratorNames, value, key, items)
 
-                evaluateKey(value => {
-                    if (keys.includes(value)) warn('Duplicate key on x-for', el)
+                evaluateKey(
+                    (value) => {
+                        if (keys.includes(value)) warn('Duplicate key on x-for', el)
 
-                    keys.push(value)
-                }, { scope: { index: key, ...scope} })
+                        keys.push(value)
+                    },
+                    { scope: { index: key, ...scope } }
+                )
 
                 scopes.push(scope)
             })
@@ -72,11 +76,14 @@ function loop(el, iteratorNames, evaluateItems, evaluateKey) {
             for (let i = 0; i < items.length; i++) {
                 let scope = getIterationScopeVariables(iteratorNames, items[i], i, items)
 
-                evaluateKey(value => {
-                    if (keys.includes(value)) warn('Duplicate key on x-for', el)
+                evaluateKey(
+                    (value) => {
+                        if (keys.includes(value)) warn('Duplicate key on x-for', el)
 
-                    keys.push(value)
-                }, { scope: { index: i, ...scope} })
+                        keys.push(value)
+                    },
+                    { scope: { index: i, ...scope } }
+                )
 
                 scopes.push(scope)
             }
@@ -99,7 +106,7 @@ function loop(el, iteratorNames, evaluateItems, evaluateKey) {
 
         // Notice we're mutating prevKeys as we go. This makes it
         // so that we can efficiently make incremental comparisons.
-        prevKeys = prevKeys.filter(key => ! removes.includes(key))
+        prevKeys = prevKeys.filter((key) => !removes.includes(key))
 
         let lastKey = 'template'
 
@@ -145,7 +152,7 @@ function loop(el, iteratorNames, evaluateItems, evaluateKey) {
             let key = removes[i]
 
             // Remove any queued effects that might run after the DOM node has been removed.
-            if (!! lookup[key]._x_effects) {
+            if (!!lookup[key]._x_effects) {
                 lookup[key]._x_effects.forEach(dequeueJob)
             }
 
@@ -166,7 +173,8 @@ function loop(el, iteratorNames, evaluateItems, evaluateKey) {
             let marker = document.createElement('div')
 
             mutateDom(() => {
-                if (! elForSpot) warn(`x-for ":key" is undefined or invalid`, templateEl, keyForSpot, lookup)
+                if (!elForSpot)
+                    warn(`x-for ":key" is undefined or invalid`, templateEl, keyForSpot, lookup)
 
                 elForSpot.after(marker)
                 elInSpot.after(elForSpot)
@@ -183,7 +191,7 @@ function loop(el, iteratorNames, evaluateItems, evaluateKey) {
         for (let i = 0; i < adds.length; i++) {
             let [lastKey, index] = adds[i]
 
-            let lastEl = (lastKey === 'template') ? templateEl : lookup[lastKey]
+            let lastEl = lastKey === 'template' ? templateEl : lookup[lastKey]
             // If the element is a x-if template evaluated to true,
             // point lastEl to the if-generated node
             if (lastEl._x_currentIfEl) lastEl = lastEl._x_currentIfEl
@@ -211,7 +219,10 @@ function loop(el, iteratorNames, evaluateItems, evaluateKey) {
             })
 
             if (typeof key === 'object') {
-                warn('x-for key cannot be an object, it must be a string or an integer', templateEl)
+                warn(
+                    'x-for key cannot be an object, it must be a string or an integer',
+                    templateEl
+                )
             }
 
             lookup[key] = clone
@@ -237,7 +248,7 @@ function parseForExpression(expression) {
     let forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/
     let inMatch = expression.match(forAliasRE)
 
-    if (! inMatch) return
+    if (!inMatch) return
 
     let res = {}
     res.items = inMatch[2].trim()
@@ -264,16 +275,28 @@ function getIterationScopeVariables(iteratorNames, item, index, items) {
 
     // Support array destructuring ([foo, bar]).
     if (/^\[.*\]$/.test(iteratorNames.item) && Array.isArray(item)) {
-        let names = iteratorNames.item.replace('[', '').replace(']', '').split(',').map(i => i.trim())
+        let names = iteratorNames.item
+            .replace('[', '')
+            .replace(']', '')
+            .split(',')
+            .map((i) => i.trim())
 
         names.forEach((name, i) => {
             scopeVariables[name] = item[i]
         })
-    // Support object destructuring ({ foo: 'oof', bar: 'rab' }).
-    } else if (/^\{.*\}$/.test(iteratorNames.item) && ! Array.isArray(item) && typeof item === 'object') {
-        let names = iteratorNames.item.replace('{', '').replace('}', '').split(',').map(i => i.trim())
+        // Support object destructuring ({ foo: 'oof', bar: 'rab' }).
+    } else if (
+        /^\{.*\}$/.test(iteratorNames.item) &&
+        !Array.isArray(item) &&
+        typeof item === 'object'
+    ) {
+        let names = iteratorNames.item
+            .replace('{', '')
+            .replace('}', '')
+            .split(',')
+            .map((i) => i.trim())
 
-        names.forEach(name => {
+        names.forEach((name) => {
             scopeVariables[name] = item[name]
         })
     } else {
@@ -287,6 +310,6 @@ function getIterationScopeVariables(iteratorNames, item, index, items) {
     return scopeVariables
 }
 
-function isNumeric(subject){
-    return ! Array.isArray(subject) && ! isNaN(subject)
+function isNumeric(subject) {
+    return !Array.isArray(subject) && !isNaN(subject)
 }

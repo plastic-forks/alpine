@@ -27,21 +27,21 @@ directive('model', (el, { modifiers, expression }, { effect, cleanup }) => {
     let getValue = () => {
         let result
 
-        evaluateGet(value => result = value)
+        evaluateGet((value) => (result = value))
 
         return isGetterSetter(result) ? result.get() : result
     }
 
-    let setValue = value => {
+    let setValue = (value) => {
         let result
 
-        evaluateGet(value => result = value)
+        evaluateGet((value) => (result = value))
 
         if (isGetterSetter(result)) {
             result.set(value)
         } else {
             evaluateSet(() => {}, {
-                scope: { '__placeholder': value }
+                scope: { __placeholder: value },
             })
         }
     }
@@ -51,36 +51,40 @@ directive('model', (el, { modifiers, expression }, { effect, cleanup }) => {
         // People might assume we take care of that for them, because
         // they already set a shared "x-model" attribute.
         mutateDom(() => {
-            if (! el.hasAttribute('name')) el.setAttribute('name', expression)
+            if (!el.hasAttribute('name')) el.setAttribute('name', expression)
         })
     }
 
     // If the element we are binding to is a select, a radio, or checkbox
     // we'll listen for the change event instead of the "input" event.
-    var event = (el.tagName.toLowerCase() === 'select')
-        || ['checkbox', 'radio'].includes(el.type)
-        || modifiers.includes('lazy')
-            ? 'change' : 'input'
+    var event =
+        el.tagName.toLowerCase() === 'select' ||
+        ['checkbox', 'radio'].includes(el.type) ||
+        modifiers.includes('lazy')
+            ? 'change'
+            : 'input'
 
     // We only want to register the event listener when we're not cloning, since the
     // mutation observer handles initializing the x-model directive already when
     // the element is inserted into the DOM. Otherwise we register it twice.
-    let removeListener = isCloning ? () => {} : on(el, event, modifiers, (e) => {
-        setValue(getInputValue(el, modifiers, e, getValue()))
-    })
+    let removeListener = isCloning
+        ? () => {}
+        : on(el, event, modifiers, (e) => {
+              setValue(getInputValue(el, modifiers, e, getValue()))
+          })
 
     if (modifiers.includes('fill'))
-        if ([undefined, null, ''].includes(getValue())
-            || (el.type === 'checkbox' && Array.isArray(getValue()))) {
-        setValue(
-            getInputValue(el, modifiers, { target: el }, getValue())
-        );
-    }
+        if (
+            [undefined, null, ''].includes(getValue()) ||
+            (el.type === 'checkbox' && Array.isArray(getValue()))
+        ) {
+            setValue(getInputValue(el, modifiers, { target: el }, getValue()))
+        }
     // Register the listener removal callback on the element, so that
     // in addition to the cleanup function, x-modelable may call it.
     // Also, make this a keyed object if we decide to reintroduce
     // "named modelables" some time in a future Alpine version.
-    if (! el._x_removeModelListeners) el._x_removeModelListeners = {}
+    if (!el._x_removeModelListeners) el._x_removeModelListeners = {}
     el._x_removeModelListeners['default'] = removeListener
 
     cleanup(() => el._x_removeModelListeners['default']())
@@ -108,7 +112,8 @@ directive('model', (el, { modifiers, expression }, { effect, cleanup }) => {
 
     el._x_forceModelUpdate = (value) => {
         // If nested model key is undefined, set the default value to empty string.
-        if (value === undefined && typeof expression === 'string' && expression.match(/\./)) value = ''
+        if (value === undefined && typeof expression === 'string' && expression.match(/\./))
+            value = ''
 
         // @todo: This is nasty
         window.fromModel = true
@@ -135,11 +140,13 @@ function getInputValue(el, modifiers, event, currentValue) {
         // Safari autofill triggers event as CustomEvent and assigns value to target
         // so we return event.target.value instead of event.detail
         if (event instanceof CustomEvent && event.detail !== undefined)
-            return event.detail !== null && event.detail !== undefined ? event.detail : event.target.value
+            return event.detail !== null && event.detail !== undefined
+                ? event.detail
+                : event.target.value
         else if (el.type === 'checkbox') {
             // If the data we are binding to is an array, toggle its value inside the array.
             if (Array.isArray(currentValue)) {
-                let newValue = null;
+                let newValue = null
 
                 if (modifiers.includes('number')) {
                     newValue = safeParseNumber(event.target.value)
@@ -149,24 +156,26 @@ function getInputValue(el, modifiers, event, currentValue) {
                     newValue = event.target.value
                 }
 
-                return event.target.checked ? currentValue.concat([newValue]) : currentValue.filter(el => ! checkedAttrLooseCompare(el, newValue))
+                return event.target.checked
+                    ? currentValue.concat([newValue])
+                    : currentValue.filter((el) => !checkedAttrLooseCompare(el, newValue))
             } else {
                 return event.target.checked
             }
         } else if (el.tagName.toLowerCase() === 'select' && el.multiple) {
             if (modifiers.includes('number')) {
-                return Array.from(event.target.selectedOptions).map(option => {
+                return Array.from(event.target.selectedOptions).map((option) => {
                     let rawValue = option.value || option.text
                     return safeParseNumber(rawValue)
                 })
             } else if (modifiers.includes('boolean')) {
-                return Array.from(event.target.selectedOptions).map(option => {
+                return Array.from(event.target.selectedOptions).map((option) => {
                     let rawValue = option.value || option.text
                     return safeParseBoolean(rawValue)
                 })
             }
 
-            return Array.from(event.target.selectedOptions).map(option => {
+            return Array.from(event.target.selectedOptions).map((option) => {
                 return option.value || option.text
             })
         } else {
@@ -205,10 +214,15 @@ function checkedAttrLooseCompare(valueA, valueB) {
     return valueA == valueB
 }
 
-function isNumeric(subject){
-    return ! Array.isArray(subject) && ! isNaN(subject)
+function isNumeric(subject) {
+    return !Array.isArray(subject) && !isNaN(subject)
 }
 
 function isGetterSetter(value) {
-    return value !== null && typeof value === 'object' && typeof value.get === 'function' && typeof value.set === 'function'
+    return (
+        value !== null &&
+        typeof value === 'object' &&
+        typeof value.get === 'function' &&
+        typeof value.set === 'function'
+    )
 }

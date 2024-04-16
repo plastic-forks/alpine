@@ -5,7 +5,7 @@ import { setStyles } from './styles'
 
 export default function bind(el, name, value, modifiers = []) {
     // Register bound data as pure observable data for other APIs to use.
-    if (! el._x_bindings) el._x_bindings = reactive({})
+    if (!el._x_bindings) el._x_bindings = reactive({})
 
     el._x_bindings[name] = value
 
@@ -14,15 +14,15 @@ export default function bind(el, name, value, modifiers = []) {
     switch (name) {
         case 'value':
             bindInputValue(el, value)
-            break;
+            break
 
         case 'style':
             bindStyles(el, value)
-            break;
+            break
 
         case 'class':
             bindClasses(el, value)
-            break;
+            break
 
         // 'selected' and 'checked' are special attributes that aren't necessarily
         // synced with their corresponding properties when updated, so both the
@@ -30,11 +30,11 @@ export default function bind(el, name, value, modifiers = []) {
         case 'selected':
         case 'checked':
             bindAttributeAndProperty(el, name, value)
-            break;
+            break
 
         default:
             bindAttribute(el, name, value)
-            break;
+            break
     }
 }
 
@@ -61,11 +61,15 @@ function bindInputValue(el, value) {
         // automatically.
         if (Number.isInteger(value)) {
             el.value = value
-        } else if (! Array.isArray(value) && typeof value !== 'boolean' && ! [null, undefined].includes(value)) {
+        } else if (
+            !Array.isArray(value) &&
+            typeof value !== 'boolean' &&
+            ![null, undefined].includes(value)
+        ) {
             el.value = String(value)
         } else {
             if (Array.isArray(value)) {
-                el.checked = value.some(val => checkedAttrLooseCompare(val, el.value))
+                el.checked = value.some((val) => checkedAttrLooseCompare(val, el.value))
             } else {
                 el.checked = !!value
             }
@@ -119,9 +123,11 @@ function setPropertyIfChanged(el, propName, value) {
 }
 
 function updateSelect(el, value) {
-    const arrayWrappedValue = [].concat(value).map(value => { return value + '' })
+    const arrayWrappedValue = [].concat(value).map((value) => {
+        return value + ''
+    })
 
-    Array.from(el.options).forEach(option => {
+    Array.from(el.options).forEach((option) => {
         option.selected = arrayWrappedValue.includes(option.value)
     })
 }
@@ -150,18 +156,37 @@ function isBooleanAttr(attrName) {
     // As per HTML spec table https://html.spec.whatwg.org/multipage/indices.html#attributes-3:boolean-attribute
     // Array roughly ordered by estimated usage
     const booleanAttributes = [
-        'disabled','checked','required','readonly','open', 'selected',
-        'autofocus', 'itemscope', 'multiple', 'novalidate','allowfullscreen',
-        'allowpaymentrequest', 'formnovalidate', 'autoplay', 'controls', 'loop',
-        'muted', 'playsinline', 'default', 'ismap', 'reversed', 'async', 'defer',
-        'nomodule'
+        'disabled',
+        'checked',
+        'required',
+        'readonly',
+        'open',
+        'selected',
+        'autofocus',
+        'itemscope',
+        'multiple',
+        'novalidate',
+        'allowfullscreen',
+        'allowpaymentrequest',
+        'formnovalidate',
+        'autoplay',
+        'controls',
+        'loop',
+        'muted',
+        'playsinline',
+        'default',
+        'ismap',
+        'reversed',
+        'async',
+        'defer',
+        'nomodule',
     ]
 
     return booleanAttributes.includes(attrName)
 }
 
 function attributeShouldntBePreservedIfFalsy(name) {
-    return ! ['aria-pressed', 'aria-checked', 'aria-expanded', 'aria-selected'].includes(name)
+    return !['aria-pressed', 'aria-checked', 'aria-expanded', 'aria-selected'].includes(name)
 }
 
 export function getBinding(el, name, fallback) {
@@ -199,7 +224,7 @@ function getAttributeBinding(el, name, fallback) {
     if (attr === '') return true
 
     if (isBooleanAttr(name)) {
-        return !! [name, 'true'].includes(attr)
+        return !![name, 'true'].includes(attr)
     }
 
     return attr

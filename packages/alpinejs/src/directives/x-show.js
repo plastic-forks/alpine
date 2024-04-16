@@ -8,21 +8,27 @@ directive('show', (el, { modifiers, expression }, { effect }) => {
 
     // We're going to set this function on the element directly so that
     // other plugins like "Collapse" can overwrite them with their own logic.
-    if (! el._x_doHide) el._x_doHide = () => {
-        mutateDom(() => {
-            el.style.setProperty('display', 'none', modifiers.includes('important') ? 'important' : undefined)
-        })
-    }
+    if (!el._x_doHide)
+        el._x_doHide = () => {
+            mutateDom(() => {
+                el.style.setProperty(
+                    'display',
+                    'none',
+                    modifiers.includes('important') ? 'important' : undefined
+                )
+            })
+        }
 
-    if (! el._x_doShow) el._x_doShow = () => {
-        mutateDom(() => {
-            if (el.style.length === 1 && el.style.display === 'none') {
-                el.removeAttribute('style')
-            } else {
-                el.style.removeProperty('display')
-            }
-        })
-    }
+    if (!el._x_doShow)
+        el._x_doShow = () => {
+            mutateDom(() => {
+                if (el.style.length === 1 && el.style.display === 'none') {
+                    el.removeAttribute('style')
+                } else {
+                    el.style.removeProperty('display')
+                }
+            })
+        }
 
     let hide = () => {
         el._x_doHide()
@@ -40,8 +46,8 @@ directive('show', (el, { modifiers, expression }, { effect }) => {
     let clickAwayCompatibleShow = () => setTimeout(show)
 
     let toggle = once(
-        value => value ? show() : hide(),
-        value => {
+        (value) => (value ? show() : hide()),
+        (value) => {
             if (typeof el._x_toggleAndCascadeWithTransitions === 'function') {
                 el._x_toggleAndCascadeWithTransitions(el, value, show, hide)
             } else {
@@ -53,16 +59,18 @@ directive('show', (el, { modifiers, expression }, { effect }) => {
     let oldValue
     let firstTime = true
 
-    effect(() => evaluate(value => {
-        // Let's make sure we only call this effect if the value changed.
-        // This prevents "blip" transitions. (1 tick out, then in)
-        if (! firstTime && value === oldValue) return
+    effect(() =>
+        evaluate((value) => {
+            // Let's make sure we only call this effect if the value changed.
+            // This prevents "blip" transitions. (1 tick out, then in)
+            if (!firstTime && value === oldValue) return
 
-        if (modifiers.includes('immediate')) value ? clickAwayCompatibleShow() : hide()
+            if (modifiers.includes('immediate')) value ? clickAwayCompatibleShow() : hide()
 
-        toggle(value)
+            toggle(value)
 
-        oldValue = value
-        firstTime = false
-    }))
+            oldValue = value
+            firstTime = false
+        })
+    )
 })

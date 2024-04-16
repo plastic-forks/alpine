@@ -1,4 +1,3 @@
-
 export function scope(node) {
     return mergeProxies(closestDataStack(node))
 }
@@ -7,12 +6,12 @@ export function addScopeToNode(node, data, referenceNode) {
     node._x_dataStack = [data, ...closestDataStack(referenceNode || node)]
 
     return () => {
-        node._x_dataStack = node._x_dataStack.filter(i => i !== data)
+        node._x_dataStack = node._x_dataStack.filter((i) => i !== data)
     }
 }
 
 export function hasScope(node) {
-    return !! node._x_dataStack
+    return !!node._x_dataStack
 }
 
 export function closestDataStack(node) {
@@ -22,7 +21,7 @@ export function closestDataStack(node) {
         return closestDataStack(node.host)
     }
 
-    if (! node.parentNode) {
+    if (!node.parentNode) {
         return []
     }
 
@@ -33,47 +32,36 @@ export function closestDataProxy(el) {
     return mergeProxies(closestDataStack(el))
 }
 
-export function mergeProxies (objects) {
-    return new Proxy({ objects }, mergeProxyTrap);
+export function mergeProxies(objects) {
+    return new Proxy({ objects }, mergeProxyTrap)
 }
 
 let mergeProxyTrap = {
     ownKeys({ objects }) {
-        return Array.from(
-            new Set(objects.flatMap((i) => Object.keys(i)))
-        )
+        return Array.from(new Set(objects.flatMap((i) => Object.keys(i))))
     },
 
     has({ objects }, name) {
-        if (name == Symbol.unscopables) return false;
+        if (name == Symbol.unscopables) return false
 
-        return objects.some((obj) =>
-            Object.prototype.hasOwnProperty.call(obj, name) ||
-            Reflect.has(obj, name)
-        );
+        return objects.some(
+            (obj) => Object.prototype.hasOwnProperty.call(obj, name) || Reflect.has(obj, name)
+        )
     },
 
     get({ objects }, name, thisProxy) {
-        if (name == "toJSON") return collapseProxies
+        if (name == 'toJSON') return collapseProxies
 
-        return Reflect.get(
-            objects.find((obj) =>
-                Reflect.has(obj, name)
-            ) || {},
-            name,
-            thisProxy
-        )
+        return Reflect.get(objects.find((obj) => Reflect.has(obj, name)) || {}, name, thisProxy)
     },
 
     set({ objects }, name, value, thisProxy) {
         const target =
-            objects.find((obj) =>
-                Object.prototype.hasOwnProperty.call(obj, name)
-            ) || objects[objects.length - 1];
-        const descriptor = Object.getOwnPropertyDescriptor(target, name);
-        if (descriptor?.set && descriptor?.get)
-            return Reflect.set(target, name, value, thisProxy);
-        return Reflect.set(target, name, value);
+            objects.find((obj) => Object.prototype.hasOwnProperty.call(obj, name)) ||
+            objects[objects.length - 1]
+        const descriptor = Object.getOwnPropertyDescriptor(target, name)
+        if (descriptor?.set && descriptor?.get) return Reflect.set(target, name, value, thisProxy)
+        return Reflect.set(target, name, value)
     },
 }
 
@@ -83,6 +71,6 @@ function collapseProxies() {
     return keys.reduce((acc, key) => {
         acc[key] = Reflect.get(this, key)
 
-        return acc;
+        return acc
     }, {})
 }
