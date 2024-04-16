@@ -102,7 +102,7 @@ export function initTree(el, walker = walk, intercept = () => {}) {
         walker(el, (el, skip) => {
             intercept(el, skip)
 
-            initInterceptors.forEach((i) => i(el, skip))
+            initInterceptors.forEach((fn) => fn(el, skip))
 
             directives(el, el.attributes).forEach((handle) => handle())
 
