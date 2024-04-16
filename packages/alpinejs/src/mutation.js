@@ -1,5 +1,3 @@
-import { destroyTree } from './lifecycle'
-
 let onEveryElAddedCallbacks = []
 let onEveryElRemovedCallbacks = []
 let onEveryElAttrsAddedCallbacks = []
@@ -180,8 +178,6 @@ function onMutate(mutations) {
         if (addedNodes.has(node)) continue
 
         onEveryElRemovedCallbacks.forEach((fn) => fn(node))
-
-        destroyTree(node)
     }
 
     // Mutations are bundled together by the browser but sometimes
