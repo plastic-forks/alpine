@@ -18,6 +18,18 @@ export function interceptClone(callback) {
     interceptors.push(callback)
 }
 
+export function clone(from, to) {
+    interceptors.forEach((i) => i(from, to))
+
+    isCloning = true
+
+    dontRegisterReactiveSideEffects(() => {
+        initShallowTree(to)
+    })
+
+    isCloning = false
+}
+
 export function cloneNode(from, to) {
     interceptors.forEach((i) => i(from, to))
 
@@ -37,25 +49,7 @@ export function cloneNode(from, to) {
     isCloning = false
 }
 
-export let isCloningLegacy = false
-
-/** deprecated */
-export function clone(oldEl, newEl) {
-    if (!newEl._x_dataStack) newEl._x_dataStack = oldEl._x_dataStack
-
-    isCloning = true
-    isCloningLegacy = true
-
-    dontRegisterReactiveSideEffects(() => {
-        cloneTree(newEl)
-    })
-
-    isCloning = false
-    isCloningLegacy = false
-}
-
-/** deprecated */
-export function cloneTree(el) {
+function initShallowTree(el) {
     let hasRunThroughFirstEl = false
 
     let shallowWalker = (el, callback) => {
