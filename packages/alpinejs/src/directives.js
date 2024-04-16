@@ -1,4 +1,4 @@
-import { onAttributeRemoved, onElRemoved } from './mutation'
+import { onElAttrRemoved } from './mutation'
 import { evaluate, evaluateLater } from './evaluator'
 import { elementBoundEffect } from './reactivity'
 import Alpine from './alpine'
@@ -139,7 +139,7 @@ export function getDirectiveHandler(el, directive) {
 
     let [utilities, cleanup] = getElementBoundUtilities(el)
 
-    onAttributeRemoved(el, directive.original, cleanup)
+    onElAttrRemoved(el, directive.original, cleanup)
 
     let fullHandler = () => {
         if (el._x_ignore || el._x_ignoreSelf) return

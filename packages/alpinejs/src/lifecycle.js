@@ -1,10 +1,10 @@
 import {
     startObservingMutations,
-    onAttributesAdded,
-    onElAdded,
-    onElRemoved,
-    cleanupAttributes,
-    cleanupElement,
+    onEveryElAdded,
+    onEveryElRemoved,
+    onEveryElAttrsAdded,
+    cleanupElAttrs,
+    cleanupEl,
 } from './mutation'
 import { deferHandlingDirectives, directives } from './directives'
 import { dispatch } from './utils/dispatch'
@@ -31,10 +31,10 @@ export function start() {
 
     startObservingMutations()
 
-    onElAdded((el) => initTree(el, walk))
-    onElRemoved((el) => destroyTree(el))
+    onEveryElAdded((el) => initTree(el, walk))
+    onEveryElRemoved((el) => destroyTree(el))
 
-    onAttributesAdded((el, attrs) => {
+    onEveryElAttrsAdded((el, attrs) => {
         directives(el, attrs).forEach((handle) => handle())
     })
 
@@ -113,7 +113,7 @@ export function initTree(el, walker = walk, intercept = () => {}) {
 
 export function destroyTree(root, walker = walk) {
     walker(root, (el) => {
-        cleanupAttributes(el)
-        cleanupElement(el)
+        cleanupElAttrs(el)
+        cleanupEl(el)
     })
 }

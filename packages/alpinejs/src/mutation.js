@@ -1,50 +1,48 @@
 import { destroyTree } from './lifecycle'
 
-let onAttributeAddeds = []
-let onElRemoveds = []
-let onElAddeds = []
+let onEveryElAddedCallbacks = []
+let onEveryElRemovedCallbacks = []
+let onEveryElAttrsAddedCallbacks = []
 
-export function onElAdded(callback) {
-    onElAddeds.push(callback)
+export function onEveryElAdded(callback) {
+    onEveryElAddedCallbacks.push(callback)
+}
+
+export function onEveryElRemoved(callback) {
+    onEveryElRemovedCallbacks.push(callback)
 }
 
 export function onElRemoved(el, callback) {
-    if (typeof callback === 'function') {
-        if (!el._x_cleanups) el._x_cleanups = []
-        el._x_cleanups.push(callback)
-    } else {
-        callback = el
-        onElRemoveds.push(callback)
-    }
+    if (!el._x_cleanups) el._x_cleanups = []
+    el._x_cleanups.push(callback)
 }
 
-export function onAttributesAdded(callback) {
-    onAttributeAddeds.push(callback)
-}
-
-export function onAttributeRemoved(el, name, callback) {
-    if (!el._x_attributeCleanups) el._x_attributeCleanups = {}
-    if (!el._x_attributeCleanups[name]) el._x_attributeCleanups[name] = []
-
-    el._x_attributeCleanups[name].push(callback)
-}
-
-export function cleanupAttributes(el, names) {
-    if (!el._x_attributeCleanups) return
-
-    Object.entries(el._x_attributeCleanups).forEach(([name, value]) => {
-        if (names === undefined || names.includes(name)) {
-            value.forEach((i) => i())
-
-            delete el._x_attributeCleanups[name]
-        }
-    })
-}
-
-export function cleanupElement(el) {
+export function cleanupEl(el) {
     if (el._x_cleanups) {
         while (el._x_cleanups.length) el._x_cleanups.pop()()
     }
+}
+
+export function onEveryElAttrsAdded(callback) {
+    onEveryElAttrsAddedCallbacks.push(callback)
+}
+
+export function onElAttrRemoved(el, name, callback) {
+    if (!el._x_attrCleanups) el._x_attrCleanups = {}
+    if (!el._x_attrCleanups[name]) el._x_attrCleanups[name] = []
+
+    el._x_attrCleanups[name].push(callback)
+}
+
+export function cleanupElAttrs(el, names) {
+    if (!el._x_attrCleanups) return
+
+    Object.entries(el._x_attrCleanups).forEach(([name, callbacks]) => {
+        if (names === undefined || names.includes(name)) {
+            callbacks.forEach((fn) => fn())
+            delete el._x_attrCleanups[name]
+        }
+    })
 }
 
 let observer = new MutationObserver(onMutate)
@@ -146,36 +144,34 @@ function onMutate(mutations) {
 
             let add = () => {
                 if (!addedAttributes.has(el)) addedAttributes.set(el, [])
-
                 addedAttributes.get(el).push({ name, value: el.getAttribute(name) })
             }
 
             let remove = () => {
                 if (!removedAttributes.has(el)) removedAttributes.set(el, [])
-
                 removedAttributes.get(el).push(name)
             }
 
-            // New attribute.
             if (el.hasAttribute(name) && oldValue === null) {
+                // New attribute.
                 add()
-                // Changed attribute.
             } else if (el.hasAttribute(name)) {
+                // Changed attribute.
                 remove()
                 add()
-                // Removed attribute.
             } else {
+                // Removed attribute.
                 remove()
             }
         }
     }
 
     removedAttributes.forEach((attrs, el) => {
-        cleanupAttributes(el, attrs)
+        cleanupElAttrs(el, attrs)
     })
 
     addedAttributes.forEach((attrs, el) => {
-        onAttributeAddeds.forEach((i) => i(el, attrs))
+        onEveryElAttrsAddedCallbacks.forEach((fn) => fn(el, attrs))
     })
 
     for (let node of removedNodes) {
@@ -183,7 +179,7 @@ function onMutate(mutations) {
         // as both an "add" and "remove", so we want to skip those.
         if (addedNodes.has(node)) continue
 
-        onElRemoveds.forEach((i) => i(node))
+        onEveryElRemovedCallbacks.forEach((fn) => fn(node))
 
         destroyTree(node)
     }
@@ -208,7 +204,7 @@ function onMutate(mutations) {
 
         delete node._x_ignoreSelf
         delete node._x_ignore
-        onElAddeds.forEach((i) => i(node))
+        onEveryElAddedCallbacks.forEach((fn) => fn(node))
         node._x_ignore = true
         node._x_ignoreSelf = true
     }
