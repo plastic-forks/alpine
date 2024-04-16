@@ -1,10 +1,10 @@
-import { closestRoot } from '../lifecycle'
+import { findClosestRoot } from '../lifecycle'
 import { directive } from '../directives'
 
 function handler() {}
 
 handler.inline = (el, { expression }, { cleanup }) => {
-    let root = closestRoot(el)
+    let root = findClosestRoot(el)
 
     if (!root._x_refs) root._x_refs = {}
 

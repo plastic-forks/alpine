@@ -16,14 +16,21 @@ let started = false
 export function start() {
     if (started)
         warn(
-            'Alpine has already been initialized on this page. Calling Alpine.start() more than once can cause problems.'
+            [
+                'Alpine has already been initialized on this page.',
+                'Calling Alpine.start() more than once can cause problems.',
+            ].join(' ')
         )
 
     started = true
 
     if (!document.body)
         warn(
-            "Unable to initialize. Trying to load Alpine before `<body>` is available. Did you forget to add `defer` in Alpine's `<script>` tag?"
+            [
+                'Unable to initialize.',
+                'Trying to load Alpine before `<body>` is available.',
+                "Did you forget to add `defer` in Alpine's `<script>` tag?",
+            ].join(' ')
         )
 
     dispatch(document, 'alpine:init')
@@ -38,14 +45,15 @@ export function start() {
         directives(el, attrs).forEach((handle) => handle())
     })
 
-    let outNestedComponents = (el) => !closestRoot(el.parentElement, true)
-    Array.from(document.querySelectorAll(allSelectors().join(',')))
-        .filter(outNestedComponents)
-        .forEach((el) => {
-            initTree(el)
-        })
+    allTopLevelComponents().forEach((el) => initTree(el))
 
     dispatch(document, 'alpine:initialized')
+}
+
+function allTopLevelComponents() {
+    const selectors = allSelectors().join(',')
+    const isTopLevelComponent = (el) => !findClosestRoot(el.parentElement, true)
+    return Array.from(document.querySelectorAll(selectors)).filter(isTopLevelComponent)
 }
 
 let rootSelectorCallbacks = []
@@ -55,8 +63,12 @@ export function rootSelectors() {
     return rootSelectorCallbacks.map((fn) => fn())
 }
 
+export function initSelectors() {
+    return initSelectorCallbacks.map((fn) => fn())
+}
+
 export function allSelectors() {
-    return rootSelectorCallbacks.concat(initSelectorCallbacks).map((fn) => fn())
+    return [...rootSelectorCallbacks, ...initSelectorCallbacks].map((fn) => fn())
 }
 
 export function addRootSelector(selectorCallback) {
@@ -66,11 +78,10 @@ export function addInitSelector(selectorCallback) {
     initSelectorCallbacks.push(selectorCallback)
 }
 
-export function closestRoot(el, includeInitSelectors = false) {
+export function findClosestRoot(el, includeInitSelectors = false) {
     return findClosest(el, (element) => {
         const selectors = includeInitSelectors ? allSelectors() : rootSelectors()
-
-        if (selectors.some((selector) => element.matches(selector))) return true
+        return selectors.some((selector) => element.matches(selector))
     })
 }
 
@@ -79,6 +90,7 @@ export function findClosest(el, callback) {
 
     if (callback(el)) return el
 
+    // TODO: understand it
     // Support crawling up teleports.
     if (el._x_teleportBack) el = el._x_teleportBack
 
@@ -97,9 +109,9 @@ export function interceptInit(callback) {
     initInterceptors.push(callback)
 }
 
-export function initTree(el, walker = walk, intercept = () => {}) {
+export function initTree(root, walker = walk, intercept = () => {}) {
     deferHandlingDirectives(() => {
-        walker(el, (el, skip) => {
+        walker(root, (el, skip) => {
             intercept(el, skip)
 
             initInterceptors.forEach((fn) => fn(el, skip))

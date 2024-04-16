@@ -160,5 +160,5 @@ export function root(el) {
 
     if (! el.parentElement) return
 
-    return closestRoot(el.parentElement)
+    return findClosestRoot(el.parentElement)
 }

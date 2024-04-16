@@ -12,7 +12,7 @@ import {
     start,
     addRootSelector,
     addInitSelector,
-    closestRoot,
+    findClosestRoot,
     findClosest,
     initTree,
     destroyTree,
@@ -86,7 +86,7 @@ let Alpine = {
     findClosest,
     onEveryElRemoved,
     onElRemoved,
-    closestRoot,
+    findClosestRoot,
     destroyTree,
     interceptor, // INTERNAL: not public API and is subject to change without major release.
     transition, // INTERNAL

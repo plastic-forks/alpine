@@ -150,7 +150,7 @@ test('destroy functions inside custom datas are called automatically',
                         document.querySelector('span').textContent = 'foo'
                     },
                     test() {
-                        Alpine.closestRoot(this.$el).remove()
+                        Alpine.findClosestRoot(this.$el).remove()
                     }
                 }))
             })
@@ -176,7 +176,7 @@ test('destroy have access to the current scope',
                         document.querySelector('span').textContent = this.foo
                     },
                     test() {
-                        Alpine.closestRoot(this.$el).remove()
+                        Alpine.findClosestRoot(this.$el).remove()
                     },
                     foo: 'bar'
                 }))

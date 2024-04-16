@@ -1,4 +1,4 @@
-import { closestRoot, findClosest } from '../lifecycle'
+import { findClosestRoot, findClosest } from '../lifecycle'
 import { mergeProxies } from '../scope'
 import { magic } from '../magics'
 
