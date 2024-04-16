@@ -1,14 +1,14 @@
 import { directive, prefix } from '../directives'
 import { initInterceptors } from '../interceptor'
 import { injectDataProviders } from '../datas'
-import { addRootSelector } from '../lifecycle'
-import { interceptClone, isCloning, isCloningLegacy } from '../clone'
+import { registerRootSelector } from '../lifecycle'
+import { interceptClone, isCloning } from '../clone'
 import { addScopeToNode } from '../scope'
 import { injectMagics, magic } from '../magics'
 import { reactive } from '../reactivity'
 import { evaluate } from '../evaluator'
 
-addRootSelector(() => `[${prefix('data')}]`)
+registerRootSelector(() => `[${prefix('data')}]`)
 
 directive('data', (el, { expression }, { cleanup }) => {
     if (shouldSkipRegisteringDataDuringClone(el)) return
@@ -60,8 +60,6 @@ interceptClone((from, to) => {
 // The reason a data context WOULD exist is that we graft root x-data state over
 // from the live tree before hydrating the clone tree.
 function shouldSkipRegisteringDataDuringClone(el) {
-    if (!isCloning) return false
-    if (isCloningLegacy) return true
-
+    if (isCloning) return true
     return el.hasAttribute('data-has-alpine-state')
 }

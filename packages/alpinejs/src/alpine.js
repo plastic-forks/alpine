@@ -10,8 +10,8 @@ import {
 import { mapAttributes, directive, setPrefix as prefix, prefix as prefixed } from './directives'
 import {
     start,
-    addRootSelector,
-    addInitSelector,
+    registerRootSelector,
+    registerInitSelector,
     findClosestRoot,
     findClosest,
     initTree,
@@ -72,8 +72,8 @@ let Alpine = {
     closestDataStack,
     skipDuringClone,
     onlyDuringClone,
-    addRootSelector,
-    addInitSelector,
+    registerRootSelector,
+    registerInitSelector,
     interceptClone,
     addScopeToNode,
     deferMutations,

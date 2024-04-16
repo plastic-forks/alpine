@@ -71,10 +71,10 @@ export function allSelectors() {
     return [...rootSelectorCallbacks, ...initSelectorCallbacks].map((fn) => fn())
 }
 
-export function addRootSelector(selectorCallback) {
+export function registerRootSelector(selectorCallback) {
     rootSelectorCallbacks.push(selectorCallback)
 }
-export function addInitSelector(selectorCallback) {
+export function registerInitSelector(selectorCallback) {
     initSelectorCallbacks.push(selectorCallback)
 }
 

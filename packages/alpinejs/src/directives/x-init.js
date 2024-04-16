@@ -1,8 +1,8 @@
 import { directive, prefix } from '../directives'
-import { addInitSelector } from '../lifecycle'
+import { registerInitSelector } from '../lifecycle'
 import { skipDuringClone } from '../clone'
 
-addInitSelector(() => `[${prefix('init')}]`)
+registerInitSelector(() => `[${prefix('init')}]`)
 
 directive(
     'init',
