@@ -1,10 +1,8 @@
-import { directive, into, mapAttributes, prefix, startingWith } from '../directives'
+import { directive } from '../directives'
 import { evaluateLater } from '../evaluator'
 import { mutateDom } from '../mutation'
 import bind from '../utils/bind'
 import { applyBindingsObject, injectBindingProviders } from '../binds'
-
-mapAttributes(startingWith(':', into(prefix('bind:'))))
 
 let handler = (el, { value, modifiers, expression, original }, { effect, cleanup }) => {
     if (!value) {

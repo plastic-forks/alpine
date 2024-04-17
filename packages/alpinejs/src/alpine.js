@@ -7,7 +7,7 @@ import {
     raw,
     watch,
 } from './reactivity'
-import { mapAttributes, directive, setPrefix as prefix, prefix as prefixed } from './directives'
+import { directive, setPrefix as prefix, prefix as prefixed } from './directives'
 import {
     start,
     registerRootSelector,
@@ -77,7 +77,6 @@ let Alpine = {
     interceptClone,
     addScopeToNode,
     deferMutations,
-    mapAttributes,
     evaluateLater,
     interceptInit,
     setEvaluator,

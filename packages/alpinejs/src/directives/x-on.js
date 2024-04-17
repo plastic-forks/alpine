@@ -1,9 +1,7 @@
-import { directive, into, mapAttributes, prefix, startingWith } from '../directives'
+import { directive } from '../directives'
 import { evaluateLater } from '../evaluator'
 import { skipDuringClone } from '../clone'
 import on from '../utils/on'
-
-mapAttributes(startingWith('@', into(prefix('on:'))))
 
 directive(
     'on',

@@ -64,16 +64,9 @@ export function directives(el, attributes, originalAttributeOverride) {
         attributes = attributes.concat(vAttributes)
     }
 
-    let transformedAttributeMap = {}
-
     let directives = attributes
-        .map(
-            toTransformedAttributes(
-                (newName, oldName) => (transformedAttributeMap[newName] = oldName)
-            )
-        )
-        .filter(outNonAlpineAttributes)
-        .map(toParsedDirectives(transformedAttributeMap, originalAttributeOverride))
+        .filter(isAlpineAttribute)
+        .map(createDirectiveAttributeParser(originalAttributeOverride))
         .sort(byPriority)
 
     return directives.map((directive) => {
@@ -82,9 +75,7 @@ export function directives(el, attributes, originalAttributeOverride) {
 }
 
 export function attributesOnly(attributes) {
-    return Array.from(attributes)
-        .map(toTransformedAttributes())
-        .filter((attr) => !outNonAlpineAttributes(attr))
+    return Array.from(attributes).filter((attr) => !isAlpineAttribute(attr))
 }
 
 let isDeferringHandlers = false
@@ -164,49 +155,18 @@ export function getDirectiveHandler(el, directive) {
     return fullHandler
 }
 
-export let startingWith =
-    (subject, replacement) =>
-    ({ name, value }) => {
-        if (name.startsWith(subject)) name = name.replace(subject, replacement)
-
-        return { name, value }
-    }
-
-export let into = (i) => i
-
-function toTransformedAttributes(callback = () => {}) {
-    return ({ name, value }) => {
-        let { name: newName, value: newValue } = attributeTransformers.reduce(
-            (carry, transform) => {
-                return transform(carry)
-            },
-            { name, value }
-        )
-
-        if (newName !== name) callback(newName, name)
-
-        return { name: newName, value: newValue }
-    }
-}
-
-let attributeTransformers = []
-
-export function mapAttributes(callback) {
-    attributeTransformers.push(callback)
-}
-
-function outNonAlpineAttributes({ name }) {
+function isAlpineAttribute({ name }) {
     return alpineAttributeRegex().test(name)
 }
 
 let alpineAttributeRegex = () => new RegExp(`^${prefixAsString}([^:^.]+)\\b`)
 
-function toParsedDirectives(transformedAttributeMap, originalAttributeOverride) {
+function createDirectiveAttributeParser(originalAttributeOverride) {
     return ({ name, value }) => {
         let typeMatch = name.match(alpineAttributeRegex())
         let valueMatch = name.match(/:([a-zA-Z0-9\-_:]+)/)
         let modifiers = name.match(/\.[^.\]]+(?=[^\]]*$)/g) || []
-        let original = originalAttributeOverride || transformedAttributeMap[name] || name
+        let original = originalAttributeOverride || name
 
         return {
             type: typeMatch ? typeMatch[1] : null,
