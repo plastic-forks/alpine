@@ -3,6 +3,8 @@ import { evaluate, evaluateLater } from './evaluator'
 import { elementBoundEffect } from './reactivity'
 import Alpine from './alpine'
 
+/* directives - prefix */
+
 let prefixAsString = 'x-'
 
 export function prefix(subject = '') {
@@ -12,6 +14,35 @@ export function prefix(subject = '') {
 export function setPrefix(newPrefix) {
     prefixAsString = newPrefix
 }
+
+/* directives - order */
+
+const DEFAULT = 'DEFAULT'
+const directiveOrder = [
+    'ignore',
+    'ref',
+    'data',
+    'id',
+    'anchor',
+    'bind',
+    'init',
+    'for',
+    'model',
+    'modelable',
+    'transition',
+    'show',
+    'if',
+    DEFAULT,
+    'teleport',
+]
+
+function compareDirective(a, b) {
+    let typeA = directiveOrder.indexOf(a.type) === -1 ? DEFAULT : a.type
+    let typeB = directiveOrder.indexOf(b.type) === -1 ? DEFAULT : b.type
+    return directiveOrder.indexOf(typeA) - directiveOrder.indexOf(typeB)
+}
+
+/* directives declaration */
 
 let directiveHandlers = {}
 
@@ -28,7 +59,7 @@ export function directive(name, callback) {
             }
 
             let index = directiveOrder.indexOf(directive)
-            index = index >= 0 ? index : directiveOrder.indexOf('DEFAULT')
+            index = index >= 0 ? index : directiveOrder.indexOf(DEFAULT)
             insertElementToArray(directiveOrder, index, name)
         },
     }
@@ -37,6 +68,8 @@ export function directive(name, callback) {
 function insertElementToArray(array, index, element) {
     array.splice(index, 0, element)
 }
+
+/* directives handling */
 
 export function directives(el, attributes, originalAttributeOverride) {
     attributes = Array.from(attributes)
@@ -65,9 +98,9 @@ export function directives(el, attributes, originalAttributeOverride) {
     }
 
     let directives = attributes
-        .filter(isAlpineAttribute)
+        .filter(isAlpineAttr)
         .map(createDirectiveAttributeParser(originalAttributeOverride))
-        .sort(byPriority)
+        .sort(compareDirective)
 
     return directives.map((directive) => {
         return getDirectiveHandler(el, directive)
@@ -75,36 +108,7 @@ export function directives(el, attributes, originalAttributeOverride) {
 }
 
 export function attributesOnly(attributes) {
-    return Array.from(attributes).filter((attr) => !isAlpineAttribute(attr))
-}
-
-let isDeferringHandlers = false
-let directiveHandlerStacks = new Map()
-let currentHandlerStackKey = Symbol()
-
-export function deferHandlingDirectives(callback) {
-    isDeferringHandlers = true
-
-    let key = Symbol()
-
-    currentHandlerStackKey = key
-
-    directiveHandlerStacks.set(key, [])
-
-    let flushHandlers = () => {
-        while (directiveHandlerStacks.get(key).length) directiveHandlerStacks.get(key).shift()()
-
-        directiveHandlerStacks.delete(key)
-    }
-
-    let stopDeferring = () => {
-        isDeferringHandlers = false
-        flushHandlers()
-    }
-
-    callback(flushHandlers)
-
-    stopDeferring()
+    return Array.from(attributes).filter((attr) => !isAlpineAttr(attr))
 }
 
 export function getElementBoundUtilities(el) {
@@ -144,10 +148,7 @@ export function getDirectiveHandler(el, directive) {
         handler.inline && handler.inline(el, directive, utilities)
 
         handler = handler.bind(handler, el, directive, utilities)
-
-        isDeferringHandlers
-            ? directiveHandlerStacks.get(currentHandlerStackKey).push(handler)
-            : handler()
+        queueDirectiveHandler(handler)
     }
 
     fullHandler.runCleanups = cleanup
@@ -155,15 +156,17 @@ export function getDirectiveHandler(el, directive) {
     return fullHandler
 }
 
-function isAlpineAttribute({ name }) {
-    return alpineAttributeRegex().test(name)
+function isAlpineAttr({ name }) {
+    return alpineAttrRegex().test(name)
 }
 
-let alpineAttributeRegex = () => new RegExp(`^${prefixAsString}([^:^.]+)\\b`)
+function alpineAttrRegex() {
+    return new RegExp(`^${prefixAsString}([^:^.]+)\\b`)
+}
 
 function createDirectiveAttributeParser(originalAttributeOverride) {
     return ({ name, value }) => {
-        let typeMatch = name.match(alpineAttributeRegex())
+        let typeMatch = name.match(alpineAttrRegex())
         let valueMatch = name.match(/:([a-zA-Z0-9\-_:]+)/)
         let modifiers = name.match(/\.[^.\]]+(?=[^\]]*$)/g) || []
         let original = originalAttributeOverride || name
@@ -178,29 +181,41 @@ function createDirectiveAttributeParser(originalAttributeOverride) {
     }
 }
 
-const DEFAULT = 'DEFAULT'
+const directiveHandlerQueues = new Map()
+let isHandlingDirectives = true
+let currentDirectiveHandlerQueueKey = Symbol()
 
-let directiveOrder = [
-    'ignore',
-    'ref',
-    'data',
-    'id',
-    'anchor',
-    'bind',
-    'init',
-    'for',
-    'model',
-    'modelable',
-    'transition',
-    'show',
-    'if',
-    DEFAULT,
-    'teleport',
-]
+export function deferHandlingDirectives(callback) {
+    const key = Symbol()
 
-function byPriority(a, b) {
-    let typeA = directiveOrder.indexOf(a.type) === -1 ? DEFAULT : a.type
-    let typeB = directiveOrder.indexOf(b.type) === -1 ? DEFAULT : b.type
+    isHandlingDirectives = false
+    currentDirectiveHandlerQueueKey = key
 
-    return directiveOrder.indexOf(typeA) - directiveOrder.indexOf(typeB)
+    directiveHandlerQueues.set(key, [])
+
+    let flushHandlers = () => {
+        while (directiveHandlerQueues.get(key).length) {
+            const handler = directiveHandlerQueues.get(key).shift()
+            handler()
+        }
+
+        directiveHandlerQueues.delete(key)
+    }
+
+    let stopDeferring = () => {
+        isHandlingDirectives = true
+        flushHandlers()
+    }
+
+    callback()
+
+    stopDeferring()
+}
+
+export function queueDirectiveHandler(handler) {
+    if (isHandlingDirectives) {
+        handler()
+    } else {
+        directiveHandlerQueues.get(currentDirectiveHandlerQueueKey).push(handler)
+    }
 }
