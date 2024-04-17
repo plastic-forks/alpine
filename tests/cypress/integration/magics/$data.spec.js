@@ -1,6 +1,7 @@
 import { haveText, html, test } from '../../utils'
 
-test('$data returns the current scope (with cascading)',
+test(
+    '$data returns the current scope (with cascading)',
     html`
         <div x-data="{ foo: 'bar'}">
             <div x-data="{ bob: 'lob' }">

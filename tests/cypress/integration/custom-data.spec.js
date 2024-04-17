@@ -1,11 +1,12 @@
 import { haveText, html, test } from '../utils'
 
-test('can register custom data providers',
+test(
+    'can register custom data providers',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.data('test', () => ({
-                    foo: 'bar'
+                    foo: 'bar',
                 }))
             })
         </script>
@@ -17,7 +18,8 @@ test('can register custom data providers',
     ({ get }) => get('span').should(haveText('bar'))
 )
 
-test('can accept initial params',
+test(
+    'can accept initial params',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
@@ -39,7 +41,8 @@ test('can accept initial params',
     }
 )
 
-test('can spread together',
+test(
+    'can spread together',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
@@ -64,7 +67,8 @@ test('can spread together',
     }
 )
 
-test('init functions inside custom datas are called automatically',
+test(
+    'init functions inside custom datas are called automatically',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
@@ -73,7 +77,7 @@ test('init functions inside custom datas are called automatically',
                         this.foo = 'baz'
                     },
 
-                    foo: 'bar'
+                    foo: 'bar',
                 }))
             })
         </script>
@@ -87,7 +91,8 @@ test('init functions inside custom datas are called automatically',
     }
 )
 
-test('init functions "this" context is reactive',
+test(
+    'init functions "this" context is reactive',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
@@ -98,7 +103,7 @@ test('init functions "this" context is reactive',
                         })
                     },
 
-                    foo: 'bar'
+                    foo: 'bar',
                 }))
             })
         </script>
@@ -116,7 +121,8 @@ test('init functions "this" context is reactive',
     }
 )
 
-test('init functions have access to the parent scope',
+test(
+    'init functions have access to the parent scope',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
@@ -141,7 +147,8 @@ test('init functions have access to the parent scope',
     }
 )
 
-test('destroy functions inside custom datas are called automatically',
+test(
+    'destroy functions inside custom datas are called automatically',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
@@ -151,7 +158,7 @@ test('destroy functions inside custom datas are called automatically',
                     },
                     test() {
                         Alpine.findClosestRoot(this.$el).remove()
-                    }
+                    },
                 }))
             })
         </script>
@@ -167,7 +174,8 @@ test('destroy functions inside custom datas are called automatically',
     }
 )
 
-test('destroy have access to the current scope',
+test(
+    'destroy have access to the current scope',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
@@ -178,7 +186,7 @@ test('destroy have access to the current scope',
                     test() {
                         Alpine.findClosestRoot(this.$el).remove()
                     },
-                    foo: 'bar'
+                    foo: 'bar',
                 }))
             })
         </script>

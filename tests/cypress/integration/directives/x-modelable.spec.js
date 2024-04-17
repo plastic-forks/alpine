@@ -1,6 +1,7 @@
 import { haveText, html, test } from '../../utils'
 
-test('can expose data for x-model binding',
+test(
+    'can expose data for x-model binding',
     html`
         <div x-data="{ outer: 'foo' }">
             <div x-data="{ inner: 'bar' }" x-modelable="inner" x-model="outer">
@@ -24,11 +25,14 @@ test('can expose data for x-model binding',
     }
 )
 
-test('x-modelable works when inside x-bind and x-model is outside',
+test(
+    'x-modelable works when inside x-bind and x-model is outside',
     html`
-        <div x-data="{ outer: 'foo', thing: {
+        <div
+            x-data="{ outer: 'foo', thing: {
             ['x-modelable']: 'inner',
-        } }">
+        } }"
+        >
             <div x-data="{ inner: 'bar' }" x-bind="thing" x-model="outer">
                 <h1 x-text="outer"></h1>
                 <h2 x-text="inner"></h2>
@@ -50,7 +54,8 @@ test('x-modelable works when inside x-bind and x-model is outside',
     }
 )
 
-test('x-modelable removes the event listener used by corresponding x-model',
+test(
+    'x-modelable removes the event listener used by corresponding x-model',
     html`
         <div x-data="{ outer: 'foo' }">
             <div x-data="{ inner: 'bar' }" x-modelable="inner" x-model="outer">

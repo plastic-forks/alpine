@@ -1,9 +1,29 @@
-import { beVisible, beHidden, haveAttribute, haveClasses, notHaveClasses, haveText, contain, notContain, html, notBeVisible, notHaveAttribute, notExist, haveFocus, test, haveValue, haveLength, ensureNoConsoleWarns} from '../../../utils'
+import {
+    beVisible,
+    beHidden,
+    haveAttribute,
+    haveClasses,
+    notHaveClasses,
+    haveText,
+    contain,
+    notContain,
+    html,
+    notBeVisible,
+    notHaveAttribute,
+    notExist,
+    haveFocus,
+    test,
+    haveValue,
+    haveLength,
+    ensureNoConsoleWarns,
+} from '../../../utils'
 
-test('it works with x-model',
-    [html`
-        <div
-            x-data="{
+test(
+    'it works with x-model',
+    [
+        html`
+            <div
+                x-data="{
                 query: '',
                 selected: null,
                 people: [
@@ -26,50 +46,52 @@ test('it works with x-model',
                         })
                 },
             }"
-        >
-            <div x-combobox x-model="selected">
-                <label x-combobox:label>Select person</label>
+            >
+                <div x-combobox x-model="selected">
+                    <label x-combobox:label>Select person</label>
 
-                <div>
                     <div>
-                        <input
-                            x-combobox:input
-                            :display-value="person => person.name"
-                            @change="query = $event.target.value"
-                            placeholder="Search..."
-                        />
+                        <div>
+                            <input
+                                x-combobox:input
+                                :display-value="person => person.name"
+                                @change="query = $event.target.value"
+                                placeholder="Search..."
+                            />
 
-                        <button x-combobox:button>Toggle</button>
-                    </div>
+                            <button x-combobox:button>Toggle</button>
+                        </div>
 
-                    <div x-combobox:options>
-                        <ul>
-                            <template
-                                x-for="person in filteredPeople"
-                                :key="person.id"
-                                hidden
-                            >
-                                <li
-                                    x-combobox:option
-                                    :option="person.id"
-                                    :value="person"
-                                    :disabled="person.disabled"
-                                    x-text="person.name"
+                        <div x-combobox:options>
+                            <ul>
+                                <template
+                                    x-for="person in filteredPeople"
+                                    :key="person.id"
+                                    hidden
                                 >
-                                </li>
-                            </template>
-                        </ul>
+                                    <li
+                                        x-combobox:option
+                                        :option="person.id"
+                                        :value="person"
+                                        :disabled="person.disabled"
+                                        x-text="person.name"
+                                    ></li>
+                                </template>
+                            </ul>
 
-                        <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                            <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                        </div>
                     </div>
+
+                    <article x-text="selected?.name"></article>
                 </div>
 
-                <article x-text="selected?.name"></article>
+                <a href="#" x-on:click.prevent="selected = { id: 7, name: 'Caroline Schultz' }"
+                    >Set selected via code</a
+                >
             </div>
-
-            <a href="#" x-on:click.prevent="selected = { id: 7, name: 'Caroline Schultz' }">Set selected via code</a>
-        </div>
-    `],
+        `,
+    ],
     ({ get }) => {
         get('ul').should(notBeVisible())
         get('button').click()
@@ -82,7 +104,8 @@ test('it works with x-model',
         get('input').should(haveValue('Arlene Mccoy'))
         get('article').should(haveText('Arlene Mccoy'))
         get('button').click()
-        get('ul').should(contain('Wade Cooper'))
+        get('ul')
+            .should(contain('Wade Cooper'))
             .should(contain('Arlene Mccoy'))
             .should(contain('Devon Webb'))
         get('[option="3"]').click()
@@ -90,7 +113,8 @@ test('it works with x-model',
         get('input').should(haveValue('Devon Webb'))
         get('article').should(haveText('Devon Webb'))
         get('button').click()
-        get('ul').should(contain('Wade Cooper'))
+        get('ul')
+            .should(contain('Wade Cooper'))
             .should(contain('Arlene Mccoy'))
             .should(contain('Devon Webb'))
         get('[option="1"]').click()
@@ -100,13 +124,15 @@ test('it works with x-model',
         get('a').click()
         get('input').should(haveValue('Caroline Schultz'))
         get('article').should(haveText('Caroline Schultz'))
-    },
+    }
 )
 
-test('initial value is set from x-model',
-    [html`
-        <div
-            x-data="{
+test(
+    'initial value is set from x-model',
+    [
+        html`
+            <div
+                x-data="{
                 query: '',
                 selected: { id: 1, name: 'Wade Cooper' },
                 people: [
@@ -120,55 +146,57 @@ test('initial value is set from x-model',
                         })
                 },
             }"
-        >
-            <div x-combobox x-model="selected">
-                <label x-combobox:label>Select person</label>
+            >
+                <div x-combobox x-model="selected">
+                    <label x-combobox:label>Select person</label>
 
-                <div>
                     <div>
-                        <input
-                            x-combobox:input
-                            :display-value="person => person.name"
-                            @change="query = $event.target.value"
-                            placeholder="Search..."
-                        />
+                        <div>
+                            <input
+                                x-combobox:input
+                                :display-value="person => person.name"
+                                @change="query = $event.target.value"
+                                placeholder="Search..."
+                            />
 
-                        <button x-combobox:button>Toggle</button>
-                    </div>
+                            <button x-combobox:button>Toggle</button>
+                        </div>
 
-                    <div x-combobox:options>
-                        <ul>
-                            <template
-                                x-for="person in filteredPeople"
-                                :key="person.id"
-                                hidden
-                            >
-                                <li
-                                    x-combobox:option
-                                    :option="person.id"
-                                    :value="person"
-                                    :disabled="person.disabled"
-                                    x-text="person.name"
+                        <div x-combobox:options>
+                            <ul>
+                                <template
+                                    x-for="person in filteredPeople"
+                                    :key="person.id"
+                                    hidden
                                 >
-                                </li>
-                            </template>
-                        </ul>
+                                    <li
+                                        x-combobox:option
+                                        :option="person.id"
+                                        :value="person"
+                                        :disabled="person.disabled"
+                                        x-text="person.name"
+                                    ></li>
+                                </template>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-                <article x-text="selected?.name"></article>
+                    <article x-text="selected?.name"></article>
+                </div>
             </div>
-        </div>
-    `],
+        `,
+    ],
     ({ get }) => {
         get('input').should(haveValue('Wade Cooper'))
-    },
+    }
 )
 
-test('it works with internal state',
-    [html`
-        <div
-            x-data="{ people: [
+test(
+    'it works with internal state',
+    [
+        html`
+            <div
+                x-data="{ people: [
                 { id: 1, name: 'Wade Cooper' },
                 { id: 2, name: 'Arlene Mccoy' },
                 { id: 3, name: 'Devon Webb' },
@@ -180,32 +208,34 @@ test('it works with internal state',
                 { id: 9, name: 'Claudie Smitham' },
                 { id: 10, name: 'Emil Schaefer' },
             ]}"
-            x-combobox
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person.name" type="text">
-            <button x-combobox:button x-text="$combobox.value ? $combobox.value.name : 'Select Person'"></button>
+                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <button
+                    x-combobox:button
+                    x-text="$combobox.value ? $combobox.value.name : 'Select Person'"
+                ></button>
 
-            <ul x-combobox:options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person"
-                        :disabled="person.disabled"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                <ul x-combobox:options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person"
+                            :disabled="person.disabled"
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('ul').should(notBeVisible())
-        get('button')
-            .should(haveText('Select Person'))
-            .click()
+        get('button').should(haveText('Select Person')).click()
         get('ul').should(beVisible())
         get('button').click()
         get('ul').should(notBeVisible())
@@ -214,13 +244,15 @@ test('it works with internal state',
         get('ul').should(notBeVisible())
         get('button').should(haveText('Arlene Mccoy'))
         get('input').should(haveValue('Arlene Mccoy'))
-    },
+    }
 )
 
-test('$combobox/$comboboxOption',
-    [html`
-        <div
-            x-data="{ people: [
+test(
+    '$combobox/$comboboxOption',
+    [
+        html`
+            <div
+                x-data="{ people: [
                 { id: 1, name: 'Wade Cooper' },
                 { id: 2, name: 'Arlene Mccoy' },
                 { id: 3, name: 'Devon Webb' },
@@ -232,41 +264,43 @@ test('$combobox/$comboboxOption',
                 { id: 9, name: 'Claudie Smitham' },
                 { id: 10, name: 'Emil Schaefer' },
             ]}"
-            x-combobox
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person.name" type="text">
-            <button x-combobox:button x-text="$combobox.value ? $combobox.value.name : 'Select Person'"></button>
+                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <button
+                    x-combobox:button
+                    x-text="$combobox.value ? $combobox.value.name : 'Select Person'"
+                ></button>
 
-            <p x-text="$combobox.activeIndex"></p>
-            <article x-text="$combobox.activeOption?.name"></article>
+                <p x-text="$combobox.activeIndex"></p>
+                <article x-text="$combobox.activeOption?.name"></article>
 
-            <ul x-combobox:options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                             'disabled': $comboboxOption.isDisabled,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('article').should(haveText(''))
         get('[option="5"]').should(haveClasses(['disabled']))
-        get('button')
-            .should(haveText('Select Person'))
-            .click()
+        get('button').should(haveText('Select Person')).click()
         get('[option="1"]').should(haveClasses(['active']))
         get('input').type('{downarrow}')
         get('article').should(haveText('Arlene Mccoy'))
@@ -276,13 +310,15 @@ test('$combobox/$comboboxOption',
         get('[option="2"]').click()
         get('button').should(haveText('Arlene Mccoy'))
         get('[option="2"]').should(haveClasses(['selected']))
-    },
+    }
 )
 
-test('"name" prop',
-    [html`
-        <div
-            x-data="{ people: [
+test(
+    '"name" prop',
+    [
+        html`
+            <div
+                x-data="{ people: [
                 { id: 1, name: 'Wade Cooper' },
                 { id: 2, name: 'Arlene Mccoy' },
                 { id: 3, name: 'Devon Webb' },
@@ -294,54 +330,62 @@ test('"name" prop',
                 { id: 9, name: 'Claudie Smitham' },
                 { id: 10, name: 'Emil Schaefer' },
             ]}"
-            x-combobox
-            name="person"
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                name="person"
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person.name" type="text">
-            <button x-combobox:button x-text="$combobox.value ? $combobox.value : 'Select Person'"></button>
+                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <button
+                    x-combobox:button
+                    x-text="$combobox.value ? $combobox.value : 'Select Person'"
+                ></button>
 
-            <ul x-combobox:options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person.id"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person.id"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('input').should(haveAttribute('value', 'null'))
         get('button').click()
         get('input').should(haveAttribute('value', 'null'))
         get('[option="2"]').click()
-        get('input').should(beHidden())
+        get('input')
+            .should(beHidden())
             .should(haveAttribute('name', 'person'))
             .should(haveAttribute('value', '2'))
             .should(haveAttribute('type', 'hidden'))
         get('button').click()
         get('[option="4"]').click()
-        get('input').should(beHidden())
+        get('input')
+            .should(beHidden())
             .should(haveAttribute('name', 'person'))
             .should(haveAttribute('value', '4'))
             .should(haveAttribute('type', 'hidden'))
-    },
-);
+    }
+)
 
-test('Preserves currently active keyboard selection while options change from searching even if there\'s a selected option in the filtered results',
-    [html`
-        <div
-            x-data="{
+test(
+    "Preserves currently active keyboard selection while options change from searching even if there's a selected option in the filtered results",
+    [
+        html`
+            <div
+                x-data="{
                 query: '',
                 selected: null,
                 people: [
@@ -364,50 +408,51 @@ test('Preserves currently active keyboard selection while options change from se
                         })
                 },
             }"
-        >
-            <div x-combobox x-model="selected">
-                <label x-combobox:label>Select person</label>
+            >
+                <div x-combobox x-model="selected">
+                    <label x-combobox:label>Select person</label>
 
-                <div>
                     <div>
-                        <input
-                            x-combobox:input
-                            :display-value="person => person.name"
-                            @change="query = $event.target.value"
-                            placeholder="Search..."
-                        />
+                        <div>
+                            <input
+                                x-combobox:input
+                                :display-value="person => person.name"
+                                @change="query = $event.target.value"
+                                placeholder="Search..."
+                            />
 
-                        <button x-combobox:button>Toggle</button>
-                    </div>
+                            <button x-combobox:button>Toggle</button>
+                        </div>
 
-                    <div x-combobox:options>
-                        <ul>
-                            <template
-                                x-for="person in filteredPeople"
-                                :key="person.id"
-                                hidden
-                            >
-                                <li
-                                    x-combobox:option
-                                    :option="person.id"
-                                    :value="person"
-                                    :disabled="person.disabled"
+                        <div x-combobox:options>
+                            <ul>
+                                <template
+                                    x-for="person in filteredPeople"
+                                    :key="person.id"
+                                    hidden
                                 >
-                                    <span x-text="person.name"></span>
-                                    <span x-show="$comboboxOption.isActive">*</span>
-                                    <span x-show="$comboboxOption.isSelected">x</span>
-                                </li>
-                            </template>
-                        </ul>
+                                    <li
+                                        x-combobox:option
+                                        :option="person.id"
+                                        :value="person"
+                                        :disabled="person.disabled"
+                                    >
+                                        <span x-text="person.name"></span>
+                                        <span x-show="$comboboxOption.isActive">*</span>
+                                        <span x-show="$comboboxOption.isSelected">x</span>
+                                    </li>
+                                </template>
+                            </ul>
 
-                        <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                            <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <article>lorem ipsum</article>
-        </div>
-    `],
+                <article>lorem ipsum</article>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('input').should(haveText(''))
         get('button').click()
@@ -426,13 +471,15 @@ test('Preserves currently active keyboard selection while options change from se
         get('input').trigger('change')
         cy.wait(100)
         get('[option="1"]').should(contain('*'))
-    },
-);
+    }
+)
 
-test('Ignore active selection while options change if not selected by a keyboard event',
-    [html`
-        <div
-            x-data="{
+test(
+    'Ignore active selection while options change if not selected by a keyboard event',
+    [
+        html`
+            <div
+                x-data="{
                 query: '',
                 selected: null,
                 people: [
@@ -455,50 +502,51 @@ test('Ignore active selection while options change if not selected by a keyboard
                         })
                 },
             }"
-        >
-            <div x-combobox x-model="selected">
-                <label x-combobox:label>Select person</label>
+            >
+                <div x-combobox x-model="selected">
+                    <label x-combobox:label>Select person</label>
 
-                <div>
                     <div>
-                        <input
-                            x-combobox:input
-                            :display-value="person => person.name"
-                            @change="query = $event.target.value"
-                            placeholder="Search..."
-                        />
+                        <div>
+                            <input
+                                x-combobox:input
+                                :display-value="person => person.name"
+                                @change="query = $event.target.value"
+                                placeholder="Search..."
+                            />
 
-                        <button x-combobox:button>Toggle</button>
-                    </div>
+                            <button x-combobox:button>Toggle</button>
+                        </div>
 
-                    <div x-combobox:options>
-                        <ul>
-                            <template
-                                x-for="person in filteredPeople"
-                                :key="person.id"
-                                hidden
-                            >
-                                <li
-                                    x-combobox:option
-                                    :option="person.id"
-                                    :value="person"
-                                    :disabled="person.disabled"
+                        <div x-combobox:options>
+                            <ul>
+                                <template
+                                    x-for="person in filteredPeople"
+                                    :key="person.id"
+                                    hidden
                                 >
-                                    <span x-text="person.name"></span>
-                                    <span x-show="$comboboxOption.isActive">*</span>
-                                    <span x-show="$comboboxOption.isSelected">x</span>
-                                </li>
-                            </template>
-                        </ul>
+                                    <li
+                                        x-combobox:option
+                                        :option="person.id"
+                                        :value="person"
+                                        :disabled="person.disabled"
+                                    >
+                                        <span x-text="person.name"></span>
+                                        <span x-show="$comboboxOption.isActive">*</span>
+                                        <span x-show="$comboboxOption.isSelected">x</span>
+                                    </li>
+                                </template>
+                            </ul>
 
-                        <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                            <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <article>lorem ipsum</article>
-        </div>
-    `],
+                <article>lorem ipsum</article>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('input').should(haveText(''))
         get('button').click()
@@ -509,13 +557,15 @@ test('Ignore active selection while options change if not selected by a keyboard
         get('input').type('{backspace}')
         get('input').trigger('change')
         get('[option="1"]').should(contain('*'))
-    },
-);
+    }
+)
 
-test('"name" prop with object value',
-    [html`
-        <div
-            x-data="{ people: [
+test(
+    '"name" prop with object value',
+    [
+        html`
+            <div
+                x-data="{ people: [
                 { id: 1, name: 'Wade Cooper' },
                 { id: 2, name: 'Arlene Mccoy' },
                 { id: 3, name: 'Devon Webb' },
@@ -527,60 +577,70 @@ test('"name" prop with object value',
                 { id: 9, name: 'Claudie Smitham' },
                 { id: 10, name: 'Emil Schaefer' },
             ]}"
-            x-combobox
-            name="person"
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                name="person"
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person.name" type="text">
+                <input x-combobox:input :display-value="(person) => person.name" type="text" />
 
-            <button x-combobox:button x-text="$combobox.value ? $combobox.value.name : 'Select Person'"></button>
+                <button
+                    x-combobox:button
+                    x-text="$combobox.value ? $combobox.value.name : 'Select Person'"
+                ></button>
 
-            <ul x-combobox:options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('input[name="person"]').should(haveAttribute('value', 'null'))
         get('button').click()
         get('[name="person[id]"]').should(notExist())
         get('[option="2"]').click()
         get('input[name="person"]').should(notExist())
-        get('[name="person[id]"]').should(beHidden())
+        get('[name="person[id]"]')
+            .should(beHidden())
             .should(haveAttribute('value', '2'))
             .should(haveAttribute('type', 'hidden'))
-        get('[name="person[name]"]').should(beHidden())
+        get('[name="person[name]"]')
+            .should(beHidden())
             .should(haveAttribute('value', 'Arlene Mccoy'))
             .should(haveAttribute('type', 'hidden'))
         get('button').click()
         get('[option="4"]').click()
-        get('[name="person[id]"]').should(beHidden())
+        get('[name="person[id]"]')
+            .should(beHidden())
             .should(haveAttribute('value', '4'))
             .should(haveAttribute('type', 'hidden'))
-        get('[name="person[name]"]').should(beHidden())
+        get('[name="person[name]"]')
+            .should(beHidden())
             .should(haveAttribute('value', 'Tom Cook'))
             .should(haveAttribute('type', 'hidden'))
-    },
-);
+    }
+)
 
-test('"default-value" prop',
-    [html`
-        <div
-            x-data="{ people: [
+test(
+    '"default-value" prop',
+    [
+        html`
+            <div
+                x-data="{ people: [
                 { id: 1, name: 'Wade Cooper' },
                 { id: 2, name: 'Arlene Mccoy' },
                 { id: 3, name: 'Devon Webb' },
@@ -592,44 +652,51 @@ test('"default-value" prop',
                 { id: 9, name: 'Claudie Smitham' },
                 { id: 10, name: 'Emil Schaefer' },
             ]}"
-            x-combobox
-            name="person"
-            default-value="2"
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                name="person"
+                default-value="2"
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person.name" type="text">
-            <button x-combobox:button x-text="$combobox.value ? $combobox.value : 'Select Person'"></button>
+                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <button
+                    x-combobox:button
+                    x-text="$combobox.value ? $combobox.value : 'Select Person'"
+                ></button>
 
-            <ul x-combobox:options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person.id"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person.id"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
-        get('input[name="person"]').should(beHidden())
+        get('input[name="person"]')
+            .should(beHidden())
             .should(haveAttribute('value', '2'))
             .should(haveAttribute('type', 'hidden'))
-    },
-);
+    }
+)
 
-test('"multiple" prop',
-    [html`
-        <div
-            x-data="{
+test(
+    '"multiple" prop',
+    [
+        html`
+            <div
+                x-data="{
                 people: [
                     { id: 1, name: 'Wade Cooper' },
                     { id: 2, name: 'Arlene Mccoy' },
@@ -643,32 +710,36 @@ test('"multiple" prop',
                     { id: 10, name: 'Emil Schaefer' },
                 ]
             }"
-            x-combobox
-            multiple
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                multiple
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input type="text">
-            <button x-combobox:button x-text="$combobox.value ? $combobox.value.join(',') : 'Select People'"></button>
+                <input x-combobox:input type="text" />
+                <button
+                    x-combobox:button
+                    x-text="$combobox.value ? $combobox.value.join(',') : 'Select People'"
+                ></button>
 
-            <ul x-combobox:options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person.id"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person.id"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('button').click()
         get('[option="2"]').click()
@@ -685,13 +756,15 @@ test('"multiple" prop',
         get('button').should(haveText('2,4'))
         // input field doesn't reset when a new option is selected
         get('input').should(haveValue('Tom'))
-    },
-);
+    }
+)
 
-test('"multiple" and "name" props together',
-    [html`
-        <div
-            x-data="{
+test(
+    '"multiple" and "name" props together',
+    [
+        html`
+            <div
+                x-data="{
                 people: [
                     { id: 1, name: 'Wade Cooper' },
                     { id: 2, name: 'Arlene Mccoy' },
@@ -705,33 +778,37 @@ test('"multiple" and "name" props together',
                     { id: 10, name: 'Emil Schaefer' },
                 ]
             }"
-            x-combobox
-            multiple
-            name="people"
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                multiple
+                name="people"
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person.name" type="text">
-            <button x-combobox:button x-text="$combobox.value ? $combobox.value.map(p => p.id).join(',') : 'Select People'"></button>
+                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <button
+                    x-combobox:button
+                    x-text="$combobox.value ? $combobox.value.map(p => p.id).join(',') : 'Select People'"
+                ></button>
 
-            <ul x-combobox:options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         // get('input[name="people"]').should(haveAttribute('value', 'null'))
         get('button').click()
@@ -740,45 +817,55 @@ test('"multiple" and "name" props together',
         get('ul').should(beVisible())
         get('button').should(haveText('2'))
         get('input[name="people"]').should(notExist())
-        get('[name="people[0][id]"]').should(beHidden())
+        get('[name="people[0][id]"]')
+            .should(beHidden())
             .should(haveAttribute('value', '2'))
             .should(haveAttribute('type', 'hidden'))
-        get('[name="people[0][name]"]').should(beHidden())
+        get('[name="people[0][name]"]')
+            .should(beHidden())
             .should(haveAttribute('value', 'Arlene Mccoy'))
             .should(haveAttribute('type', 'hidden'))
         get('[option="4"]').click()
-        get('[name="people[0][id]"]').should(beHidden())
+        get('[name="people[0][id]"]')
+            .should(beHidden())
             .should(haveAttribute('value', '2'))
             .should(haveAttribute('type', 'hidden'))
-        get('[name="people[0][name]"]').should(beHidden())
+        get('[name="people[0][name]"]')
+            .should(beHidden())
             .should(haveAttribute('value', 'Arlene Mccoy'))
             .should(haveAttribute('type', 'hidden'))
-        get('[name="people[1][id]"]').should(beHidden())
+        get('[name="people[1][id]"]')
+            .should(beHidden())
             .should(haveAttribute('value', '4'))
             .should(haveAttribute('type', 'hidden'))
-        get('[name="people[1][name]"]').should(beHidden())
+        get('[name="people[1][name]"]')
+            .should(beHidden())
             .should(haveAttribute('value', 'Tom Cook'))
             .should(haveAttribute('type', 'hidden'))
         get('button').should(haveText('2,4'))
         get('ul').should(beVisible())
         get('[option="4"]').click()
-        get('[name="people[0][id]"]').should(beHidden())
+        get('[name="people[0][id]"]')
+            .should(beHidden())
             .should(haveAttribute('value', '2'))
             .should(haveAttribute('type', 'hidden'))
-        get('[name="people[0][name]"]').should(beHidden())
+        get('[name="people[0][name]"]')
+            .should(beHidden())
             .should(haveAttribute('value', 'Arlene Mccoy'))
             .should(haveAttribute('type', 'hidden'))
         get('[name="people[1][id]"]').should(notExist())
         get('[name="people[1][name]"]').should(notExist())
         get('button').should(haveText('2'))
         get('ul').should(beVisible())
-    },
-);
+    }
+)
 
-test('"by" prop with string value',
-    [html`
-        <div
-            x-data="{
+test(
+    '"by" prop with string value',
+    [
+        html`
+            <div
+                x-data="{
                 people: [
                     { id: 1, name: 'Wade Cooper' },
                     { id: 2, name: 'Arlene Mccoy' },
@@ -792,32 +879,36 @@ test('"by" prop with string value',
                     { id: 10, name: 'Emil Schaefer' },
                 ]
             }"
-            x-combobox
-            by="id"
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                by="id"
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person" type="text">
-            <button x-combobox:button x-text="$combobox.value ? $combobox.value : 'Select People'"></button>
+                <input x-combobox:input :display-value="(person) => person" type="text" />
+                <button
+                    x-combobox:button
+                    x-text="$combobox.value ? $combobox.value : 'Select People'"
+                ></button>
 
-            <ul x-combobox:options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person.id"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person.id"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('ul').should(notBeVisible())
         get('button').click()
@@ -830,7 +921,8 @@ test('"by" prop with string value',
         get('input').should(haveValue('2'))
         get('button').should(haveText('2'))
         get('button').click()
-        get('ul').should(contain('Wade Cooper'))
+        get('ul')
+            .should(contain('Wade Cooper'))
             .should(contain('Arlene Mccoy'))
             .should(contain('Devon Webb'))
         get('[option="3"]').click()
@@ -838,20 +930,23 @@ test('"by" prop with string value',
         get('input').should(haveValue('3'))
         get('button').should(haveText('3'))
         get('button').click()
-        get('ul').should(contain('Wade Cooper'))
+        get('ul')
+            .should(contain('Wade Cooper'))
             .should(contain('Arlene Mccoy'))
             .should(contain('Devon Webb'))
         get('[option="1"]').click()
         get('ul').should(notBeVisible())
         get('input').should(haveValue('1'))
         get('button').should(haveText('1'))
-    },
-);
+    }
+)
 
-test('"by" prop with string value and "nullable"',
-    [html`
-        <div
-            x-data="{
+test(
+    '"by" prop with string value and "nullable"',
+    [
+        html`
+            <div
+                x-data="{
                 people: [
                     { id: 1, name: 'Wade Cooper' },
                     { id: 2, name: 'Arlene Mccoy' },
@@ -865,34 +960,38 @@ test('"by" prop with string value and "nullable"',
                     { id: 10, name: 'Emil Schaefer' },
                 ]
             }"
-            x-combobox
-            by="id"
-            default-value="5"
-            nullable
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                by="id"
+                default-value="5"
+                nullable
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person?.name" type="text">
-            <button x-combobox:button x-text="$combobox.value ? $combobox.value.name : 'Select People'"></button>
+                <input x-combobox:input :display-value="(person) => person?.name" type="text" />
+                <button
+                    x-combobox:button
+                    x-text="$combobox.value ? $combobox.value.name : 'Select People'"
+                ></button>
 
-            <ul x-combobox:options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('ul').should(notBeVisible())
         get('button').click()
@@ -905,7 +1004,8 @@ test('"by" prop with string value and "nullable"',
         get('input').should(haveValue('Arlene Mccoy'))
         get('button').should(haveText('Arlene Mccoy'))
         get('button').click()
-        get('ul').should(contain('Wade Cooper'))
+        get('ul')
+            .should(contain('Wade Cooper'))
             .should(contain('Arlene Mccoy'))
             .should(contain('Devon Webb'))
         get('[option="3"]').click()
@@ -913,21 +1013,23 @@ test('"by" prop with string value and "nullable"',
         get('input').should(haveValue('Devon Webb'))
         get('button').should(haveText('Devon Webb'))
         get('button').click()
-        get('ul').should(contain('Wade Cooper'))
+        get('ul')
+            .should(contain('Wade Cooper'))
             .should(contain('Arlene Mccoy'))
             .should(contain('Devon Webb'))
         get('[option="1"]').click()
         get('ul').should(notBeVisible())
         get('input').should(haveValue('Wade Cooper'))
         get('button').should(haveText('Wade Cooper'))
-    },
-);
+    }
+)
 
-
-test('keyboard controls',
-    [html`
-        <div
-            x-data="{ active: null, people: [
+test(
+    'keyboard controls',
+    [
+        html`
+            <div
+                x-data="{ active: null, people: [
                 { id: 1, name: 'Wade Cooper' },
                 { id: 2, name: 'Arlene Mccoy' },
                 { id: 3, name: 'Devon Webb', disabled: true },
@@ -939,84 +1041,69 @@ test('keyboard controls',
                 { id: 9, name: 'Claudie Smitham' },
                 { id: 10, name: 'Emil Schaefer' },
             ]}"
-            x-combobox
-            x-model="active"
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                x-model="active"
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person.name" type="text">
-            <button x-combobox:button x-text="active ? active.name : 'Select Person'"></button>
+                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <button
+                    x-combobox:button
+                    x-text="active ? active.name : 'Select Person'"
+                ></button>
 
-            <ul x-combobox:options options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('.active').should(notExist())
         get('button').click()
-        get('[options]')
-            .should(beVisible())
+        get('[options]').should(beVisible())
         get('input').should(haveFocus())
-        get('[option="1"]')
-            .should(haveClasses(['active']))
-        get('input')
-            .type('{downarrow}')
-        get('[option="2"]')
-            .should(haveClasses(['active']))
-        get('input')
-            .type('{downarrow}')
-        get('[option="4"]')
-            .should(haveClasses(['active']))
-        get('input')
-            .type('{uparrow}')
-        get('[option="2"]')
-            .should(haveClasses(['active']))
-        get('input')
-            .type('{home}')
-        get('[option="1"]')
-            .should(haveClasses(['active']))
-        get('input')
-            .type('{end}')
-        get('[option="10"]')
-            .should(haveClasses(['active']))
-        get('input')
-            .type('{pageUp}')
-        get('[option="1"]')
-            .should(haveClasses(['active']))
-        get('input')
-            .type('{pageDown}')
-        get('[option="10"]')
-            .should(haveClasses(['active']))
-        get('input')
-            .tab()
-            .should(haveFocus())
-        get('[options]')
-            .should(beVisible())
-        get('input')
-            .type('{esc}')
-        get('[options]')
-            .should(notBeVisible())
-    },
+        get('[option="1"]').should(haveClasses(['active']))
+        get('input').type('{downarrow}')
+        get('[option="2"]').should(haveClasses(['active']))
+        get('input').type('{downarrow}')
+        get('[option="4"]').should(haveClasses(['active']))
+        get('input').type('{uparrow}')
+        get('[option="2"]').should(haveClasses(['active']))
+        get('input').type('{home}')
+        get('[option="1"]').should(haveClasses(['active']))
+        get('input').type('{end}')
+        get('[option="10"]').should(haveClasses(['active']))
+        get('input').type('{pageUp}')
+        get('[option="1"]').should(haveClasses(['active']))
+        get('input').type('{pageDown}')
+        get('[option="10"]').should(haveClasses(['active']))
+        get('input').tab().should(haveFocus())
+        get('[options]').should(beVisible())
+        get('input').type('{esc}')
+        get('[options]').should(notBeVisible())
+    }
 )
 
-test('changing value manually changes internal state',
-    [html`
-        <div
-            x-data="{ active: null, people: [
+test(
+    'changing value manually changes internal state',
+    [
+        html`
+            <div
+                x-data="{ active: null, people: [
                 { id: 1, name: 'Wade Cooper' },
                 { id: 2, name: 'Arlene Mccoy' },
                 { id: 3, name: 'Devon Webb', disabled: true },
@@ -1028,46 +1115,53 @@ test('changing value manually changes internal state',
                 { id: 9, name: 'Claudie Smitham' },
                 { id: 10, name: 'Emil Schaefer' },
             ]}"
-            x-combobox
-            x-model="active"
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                x-model="active"
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person.name" type="text">
-            <button toggle x-combobox:button x-text="$combobox.value ? $combobox.value : 'Select Person'"></button>
+                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <button
+                    toggle
+                    x-combobox:button
+                    x-text="$combobox.value ? $combobox.value : 'Select Person'"
+                ></button>
 
-            <button select-tim @click="active = 4">Select Tim</button>
+                <button select-tim @click="active = 4">Select Tim</button>
 
-            <ul x-combobox:options options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person.id"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person.id"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('[select-tim]').click()
         get('[option="4"]').should(haveClasses(['selected']))
         get('[option="1"]').should(notHaveClasses(['selected']))
         get('[toggle]').should(haveText('4'))
-    },
+    }
 )
 
-test('has accessibility attributes',
-    [html`
-        <div
-            x-data="{ active: null, people: [
+test(
+    'has accessibility attributes',
+    [
+        html`
+            <div
+                x-data="{ active: null, people: [
                 { id: 1, name: 'Wade Cooper' },
                 { id: 2, name: 'Arlene Mccoy' },
                 { id: 3, name: 'Devon Webb', disabled: true },
@@ -1079,39 +1173,47 @@ test('has accessibility attributes',
                 { id: 9, name: 'Claudie Smitham' },
                 { id: 10, name: 'Emil Schaefer' },
             ]}"
-            x-combobox
-            x-model="active"
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                x-model="active"
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person.name" type="text">
-            <button x-combobox:button x-text="active ? active.name : 'Select Person'"></button>
+                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <button
+                    x-combobox:button
+                    x-text="active ? active.name : 'Select Person'"
+                ></button>
 
-            <ul x-combobox:options options>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person"
-                        :disabled="person.disabled"
-                        :class="{
+                <ul x-combobox:options options>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person"
+                            :disabled="person.disabled"
+                            :class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
-        get('input')
-            .should(haveAttribute('aria-expanded', 'false'))
+        get('input').should(haveAttribute('aria-expanded', 'false'))
 
         get('button')
             .should(haveAttribute('aria-haspopup', 'true'))
-            .should(haveAttribute('aria-labelledby', 'alpine-combobox-label-1 alpine-combobox-button-1'))
+            .should(
+                haveAttribute(
+                    'aria-labelledby',
+                    'alpine-combobox-label-1 alpine-combobox-button-1'
+                )
+            )
             .should(haveAttribute('aria-expanded', 'false'))
             .should(notHaveAttribute('aria-controls'))
             .should(haveAttribute('id', 'alpine-combobox-button-1'))
@@ -1149,18 +1251,18 @@ test('has accessibility attributes',
             .should(haveAttribute('aria-activedescendant', 'alpine-combobox-option-2'))
             .type('{enter}')
 
-        get('[option="2"]')
-            .should(haveAttribute('aria-selected', 'true'))
+        get('[option="2"]').should(haveAttribute('aria-selected', 'true'))
 
-        get('[option="1"]')
-            .should(haveAttribute('aria-selected', 'false'))
-    },
+        get('[option="1"]').should(haveAttribute('aria-selected', 'false'))
+    }
 )
 
-test('"static" prop',
-    [html`
-        <div
-            x-data="{ active: null, show: false, people: [
+test(
+    '"static" prop',
+    [
+        html`
+            <div
+                x-data="{ active: null, show: false, people: [
                 { id: 1, name: 'Wade Cooper' },
                 { id: 2, name: 'Arlene Mccoy' },
                 { id: 3, name: 'Devon Webb' },
@@ -1172,48 +1274,53 @@ test('"static" prop',
                 { id: 9, name: 'Claudie Smitham' },
                 { id: 10, name: 'Emil Schaefer' },
             ]}"
-            x-combobox
-            x-model="active"
-        >
-            <label x-combobox:label>Assigned to</label>
+                x-combobox
+                x-model="active"
+            >
+                <label x-combobox:label>Assigned to</label>
 
-            <input x-combobox:input :display-value="(person) => person.name" type="text">
-            <button normal-toggle x-combobox:button x-text="active ? active.name : 'Select Person'"></button>
+                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <button
+                    normal-toggle
+                    x-combobox:button
+                    x-text="active ? active.name : 'Select Person'"
+                ></button>
 
-            <button real-toggle @click="show = ! show">Toggle</button>
+                <button real-toggle @click="show = ! show">Toggle</button>
 
-            <ul x-combobox:options x-show="show" static>
-                <template x-for="person in people" :key="person.id">
-                    <li
-                        :option="person.id"
-                        x-combobox:option
-                        :value="person"
-                        :disabled="person.disabled"
-                    >
-                        <span x-text="person.name"></span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    `],
+                <ul x-combobox:options x-show="show" static>
+                    <template x-for="person in people" :key="person.id">
+                        <li
+                            :option="person.id"
+                            x-combobox:option
+                            :value="person"
+                            :disabled="person.disabled"
+                        >
+                            <span x-text="person.name"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('ul').should(notBeVisible())
-        get('[normal-toggle]')
-            .should(haveText('Select Person'))
-            .click()
+        get('[normal-toggle]').should(haveText('Select Person')).click()
         get('ul').should(notBeVisible())
         get('[real-toggle]').click()
         get('ul').should(beVisible())
         get('[option="2"]').click()
         get('ul').should(beVisible())
         get('[normal-toggle]').should(haveText('Arlene Mccoy'))
-    },
+    }
 )
 
-test('input reset',
-    [html`
-        <div
-            x-data="{
+test(
+    'input reset',
+    [
+        html`
+            <div
+                x-data="{
                 query: '',
                 selected: null,
                 people: [
@@ -1236,49 +1343,49 @@ test('input reset',
                         })
                 },
             }"
-        >
-            <div x-combobox x-model="selected">
-                <label x-combobox:label>Select person</label>
+            >
+                <div x-combobox x-model="selected">
+                    <label x-combobox:label>Select person</label>
 
-                <div>
                     <div>
-                        <input
-                            x-combobox:input
-                            :display-value="person => person.name"
-                            @change="query = $event.target.value"
-                            placeholder="Search..."
-                        />
+                        <div>
+                            <input
+                                x-combobox:input
+                                :display-value="person => person.name"
+                                @change="query = $event.target.value"
+                                placeholder="Search..."
+                            />
 
-                        <button x-combobox:button>Toggle</button>
-                    </div>
+                            <button x-combobox:button>Toggle</button>
+                        </div>
 
-                    <div x-combobox:options>
-                        <ul>
-                            <template
-                                x-for="person in filteredPeople"
-                                :key="person.id"
-                                hidden
-                            >
-                                <li
-                                    x-combobox:option
-                                    :option="person.id"
-                                    :value="person"
-                                    :disabled="person.disabled"
-                                    x-text="person.name"
+                        <div x-combobox:options>
+                            <ul>
+                                <template
+                                    x-for="person in filteredPeople"
+                                    :key="person.id"
+                                    hidden
                                 >
-                                </li>
-                            </template>
-                        </ul>
+                                    <li
+                                        x-combobox:option
+                                        :option="person.id"
+                                        :value="person"
+                                        :disabled="person.disabled"
+                                        x-text="person.name"
+                                    ></li>
+                                </template>
+                            </ul>
 
-                        <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                            <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <article>lorem ipsum</article>
-            <a x-on:click="selected = null">Clear</a>
-        </div>
-    `],
+                <article>lorem ipsum</article>
+                <a x-on:click="selected = null">Clear</a>
+            </div>
+        `,
+    ],
     ({ get }) => {
         // Test after closing with button
         get('button').click()
@@ -1337,13 +1444,15 @@ test('input reset',
         // Test correct state after clearing selected via code
         get('a').click()
         get('input').should(haveValue(''))
-    },
+    }
 )
 
-test('combobox shows all options when opening',
-    [html`
-        <div
-            x-data="{
+test(
+    'combobox shows all options when opening',
+    [
+        html`
+            <div
+                x-data="{
                 query: '',
                 selected: null,
                 people: [
@@ -1366,48 +1475,48 @@ test('combobox shows all options when opening',
                         })
                 },
             }"
-        >
-            <div x-combobox x-model="selected">
-                <label x-combobox:label>Select person</label>
+            >
+                <div x-combobox x-model="selected">
+                    <label x-combobox:label>Select person</label>
 
-                <div>
                     <div>
-                        <input
-                            x-combobox:input
-                            :display-value="person => person.name"
-                            @change="query = $event.target.value"
-                            placeholder="Search..."
-                        />
+                        <div>
+                            <input
+                                x-combobox:input
+                                :display-value="person => person.name"
+                                @change="query = $event.target.value"
+                                placeholder="Search..."
+                            />
 
-                        <button x-combobox:button>Toggle</button>
-                    </div>
+                            <button x-combobox:button>Toggle</button>
+                        </div>
 
-                    <div x-combobox:options>
-                        <ul>
-                            <template
-                                x-for="person in filteredPeople"
-                                :key="person.id"
-                                hidden
-                            >
-                                <li
-                                    x-combobox:option
-                                    :option="person.id"
-                                    :value="person"
-                                    :disabled="person.disabled"
-                                    x-text="person.name"
+                        <div x-combobox:options>
+                            <ul>
+                                <template
+                                    x-for="person in filteredPeople"
+                                    :key="person.id"
+                                    hidden
                                 >
-                                </li>
-                            </template>
-                        </ul>
+                                    <li
+                                        x-combobox:option
+                                        :option="person.id"
+                                        :value="person"
+                                        :disabled="person.disabled"
+                                        x-text="person.name"
+                                    ></li>
+                                </template>
+                            </ul>
 
-                        <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                            <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <article>lorem ipsum</article>
-        </div>
-    `],
+                <article>lorem ipsum</article>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('button').click()
         get('li').should(haveLength('10'))
@@ -1439,13 +1548,15 @@ test('combobox shows all options when opening',
         get('article').click()
         get('button').click()
         get('li').should(haveLength('10'))
-    },
+    }
 )
 
-test('active element logic when opening a combobox',
-    [html`
-        <div
-            x-data="{
+test(
+    'active element logic when opening a combobox',
+    [
+        html`
+            <div
+                x-data="{
                 query: '',
                 selected: null,
                 people: [
@@ -1468,47 +1579,47 @@ test('active element logic when opening a combobox',
                         })
                 },
             }"
-        >
-            <div x-combobox x-model="selected">
-                <label x-combobox:label>Select person</label>
+            >
+                <div x-combobox x-model="selected">
+                    <label x-combobox:label>Select person</label>
 
-                <div>
                     <div>
-                        <input
-                            x-combobox:input
-                            :display-value="person => person.name"
-                            @change="query = $event.target.value"
-                            placeholder="Search..."
-                        />
+                        <div>
+                            <input
+                                x-combobox:input
+                                :display-value="person => person.name"
+                                @change="query = $event.target.value"
+                                placeholder="Search..."
+                            />
 
-                        <button x-combobox:button>Toggle</button>
-                    </div>
+                            <button x-combobox:button>Toggle</button>
+                        </div>
 
-                    <div x-combobox:options>
-                        <ul>
-                            <template
-                                x-for="person in filteredPeople"
-                                :key="person.id"
-                                hidden
-                            >
-                                <li
-                                    x-combobox:option
-                                    :option="person.id"
-                                    :value="person"
-                                    :disabled="person.disabled"
-                                    :class="$comboboxOption.isActive ? 'active' : ''"
-                                    x-text="person.name"
+                        <div x-combobox:options>
+                            <ul>
+                                <template
+                                    x-for="person in filteredPeople"
+                                    :key="person.id"
+                                    hidden
                                 >
-                                </li>
-                            </template>
-                        </ul>
+                                    <li
+                                        x-combobox:option
+                                        :option="person.id"
+                                        :value="person"
+                                        :disabled="person.disabled"
+                                        :class="$comboboxOption.isActive ? 'active' : ''"
+                                        x-text="person.name"
+                                    ></li>
+                                </template>
+                            </ul>
 
-                        <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                            <p x-show="filteredPeople.length == 0">No people match your query.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    `],
+        `,
+    ],
     ({ get }) => {
         get('button').click()
         // First option is selected on opening if no preselection
@@ -1533,9 +1644,11 @@ test('active element logic when opening a combobox',
     }
 )
 
-test('can remove an option without other options getting removed',
-    [html`<div
-        x-data="{
+test(
+    'can remove an option without other options getting removed',
+    [
+        html`<div
+            x-data="{
             query: '',
             selected: [],
             frameworks: [
@@ -1566,54 +1679,61 @@ test('can remove an option without other options getting removed',
                 this.selected = this.selected.filter((i) => i !== framework)
             }
         }"
-    >
-        <div x-combobox x-model="selected" by="id" multiple>
-            <div x-show="selected.length">
-                <template x-for="selectedFramework in selected" :key="selectedFramework.id">
-                    <button x-on:click.prevent="remove(selectedFramework)" :remove-option="selectedFramework.id">
-                        <span x-text="selectedFramework.name"></span>
-                    </button>
-                </template>
-            </div>
-
-            <div>
-                <div>
-                    <input
-                        x-combobox:input
-                        @change="query = $event.target.value;"
-                        placeholder="Search..."
-                    />
-                    <button x-combobox:button>
-                        Show options
-                    </button>
-                </div>
-
-                <div x-combobox:options x-cloak x-transition.out.opacity>
-                    <ul>
-                        <template
-                            x-for="framework in filteredFrameworks"
-                            :key="framework.id"
-                            hidden
+        >
+            <div x-combobox x-model="selected" by="id" multiple>
+                <div x-show="selected.length">
+                    <template x-for="selectedFramework in selected" :key="selectedFramework.id">
+                        <button
+                            x-on:click.prevent="remove(selectedFramework)"
+                            :remove-option="selectedFramework.id"
                         >
-                            <li
-                                x-combobox:option
-                                :option="framework.id"
-                                :value="framework"
-                                :disabled="framework.disabled"
+                            <span x-text="selectedFramework.name"></span>
+                        </button>
+                    </template>
+                </div>
+
+                <div>
+                    <div>
+                        <input
+                            x-combobox:input
+                            @change="query = $event.target.value;"
+                            placeholder="Search..."
+                        />
+                        <button x-combobox:button>Show options</button>
+                    </div>
+
+                    <div x-combobox:options x-cloak x-transition.out.opacity>
+                        <ul>
+                            <template
+                                x-for="framework in filteredFrameworks"
+                                :key="framework.id"
+                                hidden
                             >
-                                <span x-text="framework.name"></span>
+                                <li
+                                    x-combobox:option
+                                    :option="framework.id"
+                                    :value="framework"
+                                    :disabled="framework.disabled"
+                                >
+                                    <span x-text="framework.name"></span>
 
-                                <span x-show="$comboboxOption.isSelected" :check="framework.id">&check;</span>
-                            </li>
-                        </template>
-                    </ul>
+                                    <span
+                                        x-show="$comboboxOption.isSelected"
+                                        :check="framework.id"
+                                        >&check;</span
+                                    >
+                                </li>
+                            </template>
+                        </ul>
 
-                    <p x-show="filteredFrameworks.length == 0">No frameworks match your query.</p>
+                        <p x-show="filteredFrameworks.length == 0">
+                            No frameworks match your query.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    `],
+        </div> `,
+    ],
     ({ get }) => {
         get('input').type('a').trigger('input')
         cy.wait(100)
@@ -1628,85 +1748,92 @@ test('can remove an option without other options getting removed',
         get('[check="1"]').should(beVisible())
         get('[check="2"]').should(beVisible())
         get('[check="3"]').should(notBeVisible())
-    },
-);
+    }
+)
 
-test('works with morph',
-    [html`
-    <div x-data="{ value: null }">
-        <div x-combobox x-model="value">
-            <button x-combobox:button>Select Framework</button>
+test(
+    'works with morph',
+    [
+        html`
+            <div x-data="{ value: null }">
+                <div x-combobox x-model="value">
+                    <button x-combobox:button>Select Framework</button>
 
-            <ul x-combobox:options>
-                <li x-combobox:option value="laravel">Laravel</li>
-            </ul>
-        </div>
+                    <ul x-combobox:options>
+                        <li x-combobox:option value="laravel">Laravel</li>
+                    </ul>
+                </div>
 
-        Selected: <span x-text="value"></span>
-    </div>
-    `],
+                Selected: <span x-text="value"></span>
+            </div>
+        `,
+    ],
     ({ get }, reload, window, document) => {
         let toHtml = html`
-        <div x-data="{ value: null }">
-            <div x-combobox x-model="value">
-                <button x-combobox:button>Select Framework (updated)</button>
+            <div x-data="{ value: null }">
+                <div x-combobox x-model="value">
+                    <button x-combobox:button>Select Framework (updated)</button>
 
-                <ul x-combobox:options>
-                    <li x-combobox:option value="laravel">Laravel</li>
-                </ul>
+                    <ul x-combobox:options>
+                        <li x-combobox:option value="laravel">Laravel</li>
+                    </ul>
+                </div>
+
+                Selected: <span x-text="value"></span>
             </div>
-
-            Selected: <span x-text="value"></span>
-        </div>
         `
         ensureNoConsoleWarns()
 
         get('div').then(([el]) => window.Alpine.morph(el, toHtml))
 
         get('button').should(haveText('Select Framework (updated)'))
-    },
+    }
 )
 
-test('boolean option values',
-    [html`
-    <div x-data="{ value: null }">
-        <div x-combobox x-model="value">
-            <input x-combobox:input />
-            <button x-combobox:button>Select boolean</button>
+test(
+    'boolean option values',
+    [
+        html`
+            <div x-data="{ value: null }">
+                <div x-combobox x-model="value">
+                    <input x-combobox:input />
+                    <button x-combobox:button>Select boolean</button>
 
-            <ul x-combobox:options>
-                <li
-                    option="boolean-true"
-                    x-combobox:option
-                    :value="true"
-                    :class="{
+                    <ul x-combobox:options>
+                        <li
+                            option="boolean-true"
+                            x-combobox:option
+                            :value="true"
+                            :class="{
                         'selected': $comboboxOption.isSelected,
                         'active': $comboboxOption.isActive,
-                    }">
-                    <span>Yes</span>
-                </li>
-                <li
-                    option="boolean-false"
-                    x-combobox:option
-                    :value="false"
-                    :class="{
+                    }"
+                        >
+                            <span>Yes</span>
+                        </li>
+                        <li
+                            option="boolean-false"
+                            x-combobox:option
+                            :value="false"
+                            :class="{
                         'selected': $comboboxOption.isSelected,
                         'active': $comboboxOption.isActive,
-                    }">
-                    <span>No</span>
-                </li>
-            </ul>
-        </div>
+                    }"
+                        >
+                            <span>No</span>
+                        </li>
+                    </ul>
+                </div>
 
-        Selected: <p x-text="value?.toString()"></p>
-    </div>
-    `],
+                Selected:
+                <p x-text="value?.toString()"></p>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('ul').should(notBeVisible())
         get('p').should(haveText(''))
-        get('button')
-            .should(haveText('Select boolean'))
-            .click()
+        get('button').should(haveText('Select boolean')).click()
         get('ul').should(beVisible())
         get('[option="boolean-true"]').should(notHaveClasses(['selected']))
         get('[option="boolean-false"]').should(notHaveClasses(['selected']))
@@ -1724,59 +1851,64 @@ test('boolean option values',
         get('ul').should(beVisible())
         get('[option="boolean-true"]').should(notHaveClasses(['selected']))
         get('[option="boolean-false"]').should(haveClasses(['selected']))
-    },
+    }
 )
 
-test('integer option values',
-    [html`
-    <div x-data="{ value: null }">
-        <div x-combobox x-model="value">
-            <input x-combobox:input />
-            <button x-combobox:button>Select number</button>
+test(
+    'integer option values',
+    [
+        html`
+            <div x-data="{ value: null }">
+                <div x-combobox x-model="value">
+                    <input x-combobox:input />
+                    <button x-combobox:button>Select number</button>
 
-            <ul x-combobox:options>
-                <li
-                    option="0"
-                    x-combobox:option
-                    :value="0"
-                    :class="{
+                    <ul x-combobox:options>
+                        <li
+                            option="0"
+                            x-combobox:option
+                            :value="0"
+                            :class="{
                         'selected': $comboboxOption.isSelected,
                         'active': $comboboxOption.isActive,
-                    }">
-                    <span>0</span>
-                </li>
-                <li
-                    option="1"
-                    x-combobox:option
-                    :value="1"
-                    :class="{
+                    }"
+                        >
+                            <span>0</span>
+                        </li>
+                        <li
+                            option="1"
+                            x-combobox:option
+                            :value="1"
+                            :class="{
                         'selected': $comboboxOption.isSelected,
                         'active': $comboboxOption.isActive,
-                    }">
-                    <span>1</span>
-                </li>
-                <li
-                    option="2"
-                    x-combobox:option
-                    :value="2"
-                    :class="{
+                    }"
+                        >
+                            <span>1</span>
+                        </li>
+                        <li
+                            option="2"
+                            x-combobox:option
+                            :value="2"
+                            :class="{
                         'selected': $comboboxOption.isSelected,
                         'active': $comboboxOption.isActive,
-                    }">
-                    <span>2</span>
-                </li>
-            </ul>
-        </div>
+                    }"
+                        >
+                            <span>2</span>
+                        </li>
+                    </ul>
+                </div>
 
-        Selected: <p x-text="value?.toString()"></p>
-    </div>
-    `],
+                Selected:
+                <p x-text="value?.toString()"></p>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('ul').should(notBeVisible())
         get('p').should(haveText(''))
-        get('button')
-            .should(haveText('Select number'))
-            .click()
+        get('button').should(haveText('Select number')).click()
         get('ul').should(beVisible())
         get('[option="0"]').should(notHaveClasses(['selected']))
         get('[option="1"]').should(notHaveClasses(['selected']))
@@ -1805,5 +1937,5 @@ test('integer option values',
         get('[option="0"]').should(notHaveClasses(['selected']))
         get('[option="1"]').should(notHaveClasses(['selected']))
         get('[option="2"]').should(haveClasses(['selected']))
-    },
+    }
 )

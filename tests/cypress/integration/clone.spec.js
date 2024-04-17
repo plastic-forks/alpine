@@ -1,6 +1,7 @@
 import { haveText, html, test } from '../utils'
 
-test('can clone a component',
+test(
+    'can clone a component',
     html`
         <script>
             document.addEventListener('alpine:initialized', () => {
@@ -35,7 +36,8 @@ test('can clone a component',
     }
 )
 
-test('wont run init on clone',
+test(
+    'wont run init on clone',
     html`
         <script>
             document.addEventListener('alpine:initialized', () => {
@@ -65,7 +67,8 @@ test('wont run init on clone',
     }
 )
 
-test('wont register listeners on clone',
+test(
+    'wont register listeners on clone',
     html`
         <script>
             document.addEventListener('alpine:initialized', () => {
@@ -98,7 +101,8 @@ test('wont register listeners on clone',
     }
 )
 
-test('wont register extra listeners on x-model on clone',
+test(
+    'wont register extra listeners on x-model on clone',
     html`
         <script>
             document.addEventListener('alpine:initialized', () => {
@@ -110,12 +114,12 @@ test('wont register extra listeners on x-model on clone',
         <button x-data @click="Alpine.clone(original, copy)">click</button>
 
         <div x-data="{ checks: [] }" id="original">
-            <input type="checkbox" x-model="checks" value="1">
+            <input type="checkbox" x-model="checks" value="1" />
             <span x-text="checks"></span>
         </div>
 
         <div x-data="{ checks: [] }" id="copy">
-            <input type="checkbox" x-model="checks" value="1">
+            <input type="checkbox" x-model="checks" value="1" />
             <span x-text="checks"></span>
         </div>
     `,

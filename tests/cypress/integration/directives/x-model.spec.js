@@ -1,20 +1,23 @@
 import { beChecked, haveData, haveText, haveValue, html, notBeChecked, test } from '../../utils'
 
-test('The name of the test',
-    html`<h1 x-data x-text="'HEY'"></h1>`,
-    ({ get }) => get('h1').should(haveText('HEY'))
+test('The name of the test', html`<h1 x-data x-text="'HEY'"></h1>`, ({ get }) =>
+    get('h1').should(haveText('HEY'))
 )
 
-test('x-model has value binding when initialized',
+test(
+    'x-model has value binding when initialized',
     html`
     <div x-data="{ foo: 'bar' }">
         <input x-model="foo"></input>
     </div>
     `,
-    ({ get }) => { get('input').should(haveValue('bar')) }
+    ({ get }) => {
+        get('input').should(haveValue('bar'))
+    }
 )
 
-test('x-model updates value when updated via input event',
+test(
+    'x-model updates value when updated via input event',
     html`
     <div x-data="{ foo: 'bar' }">
         <input x-model="foo"></input>
@@ -28,7 +31,8 @@ test('x-model updates value when updated via input event',
     }
 )
 
-test('x-model has value binding when updated',
+test(
+    'x-model has value binding when updated',
     html`
     <div x-data="{ foo: 'bar' }">
         <input x-model="foo"></input>
@@ -43,7 +47,8 @@ test('x-model has value binding when updated',
     }
 )
 
-test('x-model casts value to number if number modifier is present',
+test(
+    'x-model casts value to number if number modifier is present',
     html`
     <div x-data="{ foo: null }">
         <input type="number" x-model.number="foo"></input>
@@ -52,11 +57,11 @@ test('x-model casts value to number if number modifier is present',
     ({ get }) => {
         get('input').type('123')
         get('div').should(haveData('foo', 123))
-
     }
 )
 
-test('x-model with number modifier returns: null if empty, original value if casting fails, numeric value if casting passes',
+test(
+    'x-model with number modifier returns: null if empty, original value if casting fails, numeric value if casting passes',
     html`
     <div x-data="{ foo: 0, bar: '' }">
         <input type="number" x-model.number="foo"></input>
@@ -79,12 +84,13 @@ test('x-model with number modifier returns: null if empty, original value if cas
     }
 )
 
-test('x-model casts value to boolean initially for radios',
+test(
+    'x-model casts value to boolean initially for radios',
     html`
-    <div x-data="{ foo: true }">
-        <input id="1" type="radio" value="true" name="foo" x-model.boolean="foo">
-        <input id="2" type="radio" value="false" name="foo" x-model.boolean="foo">
-    </div>
+        <div x-data="{ foo: true }">
+            <input id="1" type="radio" value="true" name="foo" x-model.boolean="foo" />
+            <input id="2" type="radio" value="false" name="foo" x-model.boolean="foo" />
+        </div>
     `,
     ({ get }) => {
         get('div').should(haveData('foo', true))
@@ -97,7 +103,8 @@ test('x-model casts value to boolean initially for radios',
     }
 )
 
-test('x-model casts value to boolean if boolean modifier is present',
+test(
+    'x-model casts value to boolean if boolean modifier is present',
     html`
     <div x-data="{ foo: null, bar: null, baz: [] }">
         <input type="text" x-model.boolean="foo"></input>
@@ -135,7 +142,8 @@ test('x-model casts value to boolean if boolean modifier is present',
     }
 )
 
-test('x-model with boolean modifier returns: null if empty, original value if casting fails, numeric value if casting passes',
+test(
+    'x-model with boolean modifier returns: null if empty, original value if casting fails, numeric value if casting passes',
     html`
     <div x-data="{ foo: 0, bar: '' }">
         <input x-model.boolean="foo"></input>
@@ -159,7 +167,8 @@ test('x-model with boolean modifier returns: null if empty, original value if ca
     }
 )
 
-test('x-model trims value if trim modifier is present',
+test(
+    'x-model trims value if trim modifier is present',
     html`
     <div x-data="{ foo: '' }">
         <input x-model.trim="foo"></input>
@@ -173,14 +182,15 @@ test('x-model trims value if trim modifier is present',
     }
 )
 
-test('x-model can be accessed programmatically',
+test(
+    'x-model can be accessed programmatically',
     html`
-    <div x-data="{ foo: 'bar' }" x-model="foo">
-        <input x-model="foo">
+        <div x-data="{ foo: 'bar' }" x-model="foo">
+            <input x-model="foo" />
 
-        <span x-text="$root._x_model.get()"></span>
-        <button @click="$root._x_model.set('bob')">Set foo to bob</button>
-    </div>
+            <span x-text="$root._x_model.get()"></span>
+            <button @click="$root._x_model.set('bob')">Set foo to bob</button>
+        </div>
     `,
     ({ get }) => {
         get('span').should(haveText('bar'))
@@ -191,7 +201,8 @@ test('x-model can be accessed programmatically',
     }
 )
 
-test('x-model updates value when the form is reset',
+test(
+    'x-model updates value when the form is reset',
     html`
     <div x-data="{ foo: '' }">
         <form>
@@ -210,20 +221,21 @@ test('x-model updates value when the form is reset',
     }
 )
 
-test('x-model with fill modifier takes input value on null, empty string or undefined',
+test(
+    'x-model with fill modifier takes input value on null, empty string or undefined',
     html`
-    <div x-data="{ a: 123, b: 0, c: '', d: null, e: {} }">
-      <input x-model.fill="a" value="123456" />
-      <span id="a" x-text="a"></span>
-      <input x-model.fill="b" value="123456" />
-      <span id="b" x-text="b"></span>
-      <input x-model.fill="c" value="123456" />
-      <span id="c" x-text="c"></span>
-      <input x-model.fill="d" value="123456" />
-      <span id="d" x-text="d"></span>
-      <input x-model.fill="e.a" value="123456" />
-      <span id="e" x-text="e.a"></span>
-    </div>
+        <div x-data="{ a: 123, b: 0, c: '', d: null, e: {} }">
+            <input x-model.fill="a" value="123456" />
+            <span id="a" x-text="a"></span>
+            <input x-model.fill="b" value="123456" />
+            <span id="b" x-text="b"></span>
+            <input x-model.fill="c" value="123456" />
+            <span id="c" x-text="c"></span>
+            <input x-model.fill="d" value="123456" />
+            <span id="d" x-text="d"></span>
+            <input x-model.fill="e.a" value="123456" />
+            <span id="e" x-text="e.a"></span>
+        </div>
     `,
     ({ get }) => {
         get('#a').should(haveText('123'))
@@ -234,7 +246,8 @@ test('x-model with fill modifier takes input value on null, empty string or unde
     }
 )
 
-test('x-model with fill modifier works with select elements',
+test(
+    'x-model with fill modifier works with select elements',
     html`
         <div x-data="{ a: null, b: null, c: null, d: null }">
             <select x-model.fill="a">
@@ -248,12 +261,13 @@ test('x-model with fill modifier works with select elements',
         </div>
     `,
     ({ get }) => {
-        get('[x-data]').should(haveData('a', '456'));
-        get('[x-data]').should(haveData('b', ['123', '456']));
+        get('[x-data]').should(haveData('a', '456'))
+        get('[x-data]').should(haveData('b', ['123', '456']))
     }
-);
+)
 
-test('x-model with fill modifier works with radio elements',
+test(
+    'x-model with fill modifier works with radio elements',
     html`
         <div x-data="{ a: null, b: null, c: '101112', d: null }">
             <input x-model.fill="a" type="radio" value="123" />
@@ -276,13 +290,14 @@ test('x-model with fill modifier works with radio elements',
         </div>
     `,
     ({ get }) => {
-        get('[x-data]').should(haveData('a', '456'));
-        get('[x-data]').should(haveData('b', '789'));
-        get('[x-data]').should(haveData('c', '101112'));
+        get('[x-data]').should(haveData('a', '456'))
+        get('[x-data]').should(haveData('b', '789'))
+        get('[x-data]').should(haveData('c', '101112'))
     }
-);
+)
 
-test('x-model with fill modifier respects number modifier',
+test(
+    'x-model with fill modifier respects number modifier',
     html`
         <div x-data="{ a: null, b: null, c: null, d: null }">
             <input type="text" x-model.fill.number="a" value="456" / >
@@ -293,10 +308,10 @@ test('x-model with fill modifier respects number modifier',
         </div>
     `,
     ({ get }) => {
-        get('[x-data]').should(haveData('a', 456));
-        get('[x-data]').should(haveData('b', [123,456]));
+        get('[x-data]').should(haveData('a', 456))
+        get('[x-data]').should(haveData('b', [123, 456]))
     }
-);
+)
 
 test(
     'x-model with fill applies on checkboxes bound to array',
@@ -307,9 +322,9 @@ test(
         </div>
     `,
     ({ get }) => {
-        get('[x-data]').should(haveData('a', ['123']));
+        get('[x-data]').should(haveData('a', ['123']))
     }
-);
+)
 
 test(
     'x-model with fill and debounce still fills value',
@@ -319,7 +334,6 @@ test(
         </div>
     `,
     ({ get }) => {
-        get('[x-data]').should(haveData('a', 'hello'));
+        get('[x-data]').should(haveData('a', 'hello'))
     }
-);
-
+)

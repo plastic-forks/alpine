@@ -1,7 +1,7 @@
-import { haveText, html, test } from "../utils";
+import { haveText, html, test } from '../utils'
 
 test(
-    "properly merges the datastack",
+    'properly merges the datastack',
     [
         html`
             <div x-data="{ foo: 'fizz' }">
@@ -12,12 +12,12 @@ test(
         `,
     ],
     ({ get }) => {
-        get("span").should(haveText("fizzbuzz"));
+        get('span').should(haveText('fizzbuzz'))
     }
-);
+)
 
 test(
-    "merges stack from bottom up",
+    'merges stack from bottom up',
     [
         html`
             <div x-data="{ foo: 'fizz' }">
@@ -29,13 +29,13 @@ test(
         `,
     ],
     ({ get }) => {
-        get("span#one").should(haveText("buzzbuzz"));
-        get("span#two").should(haveText("fizz"));
+        get('span#one').should(haveText('buzzbuzz'))
+        get('span#two').should(haveText('fizz'))
     }
-);
+)
 
 test(
-    "handles getter setter pairs",
+    'handles getter setter pairs',
     [
         html`
             <div x-data="{ foo: 'fizzbuzz' }">
@@ -49,45 +49,41 @@ test(
         `,
     ],
     ({ get }) => {
-        get("span#one").should(haveText("fizzbuzz"));
-        get("span#two").should(haveText("fizzbuzz"));
-        get("span#one").click();
-        get("span#one").should(haveText("foobar"));
-        get("span#two").should(haveText("foobar"));
+        get('span#one').should(haveText('fizzbuzz'))
+        get('span#two').should(haveText('fizzbuzz'))
+        get('span#one').click()
+        get('span#one').should(haveText('foobar'))
+        get('span#two').should(haveText('foobar'))
     }
-);
+)
 
 test(
-    "allows accessing class methods",
+    'allows accessing class methods',
     [
         html`
             <script>
                 class Counter {
-                    value = 0;
+                    value = 0
                     constructor() {}
                     increment() {
-                        this.value++;
+                        this.value++
                     }
                 }
-                document.addEventListener("alpine:init", () =>
-                    Alpine.data("counter", () => new Counter())
-                );
+                document.addEventListener('alpine:init', () =>
+                    Alpine.data('counter', () => new Counter())
+                )
             </script>
             <div x-data="counter">
-                <button
-                    type="button"
-                    @click="increment"
-                    x-text="value"
-                ></button>
+                <button type="button" @click="increment" x-text="value"></button>
             </div>
         `,
     ],
     ({ get }) => {
-        get("button").should(haveText("0"));
-        get("button").click();
-        get("button").should(haveText("1"));
+        get('button').should(haveText('0'))
+        get('button').click()
+        get('button').should(haveText('1'))
     }
-);
+)
 
 test(
     "setting value doesn't register a dependency",
@@ -104,8 +100,8 @@ test(
         `,
     ],
     ({ get }) => {
-        get("button").should(haveText("effected"));
-        get("button").click();
-        get("button").should(haveText("clicked"));
+        get('button').should(haveText('effected'))
+        get('button').click()
+        get('button').should(haveText('clicked'))
     }
-);
+)

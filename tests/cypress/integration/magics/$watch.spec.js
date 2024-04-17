@@ -1,11 +1,9 @@
 import { haveText, html, test } from '../../utils'
 
-test('$watch',
+test(
+    '$watch',
     html`
-        <div
-            x-data="{ foo: 'bar', bob: 'lob' }"
-            x-init="$watch('foo', value => { bob = value })"
-        >
+        <div x-data="{ foo: 'bar', bob: 'lob' }" x-init="$watch('foo', value => { bob = value })">
             <h1 x-text="foo"></h1>
             <h2 x-text="bob"></h2>
 
@@ -21,7 +19,8 @@ test('$watch',
     }
 )
 
-test('$watch receives old value',
+test(
+    '$watch receives old value',
     html`
         <div
             x-data="{ foo: 'bar', fresh: '', old: '' }"
@@ -40,11 +39,15 @@ test('$watch receives old value',
     }
 )
 
-test('$watch nested properties',
+test(
+    '$watch nested properties',
     html`
-        <div x-data="{ foo: { bar: 'baz', bob: 'lob' } }" x-init="
+        <div
+            x-data="{ foo: { bar: 'baz', bob: 'lob' } }"
+            x-init="
             $watch('foo.bar', value => { foo.bob = value });
-        ">
+        "
+        >
             <h1 x-text="foo.bar"></h1>
             <h2 x-text="foo.bob"></h2>
 
@@ -60,10 +63,13 @@ test('$watch nested properties',
     }
 )
 
-test('$watch arrays',
+test(
+    '$watch arrays',
     html`
-        <div x-data="{ foo: ['one'], bob: 'lob' }"
-            x-init="$watch('foo', value => { bob = value })">
+        <div
+            x-data="{ foo: ['one'], bob: 'lob' }"
+            x-init="$watch('foo', value => { bob = value })"
+        >
             <h1 x-text="foo"></h1>
             <h2 x-text="bob"></h2>
 
@@ -110,9 +116,13 @@ test('$watch arrays',
     }
 )
 
-test('$watch nested arrays',
+test(
+    '$watch nested arrays',
     html`
-        <div x-data="{ foo: {baz: ['one']}, bob: 'lob' }" x-init="$watch('foo.baz', value => { bob = value })">
+        <div
+            x-data="{ foo: {baz: ['one']}, bob: 'lob' }"
+            x-init="$watch('foo.baz', value => { bob = value })"
+        >
             <h1 x-text="foo.baz"></h1>
             <h2 x-text="bob"></h2>
 
@@ -129,12 +139,10 @@ test('$watch nested arrays',
     }
 )
 
-test('$watch ignores other dependencies',
+test(
+    '$watch ignores other dependencies',
     html`
-        <div
-            x-data="{ a: 0, b: 0, c: 0 }"
-            x-init="$watch('a', () => { c = a + b })"
-        >
+        <div x-data="{ a: 0, b: 0, c: 0 }" x-init="$watch('a', () => { c = a + b })">
             <button @click="a++" id="a">a</button>
             <button @click="b++" id="b">b</button>
             <span x-text="c"></span>
@@ -149,12 +157,15 @@ test('$watch ignores other dependencies',
     }
 )
 
-
-test('deep $watch',
+test(
+    'deep $watch',
     html`
-        <div x-data="{ foo: { bar: 'baz'}, bob: 'lob' }" x-init="
+        <div
+            x-data="{ foo: { bar: 'baz'}, bob: 'lob' }"
+            x-init="
             $watch('foo', value => { bob = value.bar }, {deep: true});
-        ">
+        "
+        >
             <h1 x-text="foo.bar"></h1>
             <h2 x-text="bob"></h2>
 
@@ -169,4 +180,3 @@ test('deep $watch',
         get('h2').should(haveText('law'))
     }
 )
-

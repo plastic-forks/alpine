@@ -53,13 +53,17 @@ test('lookahead still works if comparison elements have keys', async () => {
     dom.querySelector('li:nth-of-type(1)').is_me = true
     dom.querySelector('li:nth-of-type(2)').is_me = true
 
-    await morph(dom, `<ul>
+    await morph(
+        dom,
+        `<ul>
 <li key="foo">foo</li>
 <li key="bar">bar</li>
 <li>hey</li>
-</ul>`, {
-        lookahead: true,
-    })
+</ul>`,
+        {
+            lookahead: true,
+        }
+    )
 
     expect(dom.querySelector('li:nth-of-type(1)').is_me).toBeFalsy()
     expect(dom.querySelector('li:nth-of-type(2)').is_me).toBeTruthy()
@@ -77,15 +81,19 @@ test('baz', async () => {
     dom.querySelector('li:nth-of-type(1)').is_me = true
     dom.querySelector('li:nth-of-type(2)').is_me = true
 
-    await morph(dom, `<ul>
+    await morph(
+        dom,
+        `<ul>
 <li>foo</li>
 
 <li key="bar">bar</li>
 
 <li>hey</li>
-</ul>`, {
-        lookahead: true,
-    })
+</ul>`,
+        {
+            lookahead: true,
+        }
+    )
 
     expect(dom.querySelector('li:nth-of-type(1)').is_me).toBeFalsy()
     expect(dom.querySelector('li:nth-of-type(2)').is_me).toBeTruthy()
@@ -101,11 +109,14 @@ test('blah blah blah no lookahead', async () => {
 
     dom.querySelector('li:nth-of-type(1)').is_me = true
 
-    await morph(dom, `<ul>
+    await morph(
+        dom,
+        `<ul>
 <li key="foo">foo</li>
 <li key="bar">bar</li>
 <li>hey</li>
-</ul>`)
+</ul>`
+    )
 
     expect(dom.querySelector('li:nth-of-type(1)').is_me).toBeFalsy()
     expect(dom.querySelector('li:nth-of-type(2)').is_me).toBeTruthy()
@@ -114,6 +125,5 @@ test('blah blah blah no lookahead', async () => {
 })
 
 //
-
 
 // @todo: add test to make sure added nodes are cloned from the "to" tree

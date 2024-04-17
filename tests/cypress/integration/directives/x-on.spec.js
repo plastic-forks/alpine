@@ -1,6 +1,17 @@
-import { beChecked, notBeChecked, haveAttribute, haveData, haveText, test, beVisible, notBeVisible, html } from '../../utils'
+import {
+    beChecked,
+    notBeChecked,
+    haveAttribute,
+    haveData,
+    haveText,
+    test,
+    beVisible,
+    notBeVisible,
+    html,
+} from '../../utils'
 
-test('data modified in event listener updates affected attribute bindings',
+test(
+    'data modified in event listener updates affected attribute bindings',
     html`
         <div x-data="{ foo: 'bar' }">
             <button x-on:click="foo = 'baz'"></button>
@@ -15,7 +26,8 @@ test('data modified in event listener updates affected attribute bindings',
     }
 )
 
-test('can call a method without parenthesis',
+test(
+    'can call a method without parenthesis',
     html`
         <div x-data="{ foo: 'bar', baz($event) { this.foo = $event.target.dataset.bob } }">
             <button x-on:click="baz" data-bob="lob"></button>
@@ -30,7 +42,8 @@ test('can call a method without parenthesis',
     }
 )
 
-test('event object is not passed if other params are present',
+test(
+    'event object is not passed if other params are present',
     html`
         <div x-data="{ foo: 'bar', baz(word) { this.foo = word } }">
             <button x-on:click="baz('foo')" data-bob="lob"></button>
@@ -45,7 +58,8 @@ test('event object is not passed if other params are present',
     }
 )
 
-test('nested data modified in event listener updates affected attribute bindings',
+test(
+    'nested data modified in event listener updates affected attribute bindings',
     html`
         <div x-data="{ nested: { foo: 'bar' } }">
             <button x-on:click="nested.foo = 'baz'"></button>
@@ -60,7 +74,8 @@ test('nested data modified in event listener updates affected attribute bindings
     }
 )
 
-test('.passive modifier should disable e.preventDefault()',
+test(
+    '.passive modifier should disable e.preventDefault()',
     html`
         <div x-data="{ defaultPrevented: null }">
             <button
@@ -79,7 +94,8 @@ test('.passive modifier should disable e.preventDefault()',
     }
 )
 
-test('.stop modifier',
+test(
+    '.stop modifier',
     html`
         <div x-data="{ foo: 'bar' }">
             <button x-on:click="foo = 'baz'">
@@ -97,8 +113,8 @@ test('.stop modifier',
     }
 )
 
-
-test('.stop modifier with a .throttle',
+test(
+    '.stop modifier with a .throttle',
     html`
         <div x-data="{ foo: 'bar' }">
             <button x-on:click="foo = 'baz'">
@@ -117,7 +133,8 @@ test('.stop modifier with a .throttle',
     }
 )
 
-test('.capture modifier',
+test(
+    '.capture modifier',
     html`
         <div x-data="{ foo: 'bar', count: 0 }">
             <button @click.capture="count = count + 1; foo = 'baz'">
@@ -134,11 +151,12 @@ test('.capture modifier',
     }
 )
 
-test('.capture modifier with @keyup',
+test(
+    '.capture modifier with @keyup',
     html`
         <div x-data="{ foo: 'bar', count: 0 }">
             <span @keyup.capture="count = count + 1; foo = 'span'">
-                <input type="text" @keyup="foo = 'input'">
+                <input type="text" @keyup="foo = 'input'" />
             </span>
         </div>
     `,
@@ -150,11 +168,12 @@ test('.capture modifier with @keyup',
     }
 )
 
-test('.capture modifier with @keyup and specified key',
+test(
+    '.capture modifier with @keyup and specified key',
     html`
         <div x-data="{ foo: 'bar', count: 0 }">
             <span @keyup.enter.capture="count = count + 1; foo = 'span'">
-                <input type="text" @keyup.enter="foo = 'input'">
+                <input type="text" @keyup.enter="foo = 'input'" />
             </span>
         </div>
     `,
@@ -166,7 +185,8 @@ test('.capture modifier with @keyup and specified key',
     }
 )
 
-test('.self modifier',
+test(
+    '.self modifier',
     html`
         <div x-data="{ foo: 'bar' }">
             <h1 x-on:click.self="foo = 'baz'" id="selfTarget">
@@ -186,10 +206,11 @@ test('.self modifier',
     }
 )
 
-test('.prevent modifier',
+test(
+    '.prevent modifier',
     html`
         <div x-data="{}">
-            <input type="checkbox" x-on:click.prevent>
+            <input type="checkbox" x-on:click.prevent />
         </div>
     `,
     ({ get }) => {
@@ -198,10 +219,11 @@ test('.prevent modifier',
     }
 )
 
-test('.prevent modifier with a .debounce',
+test(
+    '.prevent modifier with a .debounce',
     html`
         <div x-data="{}">
-            <input type="checkbox" x-on:click.prevent.debounce>
+            <input type="checkbox" x-on:click.prevent.debounce />
         </div>
     `,
     ({ get }) => {
@@ -211,7 +233,8 @@ test('.prevent modifier with a .debounce',
     }
 )
 
-test('.window modifier',
+test(
+    '.window modifier',
     html`
         <div x-data="{ foo: 'bar' }">
             <div x-on:click.window="foo = 'baz'"></div>
@@ -226,7 +249,8 @@ test('.window modifier',
     }
 )
 
-test('expressions can start with if',
+test(
+    'expressions can start with if',
     html`
         <div x-data="{ foo: 'bar' }">
             <button @click="if (foo === 'bar') foo = 'baz'">click</button>
@@ -240,7 +264,8 @@ test('expressions can start with if',
     }
 )
 
-test('unbind global event handler when element is removed',
+test(
+    'unbind global event handler when element is removed',
     html`
         <div x-data="{ count: 0 }">
             <div x-on:click.window="count++" x-ref="rmMe"></div>
@@ -256,9 +281,10 @@ test('unbind global event handler when element is removed',
     }
 )
 
-test('.document modifier',
+test(
+    '.document modifier',
     html`
-       <div x-data="{ foo: 'bar' }">
+        <div x-data="{ foo: 'bar' }">
             <div x-on:click.document="foo = 'baz'"></div>
 
             <span x-text="foo"></span>
@@ -271,7 +297,8 @@ test('.document modifier',
     }
 )
 
-test('.once modifier',
+test(
+    '.once modifier',
     html`
         <div x-data="{ count: 0 }">
             <button x-on:click.once="count = count+1"></button>
@@ -288,10 +315,11 @@ test('.once modifier',
     }
 )
 
-test('.once modifier with @keyup',
+test(
+    '.once modifier with @keyup',
     html`
         <div x-data="{ count: 0 }">
-            <input type="text" x-on:keyup.once="count = count+1">
+            <input type="text" x-on:keyup.once="count = count+1" />
 
             <span x-text="count"></span>
         </div>
@@ -305,10 +333,11 @@ test('.once modifier with @keyup',
     }
 )
 
-test('.once modifier with @keyup and specified key',
+test(
+    '.once modifier with @keyup and specified key',
     html`
         <div x-data="{ count: 0 }">
-            <input type="text" x-on:keyup.enter.once="count = count+1">
+            <input type="text" x-on:keyup.enter.once="count = count+1" />
 
             <span x-text="count"></span>
         </div>
@@ -324,10 +353,11 @@ test('.once modifier with @keyup and specified key',
     }
 )
 
-test('.debounce modifier',
+test(
+    '.debounce modifier',
     html`
         <div x-data="{ count: 0 }">
-            <input x-on:input.debounce="count = count+1">
+            <input x-on:input.debounce="count = count+1" />
 
             <span x-text="count"></span>
         </div>
@@ -341,10 +371,11 @@ test('.debounce modifier',
     }
 )
 
-test('.throttle modifier',
+test(
+    '.throttle modifier',
     html`
         <div x-data="{ count: 0 }">
-            <input x-on:keyup.throttle.504ms="count = count+1">
+            <input x-on:keyup.throttle.504ms="count = count+1" />
             <span x-text="count"></span>
         </div>
     `,
@@ -357,10 +388,12 @@ test('.throttle modifier',
     }
 )
 
-test('keydown modifiers',
+test(
+    'keydown modifiers',
     html`
         <div x-data="{ count: 0 }">
-            <input type="text"
+            <input
+                type="text"
                 x-on:keydown="count++"
                 x-on:keydown.enter="count++"
                 x-on:keydown.space="count++"
@@ -376,7 +409,7 @@ test('keydown modifiers',
                 x-on:keydown.slash="count++"
                 x-on:keydown.period="count++"
                 x-on:keydown.equal="count++"
-            >
+            />
 
             <span x-text="count"></span>
         </div>
@@ -412,7 +445,8 @@ test('keydown modifiers',
     }
 )
 
-test('discerns between space minus underscore',
+test(
+    'discerns between space minus underscore',
     html`
         <div x-data="{ count: 0 }">
             <input id="space" type="text" x-on:keydown.space="count++" />
@@ -421,7 +455,7 @@ test('discerns between space minus underscore',
             <span x-text="count"></span>
         </div>
     `,
-    ({get}) => {
+    ({ get }) => {
         get('span').should(haveText('0'))
         get('#space').type(' ')
         get('span').should(haveText('1'))
@@ -435,12 +469,14 @@ test('discerns between space minus underscore',
         get('span').should(haveText('3'))
         get('#underscore').type(' ')
         get('span').should(haveText('3'))
-    })
+    }
+)
 
-test('keydown combo modifiers',
+test(
+    'keydown combo modifiers',
     html`
         <div x-data="{ count: 0 }">
-            <input type="text" x-on:keydown.cmd.enter="count++">
+            <input type="text" x-on:keydown.cmd.enter="count++" />
 
             <span x-text="count"></span>
         </div>
@@ -454,11 +490,12 @@ test('keydown combo modifiers',
     }
 )
 
-test('keydown with specified key and stop modifier only stops for specified key',
+test(
+    'keydown with specified key and stop modifier only stops for specified key',
     html`
         <div x-data="{ count: 0 }">
             <article x-on:keydown="count++">
-                <input type="text" x-on:keydown.enter.stop>
+                <input type="text" x-on:keydown.enter.stop />
             </article>
 
             <span x-text="count"></span>
@@ -473,7 +510,8 @@ test('keydown with specified key and stop modifier only stops for specified key'
     }
 )
 
-test('@click.away',
+test(
+    '@click.away',
     html`
         <div x-data="{ foo: 'bar' }">
             <h1 @click.away="foo = 'baz'">h1</h1>
@@ -492,7 +530,8 @@ test('@click.away',
     }
 )
 
-test('@click.away with x-show (prevent race condition)',
+test(
+    '@click.away with x-show (prevent race condition)',
     html`
         <div x-data="{ show: false }">
             <button @click="show = true">Show</button>
@@ -509,12 +548,17 @@ test('@click.away with x-show (prevent race condition)',
     }
 )
 
-test('event with colon',
+test(
+    'event with colon',
     html`
         <div x-data="{ foo: 'bar' }">
             <div x-on:my:event.document="foo = 'baz'"></div>
 
-            <button @click="document.dispatchEvent(new CustomEvent('my:event', { bubbles: true }))">click</button>
+            <button
+                @click="document.dispatchEvent(new CustomEvent('my:event', { bubbles: true }))"
+            >
+                click
+            </button>
 
             <span x-text="foo"></span>
         </div>
@@ -526,7 +570,8 @@ test('event with colon',
     }
 )
 
-test('event instance can be passed to method reference',
+test(
+    'event instance can be passed to method reference',
     html`
         <div x-data="{ foo: 'bar', changeFoo(e) { this.foo = e.target.id } }">
             <button x-on:click="changeFoo" id="baz"></button>
@@ -541,7 +586,8 @@ test('event instance can be passed to method reference',
     }
 )
 
-test('.camel modifier correctly binds event listener',
+test(
+    '.camel modifier correctly binds event listener',
     html`
         <div x-data="{ foo: 'bar' }" x-on:event-name.camel="foo = 'baz'">
             <button x-on:click="$dispatch('eventName')"></button>
@@ -556,7 +602,8 @@ test('.camel modifier correctly binds event listener',
     }
 )
 
-test('.camel modifier correctly binds event listener with namespace',
+test(
+    '.camel modifier correctly binds event listener with namespace',
     html`
         <div x-data="{ foo: 'bar' }" x-on:ns:event-name.camel="foo = 'baz'">
             <button x-on:click="$dispatch('ns:eventName')"></button>
@@ -571,7 +618,8 @@ test('.camel modifier correctly binds event listener with namespace',
     }
 )
 
-test('.dot modifier correctly binds event listener',
+test(
+    '.dot modifier correctly binds event listener',
     html`
         <div x-data="{ foo: 'bar' }" x-on:event-name.dot="foo = 'baz'">
             <button x-on:click="$dispatch('event.name')"></button>
@@ -585,7 +633,8 @@ test('.dot modifier correctly binds event listener',
         get('span').should(haveText('baz'))
     }
 )
-test('underscores are allowed in event names',
+test(
+    'underscores are allowed in event names',
     html`
         <div x-data="{ foo: 'bar' }" x-on:event_name="foo = 'baz'">
             <button x-on:click="$dispatch('event_name')"></button>
@@ -600,7 +649,8 @@ test('underscores are allowed in event names',
     }
 )
 
-test('.dot modifier correctly binds event listener with namespace',
+test(
+    '.dot modifier correctly binds event listener with namespace',
     html`
         <div x-data="{ foo: 'bar' }" x-on:ns:event-name.dot="foo = 'baz'">
             <button x-on:click="$dispatch('ns:event.name')"></button>
@@ -615,10 +665,13 @@ test('.dot modifier correctly binds event listener with namespace',
     }
 )
 
-test('handles await in handlers with invalid right hand expressions',
+test(
+    'handles await in handlers with invalid right hand expressions',
     html`
         <div x-data="{ text: 'original' }">
-            <button @click="let value = 'new string'; text = await Promise.resolve(value)"></button>
+            <button
+                @click="let value = 'new string'; text = await Promise.resolve(value)"
+            ></button>
             <span x-text="text"></span>
         </div>
     `,

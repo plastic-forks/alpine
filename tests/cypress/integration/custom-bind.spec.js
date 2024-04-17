@@ -1,11 +1,14 @@
 import { haveText, html, test } from '../utils'
 
-test('can register custom bind object',
+test(
+    'can register custom bind object',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.bind('Foo', {
-                    'x-init'() { this.$el.innerText = 'bar' },
+                    'x-init'() {
+                        this.$el.innerText = 'bar'
+                    },
                 })
             })
         </script>
@@ -15,12 +18,15 @@ test('can register custom bind object',
     ({ get }) => get('div').should(haveText('bar'))
 )
 
-test('can register custom bind as function',
+test(
+    'can register custom bind as function',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.bind('Foo', () => ({
-                    'x-init'() { this.$el.innerText = 'bar' },
+                    'x-init'() {
+                        this.$el.innerText = 'bar'
+                    },
                 }))
             })
         </script>
@@ -30,12 +36,15 @@ test('can register custom bind as function',
     ({ get }) => get('div').should(haveText('bar'))
 )
 
-test('can consume custom bind as function',
+test(
+    'can consume custom bind as function',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.bind('Foo', (subject) => ({
-                    'x-init'() { this.$el.innerText = subject },
+                    'x-init'() {
+                        this.$el.innerText = subject
+                    },
                 }))
             })
         </script>
@@ -45,12 +54,15 @@ test('can consume custom bind as function',
     ({ get }) => get('div').should(haveText('bar'))
 )
 
-test('can bind directives individually to an element',
+test(
+    'can bind directives individually to an element',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.bind(document.querySelector('#one'), () => ({
-                    'x-text'() { return 'foo' },
+                    'x-text'() {
+                        return 'foo'
+                    },
                 }))
             })
         </script>

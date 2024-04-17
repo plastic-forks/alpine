@@ -1,11 +1,15 @@
 import { haveValue, html, test } from '../utils'
 
-test.skip('can entangle to getter/setter pairs',
-    [html`
-    <div x-data="{ outer: 'foo' }">
-        <input x-model="outer" outer>
+test.skip(
+    'can entangle to getter/setter pairs',
+    [
+        html`
+            <div x-data="{ outer: 'foo' }">
+                <input x-model="outer" outer />
 
-        <div x-data="{ inner: 'bar' }" x-init="() => {}; Alpine.entangle(
+                <div
+                    x-data="{ inner: 'bar' }"
+                    x-init="() => {}; Alpine.entangle(
             {
                 get() { return outer },
                 set(value) { outer = value },
@@ -14,11 +18,13 @@ test.skip('can entangle to getter/setter pairs',
                 get() { return inner },
                 set(value) { inner = value },
             }
-        )">
-            <input x-model="inner" inner>
-        </div>
-    </div>
-    `],
+        )"
+                >
+                    <input x-model="inner" inner />
+                </div>
+            </div>
+        `,
+    ],
     ({ get }) => {
         get('input[outer]').should(haveValue('foo'))
         get('input[inner]').should(haveValue('foo'))
@@ -33,12 +39,16 @@ test.skip('can entangle to getter/setter pairs',
     }
 )
 
-test.skip('can release entanglement',
-    [html`
-        <div x-data="{ outer: 'foo' }">
-            <input x-model="outer" outer>
+test.skip(
+    'can release entanglement',
+    [
+        html`
+            <div x-data="{ outer: 'foo' }">
+                <input x-model="outer" outer />
 
-            <div x-data="{ inner: 'bar', release: () => {} }" x-init="() => {}; release = Alpine.entangle(
+                <div
+                    x-data="{ inner: 'bar', release: () => {} }"
+                    x-init="() => {}; release = Alpine.entangle(
                 {
                     get() { return outer },
                     set(value) { outer = value },
@@ -47,13 +57,15 @@ test.skip('can release entanglement',
                     get() { return inner },
                     set(value) { inner = value },
                 }
-            )">
-                <input x-model="inner" inner>
+            )"
+                >
+                    <input x-model="inner" inner />
 
-                <button @click="release()">release</button>
+                    <button @click="release()">release</button>
+                </div>
             </div>
-        </div>
-    `],
+        `,
+    ],
     ({ get }) => {
         get('input[outer]').should(haveValue('foo'))
         get('input[inner]').should(haveValue('foo'))
@@ -71,7 +83,7 @@ test.skip('can release entanglement',
 )
 
 test(
-    "can handle undefined",
+    'can handle undefined',
     [
         html`
             <div x-data="{ outer: undefined }">
@@ -96,11 +108,11 @@ test(
         `,
     ],
     ({ get }) => {
-        get("input[outer]").should(haveValue(''));
-        get("input[inner]").should(haveValue(''));
+        get('input[outer]').should(haveValue(''))
+        get('input[inner]').should(haveValue(''))
 
-        get("input[inner]").type("bar");
-        get("input[inner]").should(haveValue("bar"));
-        get("input[outer]").should(haveValue("bar"));
+        get('input[inner]').type('bar')
+        get('input[inner]').should(haveValue('bar'))
+        get('input[outer]').should(haveValue('bar'))
     }
-);
+)

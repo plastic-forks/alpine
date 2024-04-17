@@ -7,7 +7,10 @@
 const dataTransfer = new DataTransfer()
 
 function omit(object = {}, keys = []) {
-    return Object.entries(object).reduce((accum, [key, value]) => (key in keys ? accum : { ...accum, [key]: value }), {})
+    return Object.entries(object).reduce(
+        (accum, [key, value]) => (key in keys ? accum : { ...accum, [key]: value }),
+        {}
+    )
 }
 
 function isAttached(element) {
@@ -20,7 +23,12 @@ const DragSimulator = {
     counter: 0,
     targetElement: null,
     rectsEqual(r1, r2) {
-        return r1.top === r2.top && r1.right === r2.right && r1.bottom === r2.bottom && r1.left === r2.left
+        return (
+            r1.top === r2.top &&
+            r1.right === r2.right &&
+            r1.bottom === r2.bottom &&
+            r1.left === r2.left
+        )
     },
     createDefaultOptions(options) {
         const commonOptions = omit(options, ['source', 'target'])
@@ -58,7 +66,11 @@ const DragSimulator = {
                 eventConstructor: 'MouseEvent',
                 ...this.options.source,
             })
-            .trigger('dragstart', { dataTransfer, eventConstructor: 'DragEvent', ...this.options.source })
+            .trigger('dragstart', {
+                dataTransfer,
+                eventConstructor: 'DragEvent',
+                ...this.options.source,
+            })
     },
     drop(clientPosition = {}) {
         return this.target

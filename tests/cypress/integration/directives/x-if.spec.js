@@ -1,6 +1,7 @@
 import { exist, haveText, html, notExist, test } from '../../utils'
 
-test('x-if',
+test(
+    'x-if',
     html`
         <div x-data="{ show: false }">
             <button @click="show = ! show">Toggle</button>
@@ -19,10 +20,10 @@ test('x-if',
     }
 )
 
-test('x-if inside x-for allows nested directives',
+test(
+    'x-if inside x-for allows nested directives',
     html`
         <div x-data="{items: [{id: 1, label: '1'}]}">
-
             <template x-for="item in items" :key="item.id">
                 <div>
                     <template x-if="item.label">
@@ -37,7 +38,8 @@ test('x-if inside x-for allows nested directives',
     }
 )
 
-test('x-if initializes after being added to the DOM to allow x-ref to work',
+test(
+    'x-if initializes after being added to the DOM to allow x-ref to work',
     html`
         <div x-data="{}">
             <template x-if="true">
@@ -53,15 +55,15 @@ test('x-if initializes after being added to the DOM to allow x-ref to work',
 )
 
 // If x-if evaluates to false, the expectation is that no sub-expressions will be evaluated.
-test('x-if removed dom does not evaluate reactive expressions in dom tree',
+test(
+    'x-if removed dom does not evaluate reactive expressions in dom tree',
     html`
-    <div x-data="{user: {name: 'lebowski'}}">
-        <button @click="user = null">Log out</button>
-        <template x-if="user">
-            <span x-text="user.name"></span>
-        </template>
-
-    </div>
+        <div x-data="{user: {name: 'lebowski'}}">
+            <button @click="user = null">Log out</button>
+            <template x-if="user">
+                <span x-text="user.name"></span>
+            </template>
+        </div>
     `,
     ({ get }) => {
         get('span').should(haveText('lebowski'))
@@ -76,32 +78,35 @@ test('x-if removed dom does not evaluate reactive expressions in dom tree',
 
 // Attempting to skip an already-flushed reactive effect would cause inconsistencies when updating other effects.
 // See https://github.com/alpinejs/alpine/issues/2803 for more details.
-test('x-if removed dom does not attempt skipping already-processed reactive effects in dom tree',
+test(
+    'x-if removed dom does not attempt skipping already-processed reactive effects in dom tree',
     html`
-    <div x-data="{
+        <div
+            x-data="{
         isEditing: true,
         foo: 'random text',
         stopEditing() {
           this.foo = '';
           this.isEditing = false;
         },
-    }">
-        <button @click="stopEditing">Stop editing</button>
-        <template x-if="isEditing">
-            <div id="div-editing">
-              <h2>Editing</h2>
-              <input id="foo" name="foo" type="text" x-model="foo" />
-            </div>
-        </template>
+    }"
+        >
+            <button @click="stopEditing">Stop editing</button>
+            <template x-if="isEditing">
+                <div id="div-editing">
+                    <h2>Editing</h2>
+                    <input id="foo" name="foo" type="text" x-model="foo" />
+                </div>
+            </template>
 
-        <template x-if="!isEditing">
-            <div id="div-not-editing"><h2>Not editing</h2></div>
-        </template>
+            <template x-if="!isEditing">
+                <div id="div-not-editing"><h2>Not editing</h2></div>
+            </template>
 
-        <template x-if="!isEditing">
-            <div id="div-also-not-editing"><h2>Also not editing</h2></div>
-        </template>
-    </div>
+            <template x-if="!isEditing">
+                <div id="div-also-not-editing"><h2>Also not editing</h2></div>
+            </template>
+        </div>
     `,
     ({ get }) => {
         get('button').click()

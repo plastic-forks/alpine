@@ -1,6 +1,7 @@
 import { exist, haveLength, haveText, html, notExist, test } from '../../utils'
 
-test('renders loops with x-for',
+test(
+    'renders loops with x-for',
     html`
         <div x-data="{ items: ['foo'] }">
             <button x-on:click="items = ['foo', 'bar']">click me</button>
@@ -19,27 +20,32 @@ test('renders loops with x-for',
     }
 )
 
-test('renders loops with x-for that have space or newline',
+test(
+    'renders loops with x-for that have space or newline',
     html`
         <div x-data="{ items: ['foo'] }">
             <button x-on:click="items = ['foo', 'bar']">click me</button>
 
             <div x-bind:id="1">
-                <template x-for="
+                <template
+                    x-for="
                     (
                         item
                     ) in items
-                ">
+                "
+                >
                     <span x-text="item"></span>
                 </template>
             </div>
 
             <div x-bind:id="2">
-                <template x-for=" (
+                <template
+                    x-for=" (
                         item,
                         index
                     ) in items
-                ">
+                "
+                >
                     <span x-text="item"></span>
                 </template>
             </div>
@@ -58,7 +64,8 @@ test('renders loops with x-for that have space or newline',
     }
 )
 
-test('can destructure arrays',
+test(
+    'can destructure arrays',
     html`
         <div x-data="{ items: [[1, 'foo'], [2, 'bar']] }">
             <template x-for="[id, label] in items">
@@ -77,7 +84,8 @@ test('can destructure arrays',
     }
 )
 
-test('can destructure object',
+test(
+    'can destructure object',
     html`
         <div x-data="{ items: [{ foo: 'oof', bar: 'rab' }, { foo: 'ofo', bar: 'arb' }] }">
             <template x-for="({ foo, bar }, i) in items">
@@ -96,7 +104,8 @@ test('can destructure object',
     }
 )
 
-test('removes all elements when array is empty and previously had one item',
+test(
+    'removes all elements when array is empty and previously had one item',
     html`
         <div x-data="{ items: ['foo'] }">
             <button x-on:click="items = []">click me</button>
@@ -113,7 +122,8 @@ test('removes all elements when array is empty and previously had one item',
     }
 )
 
-test('removes all elements when array is empty and previously had multiple items',
+test(
+    'removes all elements when array is empty and previously had multiple items',
     html`
         <div x-data="{ items: ['foo', 'bar', 'world'] }">
             <button x-on:click="items = []">click me</button>
@@ -134,7 +144,8 @@ test('removes all elements when array is empty and previously had multiple items
     }
 )
 
-test('elements inside of loop are reactive',
+test(
+    'elements inside of loop are reactive',
     html`
         <div x-data="{ items: ['first'], foo: 'bar' }">
             <button x-on:click="foo = 'baz'">click me</button>
@@ -158,7 +169,8 @@ test('elements inside of loop are reactive',
     }
 )
 
-test('components inside of loop are reactive',
+test(
+    'components inside of loop are reactive',
     html`
         <div x-data="{ items: ['first'] }">
             <template x-for="item in items">
@@ -176,7 +188,8 @@ test('components inside of loop are reactive',
     }
 )
 
-test('components inside a plain element of loop are reactive',
+test(
+    'components inside a plain element of loop are reactive',
     html`
         <div x-data="{ items: ['first'] }">
             <template x-for="item in items">
@@ -196,11 +209,19 @@ test('components inside a plain element of loop are reactive',
     }
 )
 
-test('adding key attribute moves dom nodes properly',
+test(
+    'adding key attribute moves dom nodes properly',
     html`
         <div x-data="{ items: ['foo', 'bar'] }">
-            <button x-on:click="items = ['bob', 'bar', 'foo', 'baz']" id="reorder">click me</button>
-            <button x-on:click="$el.parentElement.querySelectorAll('span').forEach((el, index) => el.og_loop_index = index)" id="assign">click me</button>
+            <button x-on:click="items = ['bob', 'bar', 'foo', 'baz']" id="reorder">
+                click me
+            </button>
+            <button
+                x-on:click="$el.parentElement.querySelectorAll('span').forEach((el, index) => el.og_loop_index = index)"
+                id="assign"
+            >
+                click me
+            </button>
 
             <template x-for="item in items" :key="item">
                 <span x-text="item"></span>
@@ -208,7 +229,7 @@ test('adding key attribute moves dom nodes properly',
         </div>
     `,
     ({ get }) => {
-        let haveOgIndex = index => el => expect(el[0].og_loop_index).to.equal(index)
+        let haveOgIndex = (index) => (el) => expect(el[0].og_loop_index).to.equal(index)
 
         get('#assign').click()
         get('span:nth-of-type(1)').should(haveOgIndex(0))
@@ -221,11 +242,17 @@ test('adding key attribute moves dom nodes properly',
     }
 )
 
-test('can key by index',
+test(
+    'can key by index',
     html`
         <div x-data="{ items: ['foo', 'bar'] }">
             <button x-on:click="items = ['bar', 'foo', 'baz']" id="reorder">click me</button>
-            <button x-on:click="$el.parentElement.querySelectorAll('span').forEach((el, index) => el.og_loop_index = index)" id="assign">click me</button>
+            <button
+                x-on:click="$el.parentElement.querySelectorAll('span').forEach((el, index) => el.og_loop_index = index)"
+                id="assign"
+            >
+                click me
+            </button>
 
             <template x-for="(item, index) in items" :key="index">
                 <span x-text="item"></span>
@@ -233,7 +260,7 @@ test('can key by index',
         </div>
     `,
     ({ get }) => {
-        let haveOgIndex = index => el => expect(el[0].og_loop_index).to.equal(index)
+        let haveOgIndex = (index) => (el) => expect(el[0].og_loop_index).to.equal(index)
 
         get('#assign').click()
         get('span:nth-of-type(1)').should(haveOgIndex(0))
@@ -245,7 +272,8 @@ test('can key by index',
     }
 )
 
-test('can use index inside of loop',
+test(
+    'can use index inside of loop',
     html`
         <div x-data="{ items: ['foo'] }">
             <template x-for="(item, index) in items">
@@ -262,7 +290,8 @@ test('can use index inside of loop',
     }
 )
 
-test('can use third iterator param (collection) inside of loop',
+test(
+    'can use third iterator param (collection) inside of loop',
     html`
         <div x-data="{ items: ['foo'] }">
             <template x-for="(item, index, things) in items">
@@ -279,7 +308,8 @@ test('can use third iterator param (collection) inside of loop',
     }
 )
 
-test('listeners in loop get fresh iteration data even though they are only registered initially',
+test(
+    'listeners in loop get fresh iteration data even though they are only registered initially',
     html`
         <div x-data="{ items: ['foo'], output: '' }">
             <button x-on:click="items = ['bar']">click me</button>
@@ -301,10 +331,13 @@ test('listeners in loop get fresh iteration data even though they are only regis
     }
 )
 
-test('nested x-for',
+test(
+    'nested x-for',
     html`
         <div x-data="{ foos: [ {bars: ['bob', 'lob']} ] }">
-            <button x-on:click="foos = [ {bars: ['bob', 'lob']}, {bars: ['law']} ]">click me</button>
+            <button x-on:click="foos = [ {bars: ['bob', 'lob']}, {bars: ['law']} ]">
+                click me
+            </button>
             <template x-for="foo in foos">
                 <h1>
                     <template x-for="bar in foo.bars">
@@ -325,10 +358,15 @@ test('nested x-for',
     }
 )
 
-test('x-for updates the right elements when new item are inserted at the beginning of the list',
+test(
+    'x-for updates the right elements when new item are inserted at the beginning of the list',
     html`
         <div x-data="{ items: [{name: 'one', key: '1'}, {name: 'two', key: '2'}] }">
-            <button x-on:click="items = [{name: 'zero', key: '0'}, {name: 'one', key: '1'}, {name: 'two', key: '2'}]">click me</button>
+            <button
+                x-on:click="items = [{name: 'zero', key: '0'}, {name: 'one', key: '1'}, {name: 'two', key: '2'}]"
+            >
+                click me
+            </button>
 
             <template x-for="item in items" :key="item.key">
                 <span x-text="item.name"></span>
@@ -345,9 +383,12 @@ test('x-for updates the right elements when new item are inserted at the beginni
     }
 )
 
-test('nested x-for access outer loop variable',
+test(
+    'nested x-for access outer loop variable',
     html`
-        <div x-data="{ foos: [ {name: 'foo', bars: ['bob', 'lob']}, {name: 'baz', bars: ['bab', 'lab']} ] }">
+        <div
+            x-data="{ foos: [ {name: 'foo', bars: ['bob', 'lob']}, {name: 'baz', bars: ['bab', 'lab']} ] }"
+        >
             <template x-for="foo in foos">
                 <h1>
                     <template x-for="bar in foo.bars">
@@ -365,7 +406,8 @@ test('nested x-for access outer loop variable',
     }
 )
 
-test('sibling x-for do not interact with each other',
+test(
+    'sibling x-for do not interact with each other',
     html`
         <div x-data="{ foos: [1], bars: [1, 2] }">
             <template x-for="foo in foos">
@@ -390,7 +432,8 @@ test('sibling x-for do not interact with each other',
     }
 )
 
-test('x-for over range using i in x syntax',
+test(
+    'x-for over range using i in x syntax',
     html`
         <div x-data>
             <template x-for="i in 10">
@@ -401,7 +444,8 @@ test('x-for over range using i in x syntax',
     ({ get }) => get('span').should(haveLength('10'))
 )
 
-test('x-for over range using i in property syntax',
+test(
+    'x-for over range using i in property syntax',
     html`
         <div x-data="{ count: 10 }">
             <template x-for="i in count">
@@ -412,7 +456,8 @@ test('x-for over range using i in property syntax',
     ({ get }) => get('span').should(haveLength('10'))
 )
 
-test.retry(2)('x-for with an array of numbers',
+test.retry(2)(
+    'x-for with an array of numbers',
     `
         <div x-data="{ items: [] }">
             <template x-for="i in items">
@@ -431,7 +476,8 @@ test.retry(2)('x-for with an array of numbers',
     }
 )
 
-test('x-for works with undefined',
+test(
+    'x-for works with undefined',
     `
         <div x-data="{ items: undefined }">
             <template x-for="i in items">
@@ -447,7 +493,8 @@ test('x-for works with undefined',
     }
 )
 
-test('x-for works with variables that start with let',
+test(
+    'x-for works with variables that start with let',
     `
         <ul x-data="{ letters: ['a','b','c'] }">
           <template x-for="letter in letters">
@@ -462,7 +509,8 @@ test('x-for works with variables that start with let',
     }
 )
 
-test('x-for works with variables that start with const',
+test(
+    'x-for works with variables that start with const',
     `
         <ul x-data="{ constants: ['a','b','c'] }">
           <template x-for="constant in constants">
@@ -477,7 +525,8 @@ test('x-for works with variables that start with const',
     }
 )
 
-test('renders children in the right order when combined with x-if',
+test(
+    'renders children in the right order when combined with x-if',
     html`
         <div x-data="{ items: ['foo', 'bar'] }">
             <template x-for="item in items">
@@ -493,7 +542,8 @@ test('renders children in the right order when combined with x-if',
     }
 )
 
-test('correctly renders x-if children when reordered',
+test(
+    'correctly renders x-if children when reordered',
     html`
         <div x-data="{ items: ['foo', 'bar'] }">
             <button @click="items = ['bar', 'foo']">click me</button>
@@ -525,7 +575,8 @@ test('correctly renders x-if children when reordered',
     }
 )
 //If an x-for element is removed from DOM, expectation is that the removed DOM element will not have any of its reactive expressions evaluated after removal.
-test('x-for removed dom node does not evaluate child expressions after being removed',
+test(
+    'x-for removed dom node does not evaluate child expressions after being removed',
     html`
         <div x-data="{ users: [{ name: 'lebowski' }] }">
             <template x-for="(user, idx) in users">
@@ -546,7 +597,8 @@ test('x-for removed dom node does not evaluate child expressions after being rem
     }
 )
 
-test('renders children using directives injected by x-html correctly',
+test(
+    'renders children using directives injected by x-html correctly',
     html`
         <div x-data="{foo: 'bar'}">
             <template x-for="i in 2">
@@ -579,11 +631,14 @@ test(
         get('button').click()
         get('#item-1 span:nth-of-type(1)').should(haveText('3'))
         get('#item-2 span:nth-of-type(1)').should(haveText('4'))
-})
+    }
+)
 
-test('x-for throws descriptive error when key is undefined',
+test(
+    'x-for throws descriptive error when key is undefined',
     html`
-        <div x-data="{ items: [
+        <div
+            x-data="{ items: [
             {
                 id: 1,
                 name: 'foo',
@@ -596,7 +651,8 @@ test('x-for throws descriptive error when key is undefined',
                 id: 3,
                 name: 'baz',
             },
-        ]}">
+        ]}"
+        >
             <template x-for="item in items" :key="item.doesntExist">
                 <span x-text="i"></span>
             </template>

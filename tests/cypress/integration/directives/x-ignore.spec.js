@@ -1,6 +1,7 @@
 import { haveText, html, notHaveClasses, notHaveText, test } from '../../utils'
 
-test('x-ignore',
+test(
+    'x-ignore',
     html`
         <div x-data="{ foo: 'bar' }">
             <div x-ignore>
@@ -11,7 +12,8 @@ test('x-ignore',
     ({ get }) => get('span').should(notHaveText('bar'))
 )
 
-test('x-ignore.self',
+test(
+    'x-ignore.self',
     html`
         <div x-data="{ foo: 'bar' }">
             <h1 x-ignore.self :class="foo">

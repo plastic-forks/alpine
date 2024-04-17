@@ -1,6 +1,7 @@
 import { haveText, notHaveText, html, test } from '../../utils'
 
-test('sets html on init',
+test(
+    'sets html on init',
     html`
         <div x-data="{ foo: '<h1>hey</h1>' }">
             <span x-html="foo"></span>
@@ -11,7 +12,8 @@ test('sets html on init',
     }
 )
 
-test('sets html on update',
+test(
+    'sets html on update',
     html`
         <div x-data="{ foo: '' }">
             <button x-on:click="foo = '<h1>hey</h1>'">Show "bar"</button>
@@ -26,7 +28,8 @@ test('sets html on update',
     }
 )
 
-test('x-html allows alpine code within',
+test(
+    'x-html allows alpine code within',
     html`
         <div x-data="{ foo: '<h1  x-text=&quot;bar&quot;></h1>', bar: 'baz' }" x-html="foo"></div>
     `,
@@ -35,7 +38,8 @@ test('x-html allows alpine code within',
     }
 )
 
-test('x-html runs even after x-if or x-for',
+test(
+    'x-html runs even after x-if or x-for',
     html`
         <div x-data="{ html: '<span x-text=&quot;foo&quot;></span>', foo: 'bar' }">
             <template x-if="true">

@@ -1,6 +1,7 @@
 import { haveAttribute, haveText, html, test } from '../../utils'
 
-test('$id generates a unique id',
+test(
+    '$id generates a unique id',
     html`
         <div x-data x-id="['foo']" id="1">
             <div>
@@ -26,16 +27,20 @@ test('$id generates a unique id',
     }
 )
 
-test('$id works with keys and nested data scopes',
+test(
+    '$id works with keys and nested data scopes',
     html`
         <div x-data x-id="['foo']" id="1">
             <!-- foo-1-3 -->
             <span :aria-activedescendant="$id('foo', 3)"></span>
 
             <ul>
-                <li x-data :id="$id('foo', 1)"></li> <!-- foo-1-1 -->
-                <li x-data :id="$id('foo', 2)"></li> <!-- foo-1-2 -->
-                <li x-data :id="$id('foo', 3)"></li> <!-- foo-1-3 -->
+                <li x-data :id="$id('foo', 1)"></li>
+                <!-- foo-1-1 -->
+                <li x-data :id="$id('foo', 2)"></li>
+                <!-- foo-1-2 -->
+                <li x-data :id="$id('foo', 3)"></li>
+                <!-- foo-1-3 -->
             </ul>
         </div>
 
@@ -44,9 +49,12 @@ test('$id works with keys and nested data scopes',
             <span :aria-activedescendant="$id('foo', 3)"></span>
 
             <ul>
-                <li x-data :id="$id('foo', 1)"></li> <!-- foo-2-1 -->
-                <li x-data :id="$id('foo', 2)"></li> <!-- foo-2-2 -->
-                <li x-data :id="$id('foo', 3)"></li> <!-- foo-2-3 -->
+                <li x-data :id="$id('foo', 1)"></li>
+                <!-- foo-2-1 -->
+                <li x-data :id="$id('foo', 2)"></li>
+                <!-- foo-2-2 -->
+                <li x-data :id="$id('foo', 3)"></li>
+                <!-- foo-2-3 -->
             </ul>
         </div>
     `,
@@ -62,15 +70,18 @@ test('$id works with keys and nested data scopes',
     }
 )
 
-test('$id scopes are grouped by name',
+test(
+    '$id scopes are grouped by name',
     html`
         <div x-data x-id="['foo']">
             <!-- foo-1 -->
             <span :aria-activedescendant="$id('foo')"></span>
 
             <ul>
-                <li x-data x-id="['bar']" :id="$id('bar')"></li> <!-- bar-1 -->
-                <li x-data x-id="['bar']" :id="$id('bar')"></li> <!-- bar-2 -->
+                <li x-data x-id="['bar']" :id="$id('bar')"></li>
+                <!-- bar-1 -->
+                <li x-data x-id="['bar']" :id="$id('bar')"></li>
+                <!-- bar-2 -->
             </ul>
         </div>
     `,
@@ -81,7 +92,8 @@ test('$id scopes are grouped by name',
     }
 )
 
-test('$ids are globally unique when outside x-id',
+test(
+    '$ids are globally unique when outside x-id',
     html`
         <div x-data>
             <h1 :id="$id('foo')"></h1>
@@ -94,7 +106,8 @@ test('$ids are globally unique when outside x-id',
     }
 )
 
-test('$id scopes can be reset',
+test(
+    '$id scopes can be reset',
     html`
         <div x-data x-id="['foo', 'bar']">
             <!-- foo-1 -->
@@ -128,16 +141,19 @@ test('$id scopes can be reset',
     }
 )
 
-test('can be used with morph without losing track',
-    [html`
-        <div x-data>
-            <p x-id="['foo']">
-                <span :id="$id('foo')">bob</span>
-            </p>
+test(
+    'can be used with morph without losing track',
+    [
+        html`
+            <div x-data>
+                <p x-id="['foo']">
+                    <span :id="$id('foo')">bob</span>
+                </p>
 
-            <h1 :id="$id('bar')">lob</h1>
-        </div>
-    `],
+                <h1 :id="$id('bar')">lob</h1>
+            </div>
+        `,
+    ],
     ({ get }, reload, window, document) => {
         let toHtml = html`
             <div x-data>
@@ -156,5 +172,5 @@ test('can be used with morph without losing track',
 
         get('span').should(haveAttribute('id', 'foo-1'))
         get('h1').should(haveAttribute('id', 'bar-1'))
-    },
+    }
 )

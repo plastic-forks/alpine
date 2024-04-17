@@ -1,6 +1,7 @@
 import { haveText, html, test } from '../../utils'
 
-test('x-data attribute value is optional',
+test(
+    'x-data attribute value is optional',
     html`
         <div x-data>
             <span x-text="'foo'"></span>
@@ -9,7 +10,8 @@ test('x-data attribute value is optional',
     ({ get }) => get('span').should(haveText('foo'))
 )
 
-test('x-data can be nested',
+test(
+    'x-data can be nested',
     html`
         <div x-data="{ foo: 'bar', bar: 'baz' }">
             <div x-data="{ bar: 'bob' }">
@@ -43,12 +45,13 @@ test('x-data can be nested',
     }
 )
 
-test('x-data can use attributes from a reusable function',
+test(
+    'x-data can use attributes from a reusable function',
     html`
         <script>
             window.test = () => {
                 return {
-                    foo: 'bar'
+                    foo: 'bar',
                 }
             }
         </script>
@@ -59,7 +62,8 @@ test('x-data can use attributes from a reusable function',
     ({ get }) => get('span').should(haveText('bar'))
 )
 
-test('x-data can use $el',
+test(
+    'x-data can use $el',
     html`
         <div x-data="{ text: $el.dataset.text }" data-text="test">
             <span x-text="text"></span>
@@ -68,7 +72,8 @@ test('x-data can use $el',
     ({ get }) => get('span').should(haveText('test'))
 )
 
-test('functions in x-data are reactive',
+test(
+    'functions in x-data are reactive',
     html`
         <div x-data="{ foo: 'bar', getFoo() {return this.foo}}">
             <span x-text="getFoo()"></span>
@@ -82,7 +87,8 @@ test('functions in x-data are reactive',
     }
 )
 
-test('functions in x-data have access to proper this context',
+test(
+    'functions in x-data have access to proper this context',
     html`
         <div x-data="{ foo: undefined, change() { this.foo = 'baz' }}" x-init="foo = 'bar'">
             <button @click="change()">change</button>
@@ -96,31 +102,37 @@ test('functions in x-data have access to proper this context',
     }
 )
 
-test('x-data works on the html tag',
-    [html`
-        <div>
-            <span x-text="'foo'"></span>
-        </div>
-    `,
-    `
+test(
+    'x-data works on the html tag',
+    [
+        html`
+            <div>
+                <span x-text="'foo'"></span>
+            </div>
+        `,
+        `
         document.querySelector('html').setAttribute('x-data', '')
-    `],
+    `,
+    ],
     ({ get }) => {
         get('span').should(haveText('foo'))
     }
 )
 
-test('x-data getters have access to parent scope',
+test(
+    'x-data getters have access to parent scope',
     html`
-    <div x-data="{ foo: 'bar' }">
-        <div x-data="{
+        <div x-data="{ foo: 'bar' }">
+            <div
+                x-data="{
             get bob() {
                 return this.foo
             }
-        }">
-            <h1 x-text="bob"></h1>
+        }"
+            >
+                <h1 x-text="bob"></h1>
+            </div>
         </div>
-    </div>
     `,
     ({ get }) => get('h1').should(haveText('bar'))
 )

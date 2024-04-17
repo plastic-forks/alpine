@@ -1,6 +1,7 @@
 import { haveText, html, test } from '../utils'
 
-test('can set a custom x- prefix',
+test(
+    'can set a custom x- prefix',
     html`
         <script>
             document.addEventListener('alpine:init', () => {

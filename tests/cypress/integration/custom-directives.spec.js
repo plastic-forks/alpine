@@ -1,30 +1,35 @@
 import { haveText, haveAttribute, html, test } from '../utils'
 
-test('can register custom directive',
-    [html`
-        <div x-data>
-            <span x-foo:bar.baz="bob"></span>
-        </div>
-    `,
-    `
+test(
+    'can register custom directive',
+    [
+        html`
+            <div x-data>
+                <span x-foo:bar.baz="bob"></span>
+            </div>
+        `,
+        `
         Alpine.directive('foo', (el, { value, modifiers, expression }) => {
             el.textContent = value+modifiers+expression
         })
-    `],
+    `,
+    ],
     ({ get }) => get('span').should(haveText('barbazbob'))
 )
 
-test('directives are auto cleaned up',
-    [html`
-        <div x-data="{ count: 0 }">
-            <span x-foo x-ref="foo"></span>
-            <h1 x-text="count"></h1>
+test(
+    'directives are auto cleaned up',
+    [
+        html`
+            <div x-data="{ count: 0 }">
+                <span x-foo x-ref="foo"></span>
+                <h1 x-text="count"></h1>
 
-            <button @click="count++" id="change">change</button>
-            <button @click="$refs.foo.remove()" id="remove">remove</button>
-        </div>
-    `,
-    `
+                <button @click="count++" id="change">change</button>
+                <button @click="$refs.foo.remove()" id="remove">remove</button>
+            </div>
+        `,
+        `
         Alpine.directive('foo', (el, {}, { effect, cleanup, evaluateLater }) => {
             let incCount = evaluateLater('count++')
 
@@ -37,7 +42,8 @@ test('directives are auto cleaned up',
                 incCount()
             })
         })
-    `],
+    `,
+    ],
     ({ get }) => {
         get('h1').should(haveText('1'))
         get('#change').click()
@@ -50,16 +56,19 @@ test('directives are auto cleaned up',
     }
 )
 
-test('can register a custom directive before an existing one',
-    [html`
-        <div x-data>
-            <span x-foo x-bind:foo="foo"></span>
-        </div>
-    `,
-    `
+test(
+    'can register a custom directive before an existing one',
+    [
+        html`
+            <div x-data>
+                <span x-foo x-bind:foo="foo"></span>
+            </div>
+        `,
+        `
         Alpine.directive('foo', (el, { value, modifiers, expression }) => {
             Alpine.addScopeToNode(el, {foo: 'bar'})
         }).before('bind')
-    `],
+    `,
+    ],
     ({ get }) => get('span').should(haveAttribute('foo', 'bar'))
 )

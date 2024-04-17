@@ -34,7 +34,7 @@
             }
 
             // Load all injected script tags.
-            root.querySelectorAll('script').forEach(el => {
+            root.querySelectorAll('script').forEach((el) => {
                 eval(el.innerHTML)
             })
 

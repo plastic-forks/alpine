@@ -1,6 +1,7 @@
 import { haveText, html, test } from '../utils'
 
-test('can register custom magic properties',
+test(
+    'can register custom magic properties',
     html`
         <script>
             document.addEventListener('alpine:init', () => {
@@ -17,7 +18,8 @@ test('can register custom magic properties',
     ({ get }) => get('span').should(haveText('baz'))
 )
 
-test('magics are lazily accessed',
+test(
+    'magics are lazily accessed',
     html`
         <script>
             window.hasBeenAccessed = false
