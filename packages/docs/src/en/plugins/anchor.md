@@ -62,7 +62,7 @@ For example, here's a simple dropdown anchored to the button that toggles it:
 
 ```alpine
 <div x-data="{ open: false }">
-    <button x-ref="button" @click="open = ! open">Toggle</button>
+    <button x-ref="button" x-on:click="open = ! open">Toggle</button>
 
     <div x-show="open" x-anchor="$refs.button">
         Dropdown content
@@ -73,7 +73,7 @@ For example, here's a simple dropdown anchored to the button that toggles it:
 <!-- START_VERBATIM -->
 <div x-data="{ open: false }" class="demo overflow-hidden">
     <div class="flex justify-center">
-        <button x-ref="button" @click="open = ! open">Toggle</button>
+        <button x-ref="button" x-on:click="open = ! open">Toggle</button>
     </div>
 
     <div x-show="open" x-anchor="$refs.button" class="bg-white rounded p-4 border shadow z-10">
@@ -96,7 +96,7 @@ Here is an example of using `.bottom-start` to position a dropdown below and to 
 
 ```alpine
 <div x-data="{ open: false }">
-    <button x-ref="button" @click="open = ! open">Toggle</button>
+    <button x-ref="button" x-on:click="open = ! open">Toggle</button>
 
     <div x-show="open" x-anchor.bottom-start="$refs.button">
         Dropdown content
@@ -107,7 +107,7 @@ Here is an example of using `.bottom-start` to position a dropdown below and to 
 <!-- START_VERBATIM -->
 <div x-data="{ open: false }" class="demo overflow-hidden">
     <div class="flex justify-center">
-        <button x-ref="button" @click="open = ! open">Toggle</button>
+        <button x-ref="button" x-on:click="open = ! open">Toggle</button>
     </div>
 
     <div x-show="open" x-anchor.bottom-start="$refs.button" class="bg-white rounded p-4 border shadow z-10">
@@ -123,7 +123,7 @@ You can add an offset to your anchored element using the `.offset.[px value]` mo
 
 ```alpine
 <div x-data="{ open: false }">
-    <button x-ref="button" @click="open = ! open">Toggle</button>
+    <button x-ref="button" x-on:click="open = ! open">Toggle</button>
 
     <div x-show="open" x-anchor.offset.10="$refs.button">
         Dropdown content
@@ -134,7 +134,7 @@ You can add an offset to your anchored element using the `.offset.[px value]` mo
 <!-- START_VERBATIM -->
 <div x-data="{ open: false }" class="demo overflow-hidden">
     <div class="flex justify-center">
-        <button x-ref="button" @click="open = ! open">Toggle</button>
+        <button x-ref="button" x-on:click="open = ! open">Toggle</button>
     </div>
 
     <div x-show="open" x-anchor.offset.10="$refs.button" class="bg-white rounded p-4 border shadow z-10">
@@ -152,7 +152,7 @@ Below is an example of bypassing `x-anchor`'s internal styling and instead apply
 
 ```alpine
 <div x-data="{ open: false }">
-    <button x-ref="button" @click="open = ! open">Toggle</button>
+    <button x-ref="button" x-on:click="open = ! open">Toggle</button>
 
     <div
         x-show="open"
@@ -167,7 +167,7 @@ Below is an example of bypassing `x-anchor`'s internal styling and instead apply
 <!-- START_VERBATIM -->
 <div x-data="{ open: false }" class="demo overflow-hidden">
     <div class="flex justify-center">
-        <button x-ref="button" @click="open = ! open">Toggle</button>
+        <button x-ref="button" x-on:click="open = ! open">Toggle</button>
     </div>
 
     <div
@@ -190,7 +190,7 @@ Because `x-anchor` accepts a reference to any DOM element, you can use utilities
 
 ```alpine
 <div x-data="{ open: false }">
-    <button id="trigger" @click="open = ! open">Toggle</button>
+    <button id="trigger" x-on:click="open = ! open">Toggle</button>
 
     <div x-show="open" x-anchor="document.getElementById('trigger')">
         Dropdown content
@@ -201,7 +201,7 @@ Because `x-anchor` accepts a reference to any DOM element, you can use utilities
 <!-- START_VERBATIM -->
 <div x-data="{ open: false }" class="demo overflow-hidden">
     <div class="flex justify-center">
-        <button class="trigger" @click="open = ! open">Toggle</button>
+        <button class="trigger" x-on:click="open = ! open">Toggle</button>
     </div>
 
 

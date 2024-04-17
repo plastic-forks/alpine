@@ -11,9 +11,9 @@
             <td><code>x-on:click.away</code></td>
             <td>
                 <div x-data="{ show: false }">
-                    <button @click="show = true">Show</button>
+                    <button x-on:click="show = true">Show</button>
 
-                    <h1 x-show="show" @click.away="show = false">h1</h1>
+                    <h1 x-show="show" x-on:click.away="show = false">h1</h1>
 
                     <h2>h2</h2>
                 </div>
@@ -24,7 +24,7 @@
             <td><code>x-transition</code></td>
             <td>
                 <div x-data="{ open: false }">
-                    <button @click="open = ! open">Toggle</button>
+                    <button x-on:click="open = ! open">Toggle</button>
 
                     <div x-show="open" x-transition>Hello 👋</div>
                 </div>
@@ -35,7 +35,7 @@
             <td><code>x-transition:enter only (should see no blip)</code></td>
             <td>
                 <main x-data="{ open: true }">
-                    <button @click="open = ! open">Toggle</button>
+                    <button x-on:click="open = ! open">Toggle</button>
 
                     <div x-show="open" x-transition:enter.duration.500ms>Hello 👋</div>
 
@@ -57,7 +57,7 @@
                     ['x-transition:leave-end']() { return `opacity-0 transform scale-90`; },
                  }}"
                 >
-                    <button @click="open = !open">Toggle</button>
+                    <button x-on:click="open = !open">Toggle</button>
                     <div x-bind="props" x-show="open">Hello 👋</div>
                 </div>
             </td>
@@ -67,7 +67,7 @@
             <td><code>x-transition</code></td>
             <td>
                 <div x-data="{ open: false }">
-                    <button @click="open = ! open">Toggle</button>
+                    <button x-on:click="open = ! open">Toggle</button>
 
                     <div x-show="open">
                         <div x-show="open" x-transition.duration.250ms>
@@ -82,7 +82,7 @@
             <td><code>x-transition.opacity</code></td>
             <td>
                 <div x-data="{ open: false }">
-                    <button @click="open = ! open">Toggle</button>
+                    <button x-on:click="open = ! open">Toggle</button>
 
                     <div x-show="open" x-transition.opacity>Hello 👋</div>
                 </div>
@@ -93,7 +93,7 @@
             <td><code>x-transition.scale</code></td>
             <td>
                 <div x-data="{ open: false }">
-                    <button @click="open = ! open">Toggle</button>
+                    <button x-on:click="open = ! open">Toggle</button>
 
                     <div x-show="open" x-transition.scale>Hello 👋</div>
                 </div>
@@ -104,7 +104,7 @@
             <td><code>x-transition.duration.1000ms</code></td>
             <td>
                 <div x-data="{ open: false }">
-                    <button @click="open = ! open">Toggle</button>
+                    <button x-on:click="open = ! open">Toggle</button>
 
                     <div x-show="open" x-transition.duration.1000ms>Hello 👋</div>
                 </div>
@@ -112,14 +112,14 @@
         </tr>
 
         <tr style="border-bottom: 1px solid black">
-            <td><code>x-transition.leave only with @click.outside</code></td>
+            <td><code>x-transition.leave only with x-on:click.outside</code></td>
             <td>
                 <div x-data="{ open: false }">
-                    <button @click="open = ! open">Toggle</button>
+                    <button x-on:click="open = ! open">Toggle</button>
 
                     <div
                         x-show="open"
-                        @click.outside="open = false"
+                        x-on:click.outside="open = false"
                         x-transition.out.duration.1000ms
                     >
                         Hello 👋
@@ -135,7 +135,7 @@
             </td>
             <td>
                 <div x-data="{ open: false }">
-                    <button @click="open = ! open">Toggle</button>
+                    <button x-on:click="open = ! open">Toggle</button>
 
                     <div
                         x-show="open"
@@ -162,7 +162,7 @@
             </td>
             <td>
                 <div x-data="{ open: false }">
-                    <button @mouseenter="open = true" @mouseleave="open = false">
+                    <button x-on:mouseenter="open = true" x-on:mouseleave="open = false">
                         Toggle (mouseover)
                     </button>
 
@@ -197,7 +197,7 @@
             <td><code>x-collapse with no overflow hidden when expanded</code></td>
             <td>
                 <div x-data="{ show: false }">
-                    <button @click="show = !show">Show</button>
+                    <button x-on:click="show = !show">Show</button>
 
                     <div x-show="show" x-collapse.duration.2000ms>
                         <div class="ring-2 ring-offset-2 ring-red-400 py-10 bg-gray-200">

@@ -42,7 +42,7 @@ directive('show', (el, { modifiers, expression }, { effect }) => {
 
     // We are wrapping this function in a setTimeout here to prevent
     // a race condition from happening where elements that have a
-    // @click.away always view themselves as shown on the page.
+    // x-on:click.away always view themselves as shown on the page.
     let clickAwayCompatibleShow = () => setTimeout(show)
 
     let toggle = once(

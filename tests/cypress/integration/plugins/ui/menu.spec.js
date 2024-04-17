@@ -91,7 +91,7 @@ test(
     'it works with x-model',
     [
         html` <div x-data="{ open: false }" x-menu x-model="open">
-            <button trigger @click="open = !open">
+            <button trigger x-on:click="open = !open">
                 <span>Options</span>
             </button>
 
@@ -146,27 +146,27 @@ test(
                     <a
                         x-menu:item
                         href="#account-settings"
-                        :class="$menuItem.isActive && 'active'"
+                        x-bind:class="$menuItem.isActive && 'active'"
                     >
                         Account settings
                     </a>
-                    <a x-menu:item href="#support" :class="$menuItem.isActive && 'active'">
+                    <a x-menu:item href="#support" x-bind:class="$menuItem.isActive && 'active'">
                         Support
                     </a>
                     <a
                         x-menu:item
                         disabled
                         href="#new-feature"
-                        :class="$menuItem.isActive && 'active'"
+                        x-bind:class="$menuItem.isActive && 'active'"
                     >
                         New feature (soon)
                     </a>
-                    <a x-menu:item href="#license" :class="$menuItem.isActive && 'active'">
+                    <a x-menu:item href="#license" x-bind:class="$menuItem.isActive && 'active'">
                         License
                     </a>
                 </div>
                 <div>
-                    <a x-menu:item href="#sign-out" :class="$menuItem.isActive && 'active'">
+                    <a x-menu:item href="#sign-out" x-bind:class="$menuItem.isActive && 'active'">
                         Sign out
                     </a>
                 </div>
@@ -220,11 +220,11 @@ test(
                     <a
                         x-menu:item
                         href="#account-settings"
-                        :class="$menuItem.isActive && 'active'"
+                        x-bind:class="$menuItem.isActive && 'active'"
                     >
                         Account settings
                     </a>
-                    <a x-menu:item href="#support" :class="$menuItem.isActive && 'active'">
+                    <a x-menu:item href="#support" x-bind:class="$menuItem.isActive && 'active'">
                         Support
                     </a>
                 </div>
@@ -273,27 +273,27 @@ test(
                     <a
                         x-menu:item
                         href="#account-settings"
-                        :class="$menuItem.isActive && 'active'"
+                        x-bind:class="$menuItem.isActive && 'active'"
                     >
                         Account settings
                     </a>
-                    <a x-menu:item href="#support" :class="$menuItem.isActive && 'active'">
+                    <a x-menu:item href="#support" x-bind:class="$menuItem.isActive && 'active'">
                         Support
                     </a>
                     <a
                         x-menu:item
                         disabled
                         href="#new-feature"
-                        :class="$menuItem.isActive && 'active'"
+                        x-bind:class="$menuItem.isActive && 'active'"
                     >
                         New feature (soon)
                     </a>
-                    <a x-menu:item href="#license" :class="$menuItem.isActive && 'active'">
+                    <a x-menu:item href="#license" x-bind:class="$menuItem.isActive && 'active'">
                         License
                     </a>
                 </div>
                 <div>
-                    <a x-menu:item href="#sign-out" :class="$menuItem.isActive && 'active'">
+                    <a x-menu:item href="#sign-out" x-bind:class="$menuItem.isActive && 'active'">
                         Sign out
                     </a>
                 </div>
@@ -333,27 +333,27 @@ test(
                     <a
                         x-menu:item
                         href="#account-settings"
-                        :class="$menuItem.isActive && 'active'"
+                        x-bind:class="$menuItem.isActive && 'active'"
                     >
                         Account settings
                     </a>
-                    <a x-menu:item href="#support" :class="$menuItem.isActive && 'active'">
+                    <a x-menu:item href="#support" x-bind:class="$menuItem.isActive && 'active'">
                         Support
                     </a>
                     <a
                         x-menu:item
                         disabled
                         href="#new-feature"
-                        :class="$menuItem.isActive && 'active'"
+                        x-bind:class="$menuItem.isActive && 'active'"
                     >
                         New feature (soon)
                     </a>
-                    <a x-menu:item href="#license" :class="$menuItem.isActive && 'active'">
+                    <a x-menu:item href="#license" x-bind:class="$menuItem.isActive && 'active'">
                         License
                     </a>
                 </div>
                 <div>
-                    <a x-menu:item href="#sign-out" :class="$menuItem.isActive && 'active'">
+                    <a x-menu:item href="#sign-out" x-bind:class="$menuItem.isActive && 'active'">
                         Sign out
                     </a>
                 </div>
@@ -419,14 +419,14 @@ test(
                     <a
                         x-menu:item
                         href="#account-settings"
-                        :class="{ 'active': $menuItem.isActive, 'disabled': $menuItem.isDisabled }"
+                        x-bind:class="{ 'active': $menuItem.isActive, 'disabled': $menuItem.isDisabled }"
                     >
                         Account settings
                     </a>
                     <a
                         x-menu:item
                         href="#support"
-                        :class="{ 'active': $menuItem.isActive, 'disabled': $menuItem.isDisabled }"
+                        x-bind:class="{ 'active': $menuItem.isActive, 'disabled': $menuItem.isDisabled }"
                     >
                         Support
                     </a>
@@ -434,14 +434,14 @@ test(
                         x-menu:item
                         disabled
                         href="#new-feature"
-                        :class="{ 'active': $menuItem.isActive, 'disabled': $menuItem.isDisabled }"
+                        x-bind:class="{ 'active': $menuItem.isActive, 'disabled': $menuItem.isDisabled }"
                     >
                         New feature (soon)
                     </a>
                     <a
                         x-menu:item
                         href="#license"
-                        :class="{ 'active': $menuItem.isActive, 'disabled': $menuItem.isDisabled }"
+                        x-bind:class="{ 'active': $menuItem.isActive, 'disabled': $menuItem.isDisabled }"
                     >
                         License
                     </a>
@@ -450,7 +450,7 @@ test(
                     <a
                         x-menu:item
                         href="#sign-out"
-                        :class="{ 'active': $menuItem.isActive, 'disabled': $menuItem.isDisabled }"
+                        x-bind:class="{ 'active': $menuItem.isActive, 'disabled': $menuItem.isDisabled }"
                     >
                         Sign out
                     </a>

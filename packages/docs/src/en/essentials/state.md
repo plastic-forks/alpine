@@ -57,7 +57,7 @@ Although this may seem obvious to some, it's worth mentioning that Alpine data c
 Sometimes you may want to use Alpine functionality, but don't need any reactive data. In these cases, you can opt out of passing an expression to `x-data` entirely. For example:
 
 ```alpine
-<button x-data @click="alert('I\'ve been clicked!')">Click Me</button>
+<button x-data x-on:click="alert('I\'ve been clicked!')">Click Me</button>
 ```
 
 <a name="re-usable-data"></a>
@@ -83,13 +83,13 @@ Now that you've registered the "dropdown" data, you can use it inside your marku
 
 ```alpine
 <div x-data="dropdown">
-    <button @click="toggle">Expand</button>
+    <button x-on:click="toggle">Expand</button>
 
     <span x-show="open">Content...</span>
 </div>
 
 <div x-data="dropdown">
-    <button @click="toggle">Expand</button>
+    <button x-on:click="toggle">Expand</button>
 
     <span x-show="open">Some Other Content...</span>
 </div>
@@ -124,9 +124,9 @@ Now we can access or modify its data from anywhere on our page:
 </div>
 
 <div x-data>
-    <button @click="$store.tabs.current = 'first'">First Tab</button>
-    <button @click="$store.tabs.current = 'second'">Second Tab</button>
-    <button @click="$store.tabs.current = 'third'">Third Tab</button>
+    <button x-on:click="$store.tabs.current = 'first'">First Tab</button>
+    <button x-on:click="$store.tabs.current = 'second'">Second Tab</button>
+    <button x-on:click="$store.tabs.current = 'third'">Third Tab</button>
 </div>
 ```
 

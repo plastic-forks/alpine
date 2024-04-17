@@ -116,17 +116,17 @@ Insert the following code into the `<body>` tag:
 
 ```alpine
 <div x-data="{ open: false }">
-    <button @click="open = ! open">Toggle</button>
+    <button x-on:click="open = ! open">Toggle</button>
 
-    <div x-show="open" @click.outside="open = false">Contents...</div>
+    <div x-show="open" x-on:click.outside="open = false">Contents...</div>
 </div>
 ```
 
 <!-- START_VERBATIM -->
 <div class="demo">
     <div x-data="{ open: false }">
-        <button @click="open = ! open">Toggle</button>
-        <div x-show="open" @click.outside="open = false">Contents...</div>
+        <button x-on:click="open = ! open">Toggle</button>
+        <div x-show="open" x-on:click.outside="open = false">Contents...</div>
     </div>
 </div>
 <!-- END_VERBATIM -->
@@ -150,7 +150,7 @@ The `x-data` and `x-on` directives should be familiar to you from the previous e
 ### Listening for a click outside
 
 ```alpine
-<div ... @click.outside="open = false">Contents...</div>
+<div ... x-on:click.outside="open = false">Contents...</div>
 ```
 
 You'll notice something new in this example: `.outside`. Many directives in Alpine accept "modifiers" that are chained onto the end of the directive and are separated by periods.
@@ -185,7 +185,7 @@ Insert the following code into the `<body>` tag:
     <input x-model="search" placeholder="Search...">
 
     <ul>
-        <template x-for="item in filteredItems" :key="item">
+        <template x-for="item in filteredItems" x-bind:key="item">
             <li x-text="item"></li>
         </template>
     </ul>
@@ -210,7 +210,7 @@ Insert the following code into the `<body>` tag:
         <input x-model="search" placeholder="Search...">
 
         <ul class="pl-6 pt-2">
-            <template x-for="item in filteredItems" :key="item">
+            <template x-for="item in filteredItems" x-bind:key="item">
                 <li x-text="item"></li>
             </template>
         </ul>

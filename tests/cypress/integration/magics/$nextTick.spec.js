@@ -54,7 +54,7 @@ test(
             <h2 x-text="loggedDisplayStyle"></h2>
 
             <button
-                @click="show = true; $nextTick(() => { loggedDisplayStyle = document.querySelector('h1').style.display })"
+                x-on:click="show = true; $nextTick(() => { loggedDisplayStyle = document.querySelector('h1').style.display })"
             >
                 click
             </button>

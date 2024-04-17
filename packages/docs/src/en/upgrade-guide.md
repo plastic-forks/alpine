@@ -45,13 +45,13 @@ Upgrading from Alpine V2 to V3 should be fairly painless. In many cases, NOTHING
 ```alpine
 <!-- 🚫 Before -->
 <div x-data>
-    <button @click="console.log($el)"></button>
+    <button x-on:click="console.log($el)"></button>
     <!-- In V2, $el would have been the <div>, now it's the <button> -->
 </div>
 
 <!-- ✅ After -->
 <div x-data>
-    <button @click="console.log($root)"></button>
+    <button x-on:click="console.log($root)"></button>
 </div>
 ```
 
@@ -201,12 +201,12 @@ Alpine V2 observes a return value of `false` as a desire to run `preventDefault`
 ```alpine
 <!-- 🚫 Before -->
 <div x-data="{ blockInput() { return false } }">
-    <input type="text" @input="blockInput()">
+    <input type="text" x-on:input="blockInput()">
 </div>
 
 <!-- ✅ After -->
 <div x-data="{ blockInput(e) { e.preventDefault() }">
-    <input type="text" @input="blockInput($event)">
+    <input type="text" x-on:input="blockInput($event)">
 </div>
 ```
 
@@ -295,7 +295,7 @@ In Alpine V2 for below code
         <div :x-ref="option.value" x-text="option.value"></div>
     </template>
 
-    <button @click="console.log($refs[0], $refs[1], $refs[2], $refs[3]);">Display $refs</button>
+    <button x-on:click="console.log($refs[0], $refs[1], $refs[2], $refs[3]);">Display $refs</button>
 </div>
 ```
 
@@ -316,12 +316,12 @@ The following 2 APIs will still work in V3, but are considered deprecated and ar
 
 ```alpine
 <!-- 🚫 Before -->
-<div x-show="open" @click.away="open = false">
+<div x-show="open" x-on:click.away="open = false">
     ...
 </div>
 
 <!-- ✅ After -->
-<div x-show="open" @click.outside="open = false">
+<div x-show="open" x-on:click.outside="open = false">
     ...
 </div>
 ```

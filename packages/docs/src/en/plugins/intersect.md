@@ -64,7 +64,7 @@ For example, in the following snippet, `shown` will remain `false` until the ele
 
 <!-- START_VERBATIM -->
 <div class="demo" style="height: 60px; overflow-y: scroll;" x-data x-ref="root">
-    <a href="#" @click.prevent="$refs.root.scrollTo({ top: $refs.root.scrollHeight, behavior: 'smooth' })">Scroll Down 👇</a>
+    <a href="#" x-on:click.prevent="$refs.root.scrollTo({ top: $refs.root.scrollHeight, behavior: 'smooth' })">Scroll Down 👇</a>
     <div style="height: 50vh"></div>
     <div x-data="{ shown: false }" x-intersect="shown = true" id="yoyo">
         <div x-show="shown" x-transition.duration.1000ms>

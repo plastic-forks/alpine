@@ -148,7 +148,7 @@ function handleRoot(el, Alpine) {
                     this.__activateSelectedOrFirst()
 
                     // Safari needs more of a "tick" for focusing after x-show for some reason.
-                    // Probably because Alpine adds an extra tick when x-showing for @click.outside
+                    // Probably because Alpine adds an extra tick when x-showing for x-on:click.outside
                     let nextTick = callback => requestAnimationFrame(() => requestAnimationFrame(callback))
 
                     nextTick(() => this.$refs.__options.focus({ preventScroll: true }))
@@ -251,7 +251,7 @@ function handleLabel(el, Alpine) {
     Alpine.bind(el, {
         'x-ref': '__label',
         ':id'() { return this.$id('alpine-listbox-label') },
-        '@click'() { this.$refs.__button.focus({ preventScroll: true }) },
+        'x-on:click'() { this.$refs.__button.focus({ preventScroll: true }) },
     })
 }
 
@@ -271,7 +271,7 @@ function handleButton(el, Alpine) {
         'x-init'() { if (this.$el.tagName.toLowerCase() === 'button' && !this.$el.hasAttribute('type')) this.$el.type = 'button' },
 
         // Register listeners...
-        '@click'() { this.$data.__open() },
+        'x-on:click'() { this.$data.__open() },
         '@keydown'(e) {
             if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
                 e.stopPropagation()
@@ -317,7 +317,7 @@ function handleOptions(el, Alpine) {
 
         'x-show'() { return this.$data.__isStatic ? true : this.$data.__isOpen },
         'x-trap'() { return this.$data.__isOpen },
-        '@click.outside'() { this.$data.__close() },
+        'x-on:click.outside'() { this.$data.__close() },
         '@keydown.escape.stop.prevent'() { this.$data.__close() },
         '@focus'() { this.$data.__activateSelectedOrFirst() },
         '@keydown'(e) {
@@ -367,7 +367,7 @@ function handleOption(el, Alpine) {
             },
 
             // Register listeners...
-            '@click'() {
+            'x-on:click'() {
                 if (this.$listboxOption.isDisabled) return;
 
                 this.$data.__selectOption(el)

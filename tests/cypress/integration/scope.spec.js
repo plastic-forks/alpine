@@ -42,7 +42,7 @@ test(
                 <div
                     x-data="{ get bar() { return this.foo }, set bar(value) { this.foo = value } }"
                 >
-                    <span id="one" x-text="bar" @click="bar = 'foobar'"></span>
+                    <span id="one" x-text="bar" x-on:click="bar = 'foobar'"></span>
                 </div>
                 <span id="two" x-text="foo"></span>
             </div>
@@ -74,7 +74,7 @@ test(
                 )
             </script>
             <div x-data="counter">
-                <button type="button" @click="increment" x-text="value"></button>
+                <button type="button" x-on:click="increment" x-text="value"></button>
             </div>
         `,
     ],
@@ -92,7 +92,7 @@ test(
             <div x-data="{ message: 'original' }">
                 <button
                     x-effect="message = 'effected'"
-                    @click="message = 'clicked'"
+                    x-on:click="message = 'clicked'"
                     x-text="message"
                 ></button>
             </div>

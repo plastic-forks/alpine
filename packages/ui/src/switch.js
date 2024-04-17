@@ -87,7 +87,7 @@ function handleRoot(el, Alpine) {
         ':aria-checked'() { return !!this.__value },
         ':aria-labelledby'() { return this.$data.__hasLabel && this.$id('alpine-switch-label') },
         ':aria-describedby'() { return this.$data.__hasDescription && this.$id('alpine-switch-description') },
-        '@click.prevent'() { this.__toggle() },
+        'x-on:click.prevent'() { this.__toggle() },
         '@keyup'(e) {
             if (e.key !== 'Tab') e.preventDefault()
             if (e.key === ' ') this.__toggle()
@@ -101,7 +101,7 @@ function handleLabel(el, Alpine) {
     Alpine.bind(el, {
         'x-init'() { this.$data.__hasLabel = true },
         ':id'() { return this.$id('alpine-switch-label') },
-        '@click'() {
+        'x-on:click'() {
             this.$data.__switchEl.click()
             this.$data.__switchEl.focus({ preventScroll: true })
         },

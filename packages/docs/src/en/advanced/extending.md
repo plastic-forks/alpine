@@ -142,7 +142,7 @@ Given the following template:
 <div x-data="{ message: 'Hello World!' }">
     <div x-log="message"></div>
 
-    <button @click="message = 'yolo'">Change</button>
+    <button x-on:click="message = 'yolo'">Change</button>
 </div>
 ```
 
@@ -291,7 +291,7 @@ Alpine.magic('clipboard', () => {
 })
 ```
 ```alpine
-<button @click="$clipboard('hello world')">Copy "Hello World"</button>
+<button x-on:click="$clipboard('hello world')">Copy "Hello World"</button>
 ```
 
 Now that accessing `$clipboard` returns a function itself, we can immediately call it and pass it an argument like we see in the template with `$clipboard('hello world')`.

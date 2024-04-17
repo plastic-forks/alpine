@@ -26,7 +26,7 @@
         <div x-data="{ selected: 'Wade Cooper' }" class="flex justify-center w-screen h-full p-12 bg-gray-50">
             <div class="w-full max-w-xs mx-auto">
                 <div class="flex justify-between mb-8">
-                    <button class="underline" @click="selected = Arlene Mccoy">Change value</button>
+                    <button class="underline" x-on:click="selected = Arlene Mccoy">Change value</button>
                 </div>
 
                 <div x-listbox name="something" x-model="selected" class="space-y-1">
@@ -51,14 +51,14 @@
                                 <li
                                     x-listbox:option value="Wade Cooper"
                                     class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                    :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
+                                    x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
                                 >
-                                    <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Wade Cooper</span>
+                                    <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Wade Cooper</span>
 
                                     <span
                                         x-show="$listboxOption.isSelected"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                        :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                        x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                     >
                                         <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -68,14 +68,14 @@
                                 <li
                                     x-listbox:option value="Arlene Mccoy"
                                     class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                    :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
+                                    x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
                                 >
-                                    <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Arlene Mccoy</span>
+                                    <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Arlene Mccoy</span>
 
                                     <span
                                         x-show="$listboxOption.isSelected"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                        :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                        x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                     >
                                         <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -85,14 +85,14 @@
                                 <li
                                     x-listbox:option value="Devon Webb"
                                     class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                    :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
+                                    x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
                                 >
-                                    <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Devon Webb</span>
+                                    <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Devon Webb</span>
 
                                     <span
                                         x-show="$listboxOption.isSelected"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                        :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                        x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                     >
                                         <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -102,14 +102,14 @@
                                 <li
                                     x-listbox:option value="Tom Cook"
                                     class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                    :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
+                                    x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
                                 >
-                                    <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Tom Cook</span>
+                                    <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Tom Cook</span>
 
                                     <span
                                         x-show="$listboxOption.isSelected"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                        :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                        x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                     >
                                         <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -119,14 +119,14 @@
                                 <li
                                     x-listbox:option value="Tanya Fox"
                                     class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                    :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
+                                    x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
                                 >
-                                    <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Tanya Fox</span>
+                                    <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Tanya Fox</span>
 
                                     <span
                                         x-show="$listboxOption.isSelected"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                        :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                        x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                     >
                                         <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -136,14 +136,14 @@
                                 <li
                                     x-listbox:option value="Hellen Schmidt"
                                     class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                    :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
+                                    x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
                                 >
-                                    <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Hellen Schmidt</span>
+                                    <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Hellen Schmidt</span>
 
                                     <span
                                         x-show="$listboxOption.isSelected"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                        :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                        x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                     >
                                         <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -153,14 +153,14 @@
                                 <li
                                     x-listbox:option value="Caroline Schultz"
                                     class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                    :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
+                                    x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
                                 >
-                                    <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Caroline Schultz</span>
+                                    <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Caroline Schultz</span>
 
                                     <span
                                         x-show="$listboxOption.isSelected"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                        :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                        x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                     >
                                         <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -170,14 +170,14 @@
                                 <li
                                     x-listbox:option value="Mason Heaney"
                                     class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                    :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
+                                    x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
                                 >
-                                    <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Mason Heaney</span>
+                                    <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Mason Heaney</span>
 
                                     <span
                                         x-show="$listboxOption.isSelected"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                        :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                        x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                     >
                                         <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -187,14 +187,14 @@
                                 <li
                                     x-listbox:option value="Claudie Smitham"
                                     class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                    :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
+                                    x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
                                 >
-                                    <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Claudie Smitham</span>
+                                    <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Claudie Smitham</span>
 
                                     <span
                                         x-show="$listboxOption.isSelected"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                        :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                        x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                     >
                                         <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -204,14 +204,14 @@
                                 <li
                                     x-listbox:option value="Emil Schaefer"
                                     class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                    :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
+                                    x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900'].filter(Boolean)"
                                 >
-                                    <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Emil Schaefer</span>
+                                    <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'">Emil Schaefer</span>
 
                                     <span
                                         x-show="$listboxOption.isSelected"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                        :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                        x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                     >
                                         <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />

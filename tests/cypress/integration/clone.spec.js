@@ -13,16 +13,16 @@ test(
             })
         </script>
 
-        <button x-data @click="Alpine.clone(original, copy)">click</button>
+        <button x-data x-on:click="Alpine.clone(original, copy)">click</button>
 
         <div x-data="{ foo: 'bar' }" id="original">
-            <h1 @click="foo = 'baz'">click me</h1>
+            <h1 x-on:click="foo = 'baz'">click me</h1>
 
             <span x-text="foo"></span>
         </div>
 
         <div x-data="{ foo: 'bar' }" id="copy" x-ignore>
-            <h1 @click="foo = 'baz'">click me</h1>
+            <h1 x-on:click="foo = 'baz'">click me</h1>
 
             <span x-text="foo"></span>
         </div>
@@ -49,7 +49,7 @@ test(
             })
         </script>
 
-        <button x-data @click="Alpine.clone(original, copy)">click</button>
+        <button x-data x-on:click="Alpine.clone(original, copy)">click</button>
 
         <div x-data="{ count: 0 }" x-init="count++" id="original">
             <span x-text="count"></span>
@@ -80,14 +80,14 @@ test(
             })
         </script>
 
-        <button x-data @click="Alpine.clone(original, copy)">click</button>
+        <button x-data x-on:click="Alpine.clone(original, copy)">click</button>
 
         <div x-data="{ count: 0 }" x-init="count++" id="original">
             <span x-text="count"></span>
         </div>
 
         <div x-data="{ count: 0 }" x-init="count++" id="copy" x-ignore>
-            <h1 @click="count++">inc</h1>
+            <h1 x-on:click="count++">inc</h1>
             <span x-text="count"></span>
         </div>
     `,
@@ -111,7 +111,7 @@ test(
             })
         </script>
 
-        <button x-data @click="Alpine.clone(original, copy)">click</button>
+        <button x-data x-on:click="Alpine.clone(original, copy)">click</button>
 
         <div x-data="{ checks: [] }" id="original">
             <input type="checkbox" x-model="checks" value="1" />

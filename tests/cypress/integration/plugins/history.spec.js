@@ -7,8 +7,8 @@ describe.skip('History tests', function () {
         [
             html`
                 <div x-data="{ count: $queryString(1) }">
-                    <button @click="count++">Inc</button>
-                    <h1 @click="count--">Dec</h1>
+                    <button x-on:click="count++">Inc</button>
+                    <h1 x-on:click="count--">Dec</h1>
                     <span x-text="count"></span>
                 </div>
             `,
@@ -34,8 +34,8 @@ describe.skip('History tests', function () {
         [
             html`
                 <div x-data="{ count: $queryString(1).alwaysShow() }">
-                    <button @click="count++">Inc</button>
-                    <h1 @click="count--">Dec</h1>
+                    <button x-on:click="count++">Inc</button>
+                    <h1 x-on:click="count--">Dec</h1>
                     <span x-text="count"></span>
                 </div>
             `,
@@ -57,7 +57,7 @@ describe.skip('History tests', function () {
         [
             html`
                 <div x-data="{ count: $queryString(1) }">
-                    <button @click="count++">Inc</button>
+                    <button x-on:click="count++">Inc</button>
                     <span x-text="count"></span>
                 </div>
             `,
@@ -81,7 +81,7 @@ describe.skip('History tests', function () {
         [
             html`
                 <div x-data="{ count: $queryString(1).as('tnuoc') }">
-                    <button @click="count++">Inc</button>
+                    <button x-on:click="count++">Inc</button>
                     <span x-text="count"></span>
                 </div>
             `,
@@ -100,7 +100,7 @@ describe.skip('History tests', function () {
         [
             html`
                 <div x-data="{ count: $queryString(1).usePush() }">
-                    <button @click="count++">Inc</button>
+                    <button x-on:click="count++">Inc</button>
                     <span x-text="count"></span>
                 </div>
             `,
@@ -125,12 +125,12 @@ describe.skip('History tests', function () {
         [
             html`
                 <div x-data="{ foo: $queryString(1).usePush() }" id="foo">
-                    <button @click="foo++">Inc</button>
+                    <button x-on:click="foo++">Inc</button>
                     <span x-text="foo"></span>
                 </div>
 
                 <div x-data="{ bar: $queryString(1).usePush() }" id="bar">
-                    <button @click="bar++">Inc</button>
+                    <button x-on:click="bar++">Inc</button>
                     <span x-text="bar"></span>
                 </div>
             `,
@@ -169,7 +169,7 @@ describe.skip('History tests', function () {
         [
             html`
                 <div x-data="{ items: $queryString(['foo']) }">
-                    <button @click="items.push('bar')">Inc</button>
+                    <button x-on:click="items.push('bar')">Inc</button>
                     <span x-text="JSON.stringify(items)"></span>
                 </div>
             `,
@@ -191,7 +191,7 @@ describe.skip('History tests', function () {
         [
             html`
                 <div x-data="{ items: $queryString(['foo', ['bar', 'baz']]) }">
-                    <button @click="items[1].push('bob')">Inc</button>
+                    <button x-on:click="items[1].push('bob')">Inc</button>
                     <span x-text="JSON.stringify(items)"></span>
                 </div>
             `,
@@ -219,7 +219,7 @@ describe.skip('History tests', function () {
         [
             html`
                 <div x-data="{ items: $queryString({ foo: 'bar' }) }">
-                    <button @click="items.bob = 'lob'">Inc</button>
+                    <button x-on:click="items.bob = 'lob'">Inc</button>
                     <span x-text="JSON.stringify(items)"></span>
                 </div>
             `,

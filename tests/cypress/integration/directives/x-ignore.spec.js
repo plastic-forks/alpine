@@ -16,7 +16,7 @@ test(
     'x-ignore.self',
     html`
         <div x-data="{ foo: 'bar' }">
-            <h1 x-ignore.self :class="foo">
+            <h1 x-ignore.self x-bind:class="foo">
                 <span x-text="foo"></span>
             </h1>
         </div>

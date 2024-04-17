@@ -39,12 +39,12 @@ test(
                 <button x-listbox:button x-text="active ? active.name : 'Select Person'"></button>
 
                 <ul x-listbox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
                         >
                             <span x-text="person.name"></span>
                         </li>
@@ -93,12 +93,12 @@ test(
                 ></button>
 
                 <ul x-listbox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
                         >
                             <span x-text="person.name"></span>
                         </li>
@@ -149,13 +149,13 @@ test(
                 <article x-text="$listbox.active?.name"></article>
 
                 <ul x-listbox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                             'disabled': $listboxOption.isDisabled,
@@ -212,13 +212,13 @@ test(
                 ></button>
 
                 <ul x-listbox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person.id"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person.id"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -278,13 +278,13 @@ test(
                 ></button>
 
                 <ul x-listbox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -352,13 +352,13 @@ test(
                 ></button>
 
                 <ul x-listbox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person.id"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person.id"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -409,13 +409,13 @@ test(
                 ></button>
 
                 <ul x-listbox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person.id"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person.id"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -472,13 +472,13 @@ test(
                 ></button>
 
                 <ul x-listbox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -566,13 +566,13 @@ test(
                 <button x-listbox:button x-text="active ? active.name : 'Select Person'"></button>
 
                 <ul x-listbox:options options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -641,13 +641,13 @@ test(
                 <button x-listbox:button x-text="active ? active.name : 'Select Person'"></button>
 
                 <ul x-listbox:options options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -702,13 +702,13 @@ test(
                 <button x-listbox:button x-text="active ? active.name : 'Select Person'"></button>
 
                 <ul x-listbox:options options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -758,13 +758,13 @@ test(
                 <button x-listbox:button x-text="active ? active.name : 'Select Person'"></button>
 
                 <ul x-listbox:options options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -815,16 +815,16 @@ test(
                     x-text="$listbox.selected ? $listbox.selected : 'Select Person'"
                 ></button>
 
-                <button select-tim @click="active = 4">Select Tim</button>
+                <button select-tim x-on:click="active = 4">Select Tim</button>
 
                 <ul x-listbox:options options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person.id"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person.id"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -869,13 +869,13 @@ test(
                 <button x-listbox:button x-text="active ? active.name : 'Select Person'"></button>
 
                 <ul x-listbox:options options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $listboxOption.isSelected,
                             'active': $listboxOption.isActive,
                         }"
@@ -955,15 +955,15 @@ test(
                     x-text="active ? active.name : 'Select Person'"
                 ></button>
 
-                <button real-toggle @click="show = ! show">Toggle</button>
+                <button real-toggle x-on:click="show = ! show">Toggle</button>
 
                 <ul x-listbox:options x-show="show" static>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-listbox:option
-                            :value="person"
-                            :disabled="person.disabled"
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
                         >
                             <span x-text="person.name"></span>
                         </li>
@@ -1039,8 +1039,8 @@ test(
                     <li
                         option="boolean-true"
                         x-listbox:option
-                        :value="true"
-                        :class="{
+                        x-bind:value="true"
+                        x-bind:class="{
                     'selected': $listboxOption.isSelected,
                     'active': $listboxOption.isActive,
                 }"
@@ -1050,8 +1050,8 @@ test(
                     <li
                         option="boolean-false"
                         x-listbox:option
-                        :value="false"
-                        :class="{
+                        x-bind:value="false"
+                        x-bind:class="{
                     'selected': $listboxOption.isSelected,
                     'active': $listboxOption.isActive,
                 }"
@@ -1101,8 +1101,8 @@ test(
                     <li
                         option="0"
                         x-listbox:option
-                        :value="0"
-                        :class="{
+                        x-bind:value="0"
+                        x-bind:class="{
                     'selected': $listboxOption.isSelected,
                     'active': $listboxOption.isActive,
                 }"
@@ -1112,8 +1112,8 @@ test(
                     <li
                         option="1"
                         x-listbox:option
-                        :value="1"
-                        :class="{
+                        x-bind:value="1"
+                        x-bind:class="{
                     'selected': $listboxOption.isSelected,
                     'active': $listboxOption.isActive,
                 }"
@@ -1123,8 +1123,8 @@ test(
                     <li
                         option="2"
                         x-listbox:option
-                        :value="2"
-                        :class="{
+                        x-bind:value="2"
+                        x-bind:class="{
                     'selected': $listboxOption.isSelected,
                     'active': $listboxOption.isActive,
                 }"

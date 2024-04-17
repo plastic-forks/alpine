@@ -6,7 +6,7 @@ test(
         html`
             <div x-data>
                 <span x-text="$store.test.foo"></span>
-                <button @click="$store.test.foo = 'baz'">clickme</button>
+                <button x-on:click="$store.test.foo = 'baz'">clickme</button>
             </div>
         `,
         `
@@ -26,7 +26,7 @@ test(
         html`
             <div x-data>
                 <span x-text="$store.test.foo"></span>
-                <button @click="$store.test.foo = 'baz'">clickme</button>
+                <button x-on:click="$store.test.foo = 'baz'">clickme</button>
             </div>
         `,
         `
@@ -44,7 +44,7 @@ test(
         html`
             <div x-data>
                 <span x-text="$store.test"></span>
-                <button @click="$store.test = 'baz'">clickme</button>
+                <button x-on:click="$store.test = 'baz'">clickme</button>
             </div>
         `,
         `
@@ -64,7 +64,7 @@ test(
         html`
             <div x-data>
                 <span x-text="$store.test"></span>
-                <button @click="$store.test++">clickme</button>
+                <button x-on:click="$store.test++">clickme</button>
             </div>
         `,
         `

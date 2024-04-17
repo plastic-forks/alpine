@@ -8,8 +8,8 @@ test(
                 <h1 x-text="outer"></h1>
                 <h2 x-text="inner"></h2>
 
-                <button @click="inner = 'bob'" id="1">change inner</button>
-                <button @click="outer = 'lob'" id="2">change outer</button>
+                <button x-on:click="inner = 'bob'" id="1">change inner</button>
+                <button x-on:click="outer = 'lob'" id="2">change outer</button>
             </div>
         </div>
     `,
@@ -37,8 +37,8 @@ test(
                 <h1 x-text="outer"></h1>
                 <h2 x-text="inner"></h2>
 
-                <button @click="inner = 'bob'" id="1">change inner</button>
-                <button @click="outer = 'lob'" id="2">change outer</button>
+                <button x-on:click="inner = 'bob'" id="1">change inner</button>
+                <button x-on:click="outer = 'lob'" id="2">change outer</button>
             </div>
         </div>
     `,
@@ -61,7 +61,7 @@ test(
             <div x-data="{ inner: 'bar' }" x-modelable="inner" x-model="outer">
                 <h1 x-text="outer"></h1>
                 <h2 x-text="inner"></h2>
-                <button id="1" @click="$dispatch('input', 'baz')"></button>
+                <button id="1" x-on:click="$dispatch('input', 'baz')"></button>
             </div>
         </div>
     `,

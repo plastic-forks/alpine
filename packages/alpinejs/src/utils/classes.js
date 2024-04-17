@@ -27,7 +27,7 @@ function setClassesFromString(el, classString) {
         }
     }
 
-    // This is to allow short-circuit expressions like: :class="show || 'hidden'" && "show && 'block'"
+    // This is to allow short-circuit expressions like: x-bind:class="show || 'hidden'" && "show && 'block'"
     classString = classString === true ? (classString = '') : classString || ''
 
     return addClassesAndReturnUndo(missingClasses(classString))

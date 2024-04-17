@@ -11,7 +11,7 @@ Here's a contrived `dropdown` component for example:
 
 ```alpine
 <div x-data="dropdown">
-    <button @click="toggle">...</button>
+    <button x-on:click="toggle">...</button>
 
     <div x-show="open">...</div>
 </div>
@@ -116,7 +116,7 @@ An example where a component is destroyed is when using one inside an `x-if`:
 
 ```html
 <span x-data="{ enabled: false }">
-    <button @click.prevent="enabled = !enabled">Toggle</button>
+    <button x-on:click.prevent="enabled = !enabled">Toggle</button>
 
     <template x-if="enabled">
         <span x-data="timer" x-text="counter"></span>
@@ -159,7 +159,7 @@ Alpine.data('dropdown', () => ({
     open: false,
 
     trigger: {
-        ['@click']() {
+        ['x-on:click']() {
             this.open = ! this.open
         },
     },

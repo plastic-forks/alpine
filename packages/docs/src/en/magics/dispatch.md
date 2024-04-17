@@ -8,8 +8,8 @@ title: dispatch
 `$dispatch` is a helpful shortcut for dispatching browser events.
 
 ```alpine
-<div @notify="alert('Hello World!')">
-    <button @click="$dispatch('notify')">
+<div x-on:notify="alert('Hello World!')">
+    <button x-on:click="$dispatch('notify')">
         Notify
     </button>
 </div>
@@ -17,8 +17,8 @@ title: dispatch
 
 <!-- START_VERBATIM -->
 <div class="demo">
-    <div x-data @notify="alert('Hello World!')">
-        <button @click="$dispatch('notify')">
+    <div x-data x-on:notify="alert('Hello World!')">
+        <button x-on:click="$dispatch('notify')">
             Notify
         </button>
     </div>
@@ -28,8 +28,8 @@ title: dispatch
 You can also pass data along with the dispatched event if you wish. This data will be accessible as the `.detail` property of the event:
 
 ```alpine
-<div @notify="alert($event.detail.message)">
-    <button @click="$dispatch('notify', { message: 'Hello World!' })">
+<div x-on:notify="alert($event.detail.message)">
+    <button x-on:click="$dispatch('notify', { message: 'Hello World!' })">
         Notify
     </button>
 </div>
@@ -37,8 +37,8 @@ You can also pass data along with the dispatched event if you wish. This data wi
 
 <!-- START_VERBATIM -->
 <div class="demo">
-    <div x-data @notify="alert($event.detail.message)">
-        <button @click="$dispatch('notify', { message: 'Hello World!' })">Notify</button>
+    <div x-data x-on:notify="alert($event.detail.message)">
+        <button x-on:click="$dispatch('notify', { message: 'Hello World!' })">Notify</button>
     </div>
 </div>
 <!-- END_VERBATIM -->
@@ -55,14 +55,14 @@ Notice that, because of [event bubbling](https://en.wikipedia.org/wiki/Event_bub
 ```alpine
 <!-- 🚫 Won't work -->
 <div x-data>
-    <span @notify="..."></span>
-    <button @click="$dispatch('notify')">Notify</button>
+    <span x-on:notify="..."></span>
+    <button x-on:click="$dispatch('notify')">Notify</button>
 </div>
 
 <!-- ✅ Will work (because of .window) -->
 <div x-data>
-    <span @notify.window="..."></span>
-    <button @click="$dispatch('notify')">Notify</button>
+    <span x-on:notify.window="..."></span>
+    <button x-on:click="$dispatch('notify')">Notify</button>
 </div>
 ```
 
@@ -78,13 +78,13 @@ You can also take advantage of the previous technique to make your components ta
 ```alpine
 <div
     x-data="{ title: 'Hello' }"
-    @set-title.window="title = $event.detail"
+    x-on:set-title.window="title = $event.detail"
 >
     <h1 x-text="title"></h1>
 </div>
 
 <div x-data>
-    <button @click="$dispatch('set-title', 'Hello World!')">Click me</button>
+    <button x-on:click="$dispatch('set-title', 'Hello World!')">Click me</button>
 </div>
 <!-- When clicked, the content of the h1 will set to "Hello World!". -->
 ```
@@ -97,7 +97,7 @@ You can also use `$dispatch()` to trigger data updates for `x-model` data bindin
 ```alpine
 <div x-data="{ title: 'Hello' }">
     <span x-model="title">
-        <button @click="$dispatch('input', 'Hello World!')">Click me</button>
+        <button x-on:click="$dispatch('input', 'Hello World!')">Click me</button>
         <!-- After the button is pressed, `x-model` will catch the bubbling "input" event, and update title. -->
     </span>
 </div>

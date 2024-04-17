@@ -4,7 +4,7 @@ test(
     '$el returns the current element',
     html`
         <div x-data>
-            <button @click="$el.innerText = 'foo'">click me</button>
+            <button x-on:click="$el.innerText = 'foo'">click me</button>
         </div>
     `,
     ({ get }) => {

@@ -5,7 +5,7 @@ test(
     [
         html`
             <div x-data="{ foo: 'bar' }">
-                <button @click="foo = 'baz'">Change Foo</button>
+                <button x-on:click="foo = 'baz'">Change Foo</button>
                 <span x-text="foo"></span>
             </div>
         `,
@@ -29,7 +29,7 @@ test(
         html`
             <article x-data="{ foo: 'bar' }">
                 <div>
-                    <button @click="foo = 'baz'">Change Foo</button>
+                    <button x-on:click="foo = 'baz'">Change Foo</button>
                     <span x-text="foo"></span>
                 </div>
             </article>
@@ -53,7 +53,7 @@ test(
     [
         html`
             <div x-data="{ foo: 'bar' }">
-                <button @click="foo = 'baz'">Change Foo</button>
+                <button x-on:click="foo = 'baz'">Change Foo</button>
                 <span x-text="foo"></span>
             </div>
         `,
@@ -78,11 +78,11 @@ test(
     [
         html`
             <div x-data="{ foo: 'bar' }">
-                <button @click="foo = 'baz'">Change Foo</button>
+                <button x-on:click="foo = 'baz'">Change Foo</button>
                 <span x-text="foo"></span>
 
                 <div x-data="{ bob: 'lob' }">
-                    <a href="#" @click.prevent="bob = 'law'">Change Bob</a>
+                    <a href="#" x-on:click.prevent="bob = 'law'">Change Bob</a>
                     <h1 x-text="bob"></h1>
                 </div>
             </div>
@@ -110,7 +110,7 @@ test(
     [
         html`
             <div x-data="{ count: 1 }" id="a">
-                <button @click="count++">Inc</button>
+                <button x-on:click="count++">Inc</button>
 
                 <template x-teleport="#b">
                     <div>
@@ -126,7 +126,7 @@ test(
     ({ get }, reload, window, document) => {
         let toHtml = html`
             <div x-data="{ count: 1 }" id="a">
-                <button @click="count++">Inc</button>
+                <button x-on:click="count++">Inc</button>
 
                 <template x-teleport="#b">
                     <div>
@@ -552,7 +552,7 @@ test(
         `,
     ],
     ({ get, click }, reload, window, document) => {
-        let toHtml = html` <button @click="foo = 'buzz'" x-text="foo"></button> `
+        let toHtml = html` <button x-on:click="foo = 'buzz'" x-text="foo"></button> `
 
         get('button').should(haveText('bar'))
 

@@ -21,7 +21,7 @@ Here's a basic example of listening for a click on a button:
 As an alternative, you can use the event shorthand syntax if you prefer: `@`. Here's the same example as before, but using the shorthand syntax (which we'll be using from now on):
 
 ```alpine
-<button @click="...">...</button>
+<button x-on:click="...">...</button>
 ```
 
 In addition to `click`, you can listen for any browser event by name. For example: `@mouseenter`, `@keyup`, etc... are all valid syntax.
@@ -32,13 +32,13 @@ In addition to `click`, you can listen for any browser event by name. For exampl
 Let's say you wanted to listen for the `enter` key to be pressed inside an `<input>` element. Alpine makes this easy by adding the `.enter` like so:
 
 ```alpine
-<input @keyup.enter="...">
+<input x-on:keyup.enter="...">
 ```
 
 You can even combine key modifiers to listen for key combinations like pressing `enter` while holding `shift`:
 
 ```alpine
-<input @keyup.shift.enter="...">
+<input x-on:keyup.shift.enter="...">
 ```
 
 <a name="preventing-default"></a>
@@ -49,7 +49,7 @@ When reacting to browser events, it is often necessary to "prevent default" (pre
 For example, if you want to listen for a form submission but prevent the browser from submitting a form request, you can use `.prevent`:
 
 ```alpine
-<form @submit.prevent="...">...</form>
+<form x-on:submit.prevent="...">...</form>
 ```
 
 You can also apply `.stop` to achieve the equivalent of `event.stopPropagation()`.
@@ -60,7 +60,7 @@ You can also apply `.stop` to achieve the equivalent of `event.stopPropagation()
 Sometimes you may want to access the native browser event object inside your own code. To make this easy, Alpine automatically injects an `$event` magic variable:
 
 ```alpine
-<button @click="$event.target.remove()">Remove Me</button>
+<button x-on:click="$event.target.remove()">Remove Me</button>
 ```
 
 <a name="dispatching-custom-events"></a>
@@ -71,8 +71,8 @@ In addition to listening for browser events, you can dispatch them as well. This
 Alpine exposes a magic helper called `$dispatch` for this:
 
 ```alpine
-<div @foo="console.log('foo was dispatched')">
-    <button @click="$dispatch('foo')"></button>
+<div x-on:foo="console.log('foo was dispatched')">
+    <button x-on:click="$dispatch('foo')"></button>
 </div>
 ```
 
@@ -88,10 +88,10 @@ This allows you to communicate across components completely like the following e
 
 ```alpine
 <div x-data>
-    <button @click="$dispatch('foo')"></button>
+    <button x-on:click="$dispatch('foo')"></button>
 </div>
 
-<div x-data @foo.window="console.log('foo was dispatched')">...</div>
+<div x-data x-on:foo.window="console.log('foo was dispatched')">...</div>
 ```
 
 In the above example, if we click the button in the first component, Alpine will dispatch the "foo" event. Because of the way events work in the browser, they "bubble" up through parent elements all the way to the top-level "window".

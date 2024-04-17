@@ -13,7 +13,7 @@ test(
     [
         html`
             <div x-data="{ open: false }">
-                <button @click="open = ! open">Toggle</button>
+                <button x-on:click="open = ! open">Toggle</button>
 
                 <article x-dialog x-model="open">Dialog Contents!</article>
             </div>
@@ -30,7 +30,7 @@ test(
     [
         html`
             <div x-data="{ open: false }">
-                <button @click="open = ! open">Toggle</button>
+                <button x-on:click="open = ! open">Toggle</button>
 
                 <article x-dialog x-model="open">Dialog Contents!</article>
             </div>
@@ -50,9 +50,9 @@ test(
     [
         html`
             <div x-data="{ open: false }">
-                <button @click="open = ! open">Toggle</button>
+                <button x-on:click="open = ! open">Toggle</button>
 
-                <article x-dialog :open="open" @close="open = false">Dialog Contents!</article>
+                <article x-dialog x-bind:open="open" x-on:close="open = false">Dialog Contents!</article>
             </div>
         `,
     ],
@@ -68,7 +68,7 @@ test(
     [
         html`
             <div x-data="{ open: false }">
-                <button @click="open = ! open">Toggle</button>
+                <button x-on:click="open = ! open">Toggle</button>
 
                 <template x-if="open">
                     <article x-dialog static>Dialog Contents!</article>
@@ -88,7 +88,7 @@ test(
     [
         html`
             <div x-data="{ open: false }">
-                <button @click="open = ! open">Toggle</button>
+                <button x-on:click="open = ! open">Toggle</button>
 
                 <article x-dialog x-model="open">
                     Dialog Contents!
@@ -185,7 +185,7 @@ test(
     [
         html`
             <div x-data="{ open: false }">
-                <button @click="open = ! open">Toggle</button>
+                <button x-on:click="open = ! open">Toggle</button>
 
                 <article x-dialog x-model="open">
                     Dialog Contents!
@@ -206,7 +206,7 @@ test(
     [
         html`
             <div x-data="{ open: false }">
-                <button @click="open = ! open">Toggle</button>
+                <button x-on:click="open = ! open">Toggle</button>
 
                 <template x-teleport="body">
                     <article x-dialog x-model="open">Dialog Contents!</article>

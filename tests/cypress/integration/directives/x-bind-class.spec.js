@@ -19,7 +19,7 @@ test(
         <div x-data="{ isOn: false }">
             <span class="foo" x-bind:class="isOn ? 'bar': ''"></span>
 
-            <button @click="isOn = ! isOn">button</button>
+            <button x-on:click="isOn = ! isOn">button</button>
         </div>
     `,
     ({ get }) => {
@@ -64,7 +64,7 @@ test(
                   }"
             ></span>
 
-            <button @click="mode = (mode + 1) % 3">button</button>
+            <button x-on:click="mode = (mode + 1) % 3">button</button>
         </div>
     `,
     ({ get }) => {
@@ -87,8 +87,8 @@ test(
     'classes are removed before being added',
     html`
         <div x-data="{ isOpen: true }">
-            <span class="text-red" :class="isOpen ? 'block' : 'hidden'"> Span </span>
-            <button @click="isOpen = !isOpen">click me</button>
+            <span class="text-red" x-bind:class="isOpen ? 'block' : 'hidden'"> Span </span>
+            <button x-on:click="isOpen = !isOpen">click me</button>
         </div>
     `,
     ({ get }) => {

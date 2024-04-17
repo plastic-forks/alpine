@@ -78,7 +78,7 @@ test(
     [
         html`
             <div x-data="{isOpen: true}">
-                <div id="xbind" :class="{ 'block' : isVisible, 'hidden' : !isVisible }"></div>
+                <div id="xbind" x-bind:class="{ 'block' : isVisible, 'hidden' : !isVisible }"></div>
             </div>
         `,
         setupConsoleInterceptor('xbind'),

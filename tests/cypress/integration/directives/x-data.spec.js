@@ -17,12 +17,12 @@ test(
             <div x-data="{ bar: 'bob' }">
                 <h1 x-text="foo"></h1>
                 <h2 x-text="bar"></h2>
-                <button id="inner" @click="foo = 'bob'; bar = 'lob'">click</button>
+                <button id="inner" x-on:click="foo = 'bob'; bar = 'lob'">click</button>
             </div>
 
             <h3 x-text="foo"></h3>
             <h4 x-text="bar"></h4>
-            <button id="outer" @click="foo = 'law'; bar = 'blog'">click</button>
+            <button id="outer" x-on:click="foo = 'law'; bar = 'blog'">click</button>
         </div>
     `,
     ({ get }) => {
@@ -91,7 +91,7 @@ test(
     'functions in x-data have access to proper this context',
     html`
         <div x-data="{ foo: undefined, change() { this.foo = 'baz' }}" x-init="foo = 'bar'">
-            <button @click="change()">change</button>
+            <button x-on:click="change()">change</button>
             <span x-text="foo"></span>
         </div>
     `,

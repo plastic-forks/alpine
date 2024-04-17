@@ -10,7 +10,7 @@ title: bind()
 Here's a simple example. Rather than binding attributes manually with Alpine:
 
 ```alpine
-<button type="button" @click="doSomething()" :disabled="shouldDisable"></button>
+<button type="button" x-on:click="doSomething()" x-bind:disabled="shouldDisable"></button>
 ```
 
 You can bundle these attributes up into a reusable object and use `x-bind` to bind to that:
@@ -23,7 +23,7 @@ You can bundle these attributes up into a reusable object and use `x-bind` to bi
         Alpine.bind('SomeButton', () => ({
             type: 'button',
 
-            '@click'() {
+            'x-on:click'() {
                 this.doSomething()
             },
 

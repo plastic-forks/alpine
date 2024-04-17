@@ -128,11 +128,11 @@ test(
     'x-show with x-bind:style inside x-for works correctly',
     html`
         <div x-data="{items: [{ cleared: false }, { cleared: false }]}">
-            <template x-for="(item, index) in items" :key="index">
+            <template x-for="(item, index) in items" x-bind:key="index">
                 <button
                     x-show="! item.cleared"
                     x-bind:style="'background: #999'"
-                    @click="item.cleared = true"
+                    x-on:click="item.cleared = true"
                 ></button>
             </template>
         </div>
@@ -156,8 +156,8 @@ test(
     'x-show takes precedence over style bindings for display property',
     html`
         <div x-data="{ show: false }">
-            <span x-show="show" :style="'color: red;'">thing</span>
-            <span :style="'color: red;'" x-show="show">thing</span>
+            <span x-show="show" x-bind:style="'color: red;'">thing</span>
+            <span x-bind:style="'color: red;'" x-show="show">thing</span>
         </div>
     `,
     ({ get }) => {
@@ -173,8 +173,8 @@ test(
             x-data="{ isEnabled: false }"
             x-init="$watch('isEnabled', () => { if (isEnabled) isEnabled = false })"
         >
-            <button id="enable" x-show="!isEnabled" @click="isEnabled = true"></button>
-            <button id="disable" x-show="isEnabled" @click="isEnabled = false"></button>
+            <button id="enable" x-show="!isEnabled" x-on:click="isEnabled = true"></button>
+            <button id="disable" x-show="isEnabled" x-on:click="isEnabled = false"></button>
         </div>
     `,
     ({ get }) => {

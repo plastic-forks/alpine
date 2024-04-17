@@ -61,7 +61,7 @@ test.skip(
                 >
                     <input x-model="inner" inner />
 
-                    <button @click="release()">release</button>
+                    <button x-on:click="release()">release</button>
                 </div>
             </div>
         `,

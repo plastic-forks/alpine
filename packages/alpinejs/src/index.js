@@ -21,7 +21,7 @@ import Alpine from './alpine'
  *
  * Now we're ready to bootstrap Alpine's evaluation system.
  * It's the function that converts raw JavaScript string
- * expressions like @click="toggle()", into actual JS.
+ * expressions like x-on:click="toggle()", into actual JS.
  */
 import { normalEvaluator } from './evaluator'
 

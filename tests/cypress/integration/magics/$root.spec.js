@@ -4,7 +4,7 @@ test(
     '$root returns the root element of the component',
     html`
         <div x-data data-message="foo">
-            <button @click="$el.innerText = $root.dataset.message">click me</button>
+            <button x-on:click="$el.innerText = $root.dataset.message">click me</button>
         </div>
     `,
     ({ get }) => {

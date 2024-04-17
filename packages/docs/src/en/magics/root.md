@@ -10,12 +10,12 @@ title: root
 
 ```alpine
 <div x-data data-message="Hello World!">
-    <button @click="alert($root.dataset.message)">Say Hi</button>
+    <button x-on:click="alert($root.dataset.message)">Say Hi</button>
 </div>
 ```
 
 <!-- START_VERBATIM -->
 <div x-data data-message="Hello World!" class="demo">
-    <button @click="alert($root.dataset.message)">Say Hi</button>
+    <button x-on:click="alert($root.dataset.message)">Say Hi</button>
 </div>
 <!-- END_VERBATIM -->

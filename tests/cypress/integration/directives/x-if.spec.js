@@ -4,7 +4,7 @@ test(
     'x-if',
     html`
         <div x-data="{ show: false }">
-            <button @click="show = ! show">Toggle</button>
+            <button x-on:click="show = ! show">Toggle</button>
 
             <template x-if="show">
                 <h1>Toggle Me</h1>
@@ -24,7 +24,7 @@ test(
     'x-if inside x-for allows nested directives',
     html`
         <div x-data="{items: [{id: 1, label: '1'}]}">
-            <template x-for="item in items" :key="item.id">
+            <template x-for="item in items" x-bind:key="item.id">
                 <div>
                     <template x-if="item.label">
                         <span x-text="item.label"></span>
@@ -59,7 +59,7 @@ test(
     'x-if removed dom does not evaluate reactive expressions in dom tree',
     html`
         <div x-data="{user: {name: 'lebowski'}}">
-            <button @click="user = null">Log out</button>
+            <button x-on:click="user = null">Log out</button>
             <template x-if="user">
                 <span x-text="user.name"></span>
             </template>
@@ -91,7 +91,7 @@ test(
         },
     }"
         >
-            <button @click="stopEditing">Stop editing</button>
+            <button x-on:click="stopEditing">Stop editing</button>
             <template x-if="isEditing">
                 <div id="div-editing">
                     <h2>Editing</h2>

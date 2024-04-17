@@ -92,7 +92,7 @@ For example, an inline component like this will not work.
 ```alpine
 <!-- Bad -->
 <div x-data="{ count: 1 }">
-    <button @click="count++">Increment</button>
+    <button x-on:click="count++">Increment</button>
 
     <span x-text="count"></span>
 </div>
@@ -103,7 +103,7 @@ However, breaking out the expressions into external APIs, the following is valid
 ```alpine
 <!-- Good -->
 <div x-data="counter">
-    <button @click="increment">Increment</button>
+    <button x-on:click="increment">Increment</button>
 
     <span x-text="count"></span>
 </div>

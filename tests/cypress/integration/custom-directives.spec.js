@@ -25,8 +25,8 @@ test(
                 <span x-foo x-ref="foo"></span>
                 <h1 x-text="count"></h1>
 
-                <button @click="count++" id="change">change</button>
-                <button @click="$refs.foo.remove()" id="remove">remove</button>
+                <button x-on:click="count++" id="change">change</button>
+                <button x-on:click="$refs.foo.remove()" id="remove">remove</button>
             </div>
         `,
         `

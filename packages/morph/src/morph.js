@@ -470,7 +470,7 @@ function monkeyPatchDomSetAttributeToAllowAtSymbols() {
     patched = true
 
     // Because morphdom may add attributes to elements containing "@" symbols
-    // like in the case of an Alpine `@click` directive, we have to patch
+    // like in the case of an Alpine `x-on:click` directive, we have to patch
     // the standard Element.setAttribute method to allow this to work.
     let original = Element.prototype.setAttribute
 

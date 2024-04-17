@@ -9,7 +9,7 @@ title: refs
 `$refs` is a magic property that can be used to retrieve DOM elements marked with `x-ref` inside the component. This is useful when you need to manually manipulate DOM elements. It's often used as a more succinct, scoped, alternative to `document.querySelector`.
 
 ```alpine
-<button @click="$refs.text.remove()">Remove Text</button>
+<button x-on:click="$refs.text.remove()">Remove Text</button>
 
 <span x-ref="text">Hello 👋</span>
 ```
@@ -17,7 +17,7 @@ title: refs
 <!-- START_VERBATIM -->
 <div class="demo">
     <div x-data>
-        <button @click="$refs.text.remove()">Remove Text</button>
+        <button x-on:click="$refs.text.remove()">Remove Text</button>
 
         <div class="pt-4" x-ref="text">Hello 👋</div>
     </div>
@@ -32,7 +32,7 @@ Now, when the `<button>` is pressed, the `<span>` will be removed.
 In V2 it was possible to bind `$refs` to elements dynamically, like seen below:
 
 ```alpine
-<template x-for="item in items" :key="item.id" >
+<template x-for="item in items" x-bind:key="item.id" >
     <div :x-ref="item.name">
     some content ...
     </div>

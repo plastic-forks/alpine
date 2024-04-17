@@ -21,7 +21,7 @@ For example, here's a component where we will use `x-bind` to set the placeholde
 If `x-bind:` is too verbose for your liking, you can use the shorthand: `:`. For example, here is the same input element as above, but refactored to use the shorthand syntax.
 
 ```alpine
-<input type="text" :placeholder="placeholder">
+<input type="text" x-bind:placeholder="placeholder">
 ```
 
 <a name="binding-classes"></a>
@@ -35,7 +35,7 @@ Here's a simple example of a simple dropdown toggle, but instead of using `x-sho
 <div x-data="{ open: false }">
     <button x-on:click="open = ! open">Toggle Dropdown</button>
 
-    <div :class="open ? '' : 'hidden'">
+    <div x-bind:class="open ? '' : 'hidden'">
         Dropdown Contents...
     </div>
 </div>
@@ -49,17 +49,17 @@ Now, when `open` is `false`, the "hidden" class will be added to the dropdown.
 In cases like these, if you prefer a less verbose syntax you can use JavaScript's short-circuit evaluation instead of standard conditionals:
 
 ```alpine
-<div :class="show ? '' : 'hidden'">
+<div x-bind:class="show ? '' : 'hidden'">
 <!-- Is equivalent to: -->
-<div :class="show || 'hidden'">
+<div x-bind:class="show || 'hidden'">
 ```
 
 The inverse is also available to you. Suppose instead of `open`, we use a variable with the opposite value: `closed`.
 
 ```alpine
-<div :class="closed ? 'hidden' : ''">
+<div x-bind:class="closed ? 'hidden' : ''">
 <!-- Is equivalent to: -->
-<div :class="closed && 'hidden'">
+<div x-bind:class="closed && 'hidden'">
 ```
 
 <a name="class-object-syntax"></a>
@@ -68,7 +68,7 @@ The inverse is also available to you. Suppose instead of `open`, we use a variab
 Alpine offers an additional syntax for toggling classes if you prefer. By passing a JavaScript object where the classes are the keys and booleans are the values, Alpine will know which classes to apply and which to remove. For example:
 
 ```alpine
-<div :class="{ 'hidden': ! show }">
+<div x-bind:class="{ 'hidden': ! show }">
 ```
 
 This technique offers a unique advantage to other methods. When using object-syntax, Alpine will NOT preserve original classes applied to an element's `class` attribute.
@@ -76,7 +76,7 @@ This technique offers a unique advantage to other methods. When using object-syn
 For example, if you wanted to apply the "hidden" class to an element before Alpine loads, AND use Alpine to toggle its existence you can only achieve that behavior using object-syntax:
 
 ```alpine
-<div class="hidden" :class="{ 'hidden': ! show }">
+<div class="hidden" x-bind:class="{ 'hidden': ! show }">
 ```
 
 In case that confused you, let's dig deeper into how Alpine handles `x-bind:class` differently than other attributes.
@@ -89,7 +89,7 @@ In case that confused you, let's dig deeper into how Alpine handles `x-bind:clas
 Consider the following case.
 
 ```alpine
-<div class="opacity-50" :class="hide && 'hidden'">
+<div class="opacity-50" x-bind:class="hide && 'hidden'">
 ```
 
 If "class" were any other attribute, the `:class` binding would overwrite any existing class attribute, causing `opacity-50` to be overwritten by either `hidden` or `''`.
@@ -118,7 +118,7 @@ Similar to the special syntax for binding classes with JavaScript objects, Alpin
 Just like the class objects, this syntax is entirely optional. Only use it if it affords you some advantage.
 
 ```alpine
-<div :style="{ color: 'red', display: 'flex' }">
+<div x-bind:style="{ color: 'red', display: 'flex' }">
 
 <!-- Will render: -->
 <div style="color: red; display: flex;" ...>
@@ -135,7 +135,7 @@ Conditional inline styling is possible using expressions just like with x-bind:c
 One advantage of this approach is being able to mix it in with existing styles on an element:
 
 ```alpine
-<div style="padding: 1rem;" :style="{ color: 'red', display: 'flex' }">
+<div style="padding: 1rem;" x-bind:style="{ color: 'red', display: 'flex' }">
 
 <!-- Will render: -->
 <div style="padding: 1rem; color: red; display: flex;" ...>
@@ -145,7 +145,7 @@ And like most expressions in Alpine, you can always use the result of a JavaScri
 
 ```alpine
 <div x-data="{ styles: { color: 'red', display: 'flex' }}">
-    <div :style="styles">
+    <div x-bind:style="styles">
 </div>
 
 <!-- Will render: -->
@@ -175,7 +175,7 @@ The object keys can be anything you would normally write as an attribute name in
 
             trigger: {
                 ['x-ref']: 'trigger',
-                ['@click']() {
+                ['x-on:click']() {
                     this.open = true
                 },
             },
@@ -184,7 +184,7 @@ The object keys can be anything you would normally write as an attribute name in
                 ['x-show']() {
                     return this.open
                 },
-                ['@click.outside']() {
+                ['x-on:click.outside']() {
                     this.open = false
                 },
             },

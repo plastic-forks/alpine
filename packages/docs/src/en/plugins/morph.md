@@ -16,15 +16,15 @@ The best way to understand its purpose is with the following interactive visuali
 <!-- START_VERBATIM -->
 <div x-data="{ slide: 1 }" class="border rounded">
     <div>
-        <img :src="'/img/morphs/morph'+slide+'.png'">
+        <img x-bind:src="'/img/morphs/morph'+slide+'.png'">
     </div>
 
     <div class="flex w-full justify-between" style="padding-bottom: 1rem">
         <div class="w-1/2 px-4">
-            <button @click="slide = (slide === 1) ? 13 : slide - 1" class="w-full bg-cyan-400 rounded-full text-center py-3 font-bold text-white">Previous</button>
+            <button x-on:click="slide = (slide === 1) ? 13 : slide - 1" class="w-full bg-cyan-400 rounded-full text-center py-3 font-bold text-white">Previous</button>
         </div>
         <div class="w-1/2 px-4">
-            <button @click="slide = (slide % 13) + 1" class="w-full bg-cyan-400 rounded-full text-center py-3 font-bold text-white">Next</button>
+            <button x-on:click="slide = (slide % 13) + 1" class="w-full bg-cyan-400 rounded-full text-center py-3 font-bold text-white">Next</button>
         </div>
     </div>
 </div>

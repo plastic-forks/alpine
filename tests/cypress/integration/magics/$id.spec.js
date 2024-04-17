@@ -5,18 +5,18 @@ test(
     html`
         <div x-data x-id="['foo']" id="1">
             <div>
-                <h1 :id="$id('foo')"></h1>
+                <h1  x-bind:id="$id('foo')"></h1>
             </div>
 
-            <span :aria-labelledby="$id('foo')"></span>
+            <span x-bind:aria-labelledby="$id('foo')"></span>
         </div>
 
         <div x-data x-id="['foo']" id="2">
             <div>
-                <h1 :id="$id('foo')"></h1>
+                <h1  x-bind:id="$id('foo')"></h1>
             </div>
 
-            <span :aria-labelledby="$id('foo')"></span>
+            <span x-bind:aria-labelledby="$id('foo')"></span>
         </div>
     `,
     ({ get }) => {
@@ -32,28 +32,28 @@ test(
     html`
         <div x-data x-id="['foo']" id="1">
             <!-- foo-1-3 -->
-            <span :aria-activedescendant="$id('foo', 3)"></span>
+            <span x-bind:aria-activedescendant="$id('foo', 3)"></span>
 
             <ul>
-                <li x-data :id="$id('foo', 1)"></li>
+                <li x-data  x-bind:id="$id('foo', 1)"></li>
                 <!-- foo-1-1 -->
-                <li x-data :id="$id('foo', 2)"></li>
+                <li x-data  x-bind:id="$id('foo', 2)"></li>
                 <!-- foo-1-2 -->
-                <li x-data :id="$id('foo', 3)"></li>
+                <li x-data  x-bind:id="$id('foo', 3)"></li>
                 <!-- foo-1-3 -->
             </ul>
         </div>
 
         <div x-data x-id="['foo']" id="2">
             <!-- foo-2-3 -->
-            <span :aria-activedescendant="$id('foo', 3)"></span>
+            <span x-bind:aria-activedescendant="$id('foo', 3)"></span>
 
             <ul>
-                <li x-data :id="$id('foo', 1)"></li>
+                <li x-data  x-bind:id="$id('foo', 1)"></li>
                 <!-- foo-2-1 -->
-                <li x-data :id="$id('foo', 2)"></li>
+                <li x-data  x-bind:id="$id('foo', 2)"></li>
                 <!-- foo-2-2 -->
-                <li x-data :id="$id('foo', 3)"></li>
+                <li x-data  x-bind:id="$id('foo', 3)"></li>
                 <!-- foo-2-3 -->
             </ul>
         </div>
@@ -75,12 +75,12 @@ test(
     html`
         <div x-data x-id="['foo']">
             <!-- foo-1 -->
-            <span :aria-activedescendant="$id('foo')"></span>
+            <span x-bind:aria-activedescendant="$id('foo')"></span>
 
             <ul>
-                <li x-data x-id="['bar']" :id="$id('bar')"></li>
+                <li x-data x-id="['bar']"  x-bind:id="$id('bar')"></li>
                 <!-- bar-1 -->
-                <li x-data x-id="['bar']" :id="$id('bar')"></li>
+                <li x-data x-id="['bar']"  x-bind:id="$id('bar')"></li>
                 <!-- bar-2 -->
             </ul>
         </div>
@@ -96,8 +96,8 @@ test(
     '$ids are globally unique when outside x-id',
     html`
         <div x-data>
-            <h1 :id="$id('foo')"></h1>
-            <h2 :id="$id('foo')"></h2>
+            <h1  x-bind:id="$id('foo')"></h1>
+            <h2  x-bind:id="$id('foo')"></h2>
         </div>
     `,
     ({ get }) => {
@@ -111,22 +111,22 @@ test(
     html`
         <div x-data x-id="['foo', 'bar']">
             <!-- foo-1 -->
-            <span :aria-labelledby="$id('foo')"></span>
+            <span x-bind:aria-labelledby="$id('foo')"></span>
 
             <div x-data>
-                <h1 :id="$id('foo')"></h1>
-                <h5 :id="$id('bar')"></h5>
+                <h1  x-bind:id="$id('foo')"></h1>
+                <h5  x-bind:id="$id('bar')"></h5>
 
                 <div x-id="['foo']">
-                    <h2 :aria-labelledby="$id('foo')"></h2>
-                    <h6 :aria-labelledby="$id('bar')"></h6>
+                    <h2 x-bind:aria-labelledby="$id('foo')"></h2>
+                    <h6 x-bind:aria-labelledby="$id('bar')"></h6>
 
                     <div x-data>
-                        <h3 :id="$id('foo')"></h3>
+                        <h3  x-bind:id="$id('foo')"></h3>
                     </div>
                 </div>
 
-                <h4 :id="$id('foo')"></h4>
+                <h4  x-bind:id="$id('foo')"></h4>
             </div>
         </div>
     `,
@@ -147,10 +147,10 @@ test(
         html`
             <div x-data>
                 <p x-id="['foo']">
-                    <span :id="$id('foo')">bob</span>
+                    <span  x-bind:id="$id('foo')">bob</span>
                 </p>
 
-                <h1 :id="$id('bar')">lob</h1>
+                <h1  x-bind:id="$id('bar')">lob</h1>
             </div>
         `,
     ],
@@ -158,10 +158,10 @@ test(
         let toHtml = html`
             <div x-data>
                 <p x-id="['foo']">
-                    <span :id="$id('foo')">bob</span>
+                    <span  x-bind:id="$id('foo')">bob</span>
                 </p>
 
-                <h1 :id="$id('bar')">lob</h1>
+                <h1  x-bind:id="$id('bar')">lob</h1>
             </div>
         `
 

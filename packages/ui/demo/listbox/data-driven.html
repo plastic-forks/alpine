@@ -40,13 +40,13 @@
         >
             <div class="w-full max-w-xs mx-auto">
                 <div class="flex justify-between mb-8">
-                    <button class="underline" @click="selected = people[1]">Change value</button>
+                    <button class="underline" x-on:click="selected = people[1]">Change value</button>
 
-                    <button class="underline" @click="
+                    <button class="underline" x-on:click="
                         people.sort((a, b) => a.name > b.name ? 1 : -1)
                     ">Reorder</button>
 
-                    <button class="underline" @click="
+                    <button class="underline" x-on:click="
                         people = people.filter(i => i.name !== 'Arlene Mccoy')
                     ">Destroy item</button>
                 </div>
@@ -70,19 +70,19 @@
 
                         <div class="absolute w-full mt-1 bg-white rounded-md shadow-lg">
                             <ul x-listbox:options class="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-60 focus:outline-none sm:text-sm sm:leading-5">
-                                <template x-for="person in people" :key="person.id">
+                                <template x-for="person in people" x-bind:key="person.id">
                                     <li
-                                        x-listbox:option :value="person"
+                                        x-listbox:option x-bind:value="person"
                                         class="relative py-2 pl-3 cursor-default select-none pr-9 focus:outline-none"
-                                        :disabled="person.disabled"
-                                        :class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900', person.disabled && 'bg-gray-50 text-gray-300'].filter(Boolean)"
+                                        x-bind:disabled="person.disabled"
+                                        x-bind:class="[$listboxOption.isActive ? 'text-white bg-indigo-600' : 'text-gray-900', person.disabled && 'bg-gray-50 text-gray-300'].filter(Boolean)"
                                     >
-                                        <span class="block truncate" :class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'" x-text="person.name"></span>
+                                        <span class="block truncate" x-bind:class="$listboxOption.isSelected ? 'font-semibold' : 'font-normal'" x-text="person.name"></span>
 
                                         <span
                                             x-show="$listboxOption.isSelected"
                                             class="absolute inset-y-0 right-0 flex items-center pr-4"
-                                            :class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
+                                            x-bind:class="$listboxOption.isActive ? 'text-white' : 'text-indigo-600'"
                                         >
                                             <svg class="w-5 h-5" viewbox="0 0 20 20" fill="currentColor">
                                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />

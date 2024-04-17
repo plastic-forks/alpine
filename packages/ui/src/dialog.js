@@ -31,7 +31,7 @@ function handleRoot(el, Alpine) {
         'x-data'() {
             return {
                 init() {
-                    // If the user chose to use :open and @close instead of x-model.
+                    // If the user chose to use x-bind:open and x-on:close instead of x-model.
                     (Alpine.bound(el, 'open') !== undefined) && Alpine.effect(() => {
                         this.__isOpenState = Alpine.bound(el, 'open')
                     })
@@ -70,13 +70,13 @@ function handleOverlay(el, Alpine) {
     Alpine.bind(el, {
         'x-init'() { if (this.$data.__isOpen === undefined) console.warn('"x-dialog:overlay" is missing a parent element with "x-dialog".') },
         'x-show'() { return this.__isOpen },
-        '@click.prevent.stop'() { this.$data.__close() },
+        'x-on:click.prevent.stop'() { this.$data.__close() },
     })
 }
 
 function handlePanel(el, Alpine) {
     Alpine.bind(el, {
-        '@click.outside'() { this.$data.__close() },
+        'x-on:click.outside'() { this.$data.__close() },
         'x-show'() { return this.$data.__isOpen },
     })
 }

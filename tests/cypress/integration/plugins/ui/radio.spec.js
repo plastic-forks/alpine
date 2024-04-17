@@ -51,9 +51,9 @@ test(
                         <div>
                             <template
                                 x-for="({ id, name, description, disabled }, i) in access"
-                                :key="id"
+                                x-bind:key="id"
                             >
-                                <div :option="id" x-radio:option :value="id" :disabled="disabled">
+                                <divx-bind:option="id" x-radio:option x-bind:value="id" x-bind:disabled="disabled">
                                     <span x-radio:label x-text="name"></span>
                                     <span x-radio:description x-text="description"></span>
                                 </div>
@@ -116,9 +116,9 @@ test(
                         <div>
                             <template
                                 x-for="({ id, name, description, disabled }, i) in access"
-                                :key="id"
+                                x-bind:key="id"
                             >
-                                <div :option="id" x-radio:option :value="id" :disabled="disabled">
+                                <divx-bind:option="id" x-radio:option x-bind:value="id" x-bind:disabled="disabled">
                                     <span x-radio:label x-text="name"></span>
                                     <span x-radio:description x-text="description"></span>
                                 </div>
@@ -171,9 +171,9 @@ test(
                 <div x-radio x-model="active" disabled>
                     <template
                         x-for="({ id, name, description, disabled }, i) in access"
-                        :key="id"
+                        x-bind:key="id"
                     >
-                        <div :option="id" x-radio:option :value="id" :disabled="disabled">
+                        <divx-bind:option="id" x-radio:option x-bind:value="id" x-bind:disabled="disabled">
                             <span x-radio:label x-text="name"></span>
                             <span x-radio:description x-text="description"></span>
                         </div>
@@ -226,9 +226,9 @@ test(
                 <div x-radio x-model="active">
                     <template
                         x-for="({ id, name, description, disabled }, i) in access"
-                        :key="id"
+                        x-bind:key="id"
                     >
-                        <div :option="id" x-radio:option :value="id" :disabled="disabled">
+                        <divx-bind:option="id" x-radio:option x-bind:value="id" x-bind:disabled="disabled">
                             <span x-radio:label x-text="name"></span>
                             <span x-radio:description x-text="description"></span>
                         </div>
@@ -281,9 +281,9 @@ test(
                 <div x-radio x-model="active">
                     <template
                         x-for="({ id, name, description, disabled }, i) in access"
-                        :key="id"
+                        x-bind:key="id"
                     >
-                        <div :option="id" x-radio:option :value="id" :disabled="disabled">
+                        <divx-bind:option="id" x-radio:option x-bind:value="id" x-bind:disabled="disabled">
                             <span x-radio:label x-text="name"></span>
                             <span x-radio:description x-text="description"></span>
                         </div>
@@ -345,12 +345,12 @@ test(
                         <div>
                             <template
                                 x-for="({ id, name, description, disabled }, i) in access"
-                                :key="id"
+                                x-bind:key="id"
                             >
-                                <div :option="id" x-radio:option :value="id" :disabled="disabled">
-                                    <span :label="id" x-radio:label x-text="name"></span>
+                                <divx-bind:option="id" x-radio:option x-bind:value="id" x-bind:disabled="disabled">
+                                    <span x-bind:label="id" x-radio:label x-text="name"></span>
                                     <span
-                                        :description="id"
+                                        x-bind:description="id"
                                         x-radio:description
                                         x-text="description"
                                     ></span>
@@ -425,22 +425,22 @@ test(
                 <div x-radio group>
                     <template
                         x-for="({ id, name, description, disabled }, i) in access"
-                        :key="id"
+                        x-bind:key="id"
                     >
                         <div
-                            :option="id"
+                           x-bind:option="id"
                             x-radio:option
-                            :value="id"
-                            :disabled="disabled"
-                            :class="{
+                            x-bind:value="id"
+                            x-bind:disabled="disabled"
+                            x-bind:class="{
                             'active': $radioOption.isActive,
                             'checked': $radioOption.isChecked,
                             'disabled': $radioOption.isDisabled,
                         }"
                         >
-                            <span :label="id" x-radio:label x-text="name"></span>
+                            <span x-bind:label="id" x-radio:label x-text="name"></span>
                             <span
-                                :description="id"
+                                x-bind:description="id"
                                 x-radio:description
                                 x-text="description"
                             ></span>
@@ -497,16 +497,16 @@ test(
         ]}"
             >
                 <div x-radio group x-model="active">
-                    <template x-for="(option, i) in access" :key="option.id">
+                    <template x-for="(option, i) in access" x-bind:key="option.id">
                         <div
-                            :option="option.id"
+                           x-bind:option="option.id"
                             x-radio:option
-                            :value="option"
-                            :disabled="option.disabled"
+                            x-bind:value="option"
+                            x-bind:disabled="option.disabled"
                         >
-                            <span :label="option.id" x-radio:label x-text="option.name"></span>
+                            <span x-bind:label="option.id" x-radio:label x-text="option.name"></span>
                             <span
-                                :description="option.id"
+                                x-bind:description="option.id"
                                 x-radio:description
                                 x-text="option.description"
                             ></span>
@@ -572,12 +572,12 @@ test(
                 <div x-radio group x-model="active" name="access">
                     <template
                         x-for="({ id, name, description, disabled }, i) in access"
-                        :key="id"
+                        x-bind:key="id"
                     >
-                        <div :option="id" x-radio:option :value="id" :disabled="disabled">
-                            <span :label="id" x-radio:label x-text="name"></span>
+                        <divx-bind:option="id" x-radio:option x-bind:value="id" x-bind:disabled="disabled">
+                            <span x-bind:label="id" x-radio:label x-text="name"></span>
                             <span
-                                :description="id"
+                                x-bind:description="id"
                                 x-radio:description
                                 x-text="description"
                             ></span>

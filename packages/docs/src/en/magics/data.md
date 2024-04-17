@@ -15,7 +15,7 @@ However, sometimes it is helpful to have an actual object that encapsulates all 
 ```alpine
 <div x-data="{ greeting: 'Hello' }">
     <div x-data="{ name: 'Caleb' }">
-        <button @click="sayHello($data)">Say Hello</button>
+        <button x-on:click="sayHello($data)">Say Hello</button>
     </div>
 </div>
 
@@ -29,7 +29,7 @@ However, sometimes it is helpful to have an actual object that encapsulates all 
 <!-- START_VERBATIM -->
 <div x-data="{ greeting: 'Hello' }" class="demo">
     <div x-data="{ name: 'Caleb' }">
-        <button @click="sayHello($data)">Say Hello</button>
+        <button x-on:click="sayHello($data)">Say Hello</button>
     </div>
 </div>
 
@@ -40,6 +40,6 @@ However, sometimes it is helpful to have an actual object that encapsulates all 
 </script>
 <!-- END_VERBATIM -->
 
-Now when the button is pressed, the browser will alert `Hello Caleb!` because it was passed a data object that contained all the Alpine scope of the expression that called it (`@click="..."`).
+Now when the button is pressed, the browser will alert `Hello Caleb!` because it was passed a data object that contained all the Alpine scope of the expression that called it (`x-on:click="..."`).
 
 Most applications won't need this magic property, but it can be very helpful for deeper, more complicated Alpine utilities.

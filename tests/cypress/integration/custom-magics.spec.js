@@ -32,7 +32,7 @@ test(
         </script>
 
         <div x-data>
-            <button @click="$el.textContent = window.hasBeenAccessed">clickme</button>
+            <button x-on:click="$el.textContent = window.hasBeenAccessed">clickme</button>
         </div>
     `,
     ({ get }) => {

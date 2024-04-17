@@ -189,7 +189,7 @@ function handleOption(el, Alpine) {
 
             return -1
         },
-        '@click'() {
+        'x-on:click'() {
             if (this.$radioOption.isDisabled) return
             this.$data.__change(this.$data.__option)
             this.$el.focus()

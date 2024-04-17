@@ -169,7 +169,7 @@ function handleRoot(el, Alpine) {
                     }
 
                     // Safari needs more of a "tick" for focusing after x-show for some reason.
-                    // Probably because Alpine adds an extra tick when x-showing for @click.outside
+                    // Probably because Alpine adds an extra tick when x-showing for x-on:click.outside
                     let nextTick = callback => requestAnimationFrame(() => requestAnimationFrame(callback))
 
                     nextTick(() => {
@@ -389,7 +389,7 @@ function handleButton(el, Alpine) {
         'x-init'() { if (this.$el.tagName.toLowerCase() === 'button' && ! this.$el.hasAttribute('type')) this.$el.type = 'button' },
 
         // Register listeners...
-        '@click'(e) {
+        'x-on:click'(e) {
             if (this.$data.__isDisabled) return
             if (this.$data.__isOpen) {
                 this.$data.__close()
@@ -408,7 +408,7 @@ function handleLabel(el, Alpine) {
     Alpine.bind(el, {
         'x-ref': '__label',
         ':id'() { return this.$id('alpine-combobox-label') },
-        '@click'() { this.$refs.__input.focus({ preventScroll: true }) },
+        'x-on:click'() { this.$refs.__input.focus({ preventScroll: true }) },
     })
 }
 
@@ -476,7 +476,7 @@ function handleOption(el, Alpine) {
         },
 
         // Register listeners...
-        '@click'() {
+        'x-on:click'() {
             if (this.$comboboxOption.isDisabled) return;
 
             this.__selectOption(this.$el)

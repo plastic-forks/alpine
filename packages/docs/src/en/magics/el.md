@@ -9,13 +9,13 @@ title: el
 `$el` is a magic property that can be used to retrieve the current DOM node.
 
 ```alpine
-<button @click="$el.innerHTML = 'Hello World!'">Replace me with "Hello World!"</button>
+<button x-on:click="$el.innerHTML = 'Hello World!'">Replace me with "Hello World!"</button>
 ```
 
 <!-- START_VERBATIM -->
 <div class="demo">
     <div x-data>
-        <button @click="$el.textContent = 'Hello World!'">Replace me with "Hello World!"</button>
+        <button x-on:click="$el.textContent = 'Hello World!'">Replace me with "Hello World!"</button>
     </div>
 </div>
 <!-- END_VERBATIM -->

@@ -223,7 +223,7 @@ test(
                 click me
             </button>
 
-            <template x-for="item in items" :key="item">
+            <template x-for="item in items" x-bind:key="item">
                 <span x-text="item"></span>
             </template>
         </div>
@@ -254,7 +254,7 @@ test(
                 click me
             </button>
 
-            <template x-for="(item, index) in items" :key="index">
+            <template x-for="(item, index) in items" x-bind:key="index">
                 <span x-text="item"></span>
             </template>
         </div>
@@ -368,7 +368,7 @@ test(
                 click me
             </button>
 
-            <template x-for="item in items" :key="item.key">
+            <template x-for="item in items" x-bind:key="item.key">
                 <span x-text="item.name"></span>
             </template>
         </div>
@@ -416,7 +416,7 @@ test(
             <template x-for="bar in bars">
                 <h2 x-text="bar"></h2>
             </template>
-            <button @click="foos = [1, 2];bars = [1, 2, 3]">Change</button>
+            <button x-on:click="foos = [1, 2];bars = [1, 2, 3]">Change</button>
         </div>
     `,
     ({ get }) => {
@@ -463,8 +463,8 @@ test.retry(2)(
             <template x-for="i in items">
                 <span x-text="i"></span>
             </template>
-            <button @click="items.push(2)" id="first">click me</button>
-            <button @click="items.push(3)" id="second">click me</button>
+            <button x-on:click="items.push(2)" id="first">click me</button>
+            <button x-on:click="items.push(3)" id="second">click me</button>
         </div>
     `,
     ({ get }) => {
@@ -483,7 +483,7 @@ test(
             <template x-for="i in items">
                 <span x-text="i"></span>
             </template>
-            <button @click="items = [2]" id="first">click me</button>
+            <button x-on:click="items = [2]" id="first">click me</button>
         </div>
     `,
     ({ get }) => {
@@ -546,10 +546,10 @@ test(
     'correctly renders x-if children when reordered',
     html`
         <div x-data="{ items: ['foo', 'bar'] }">
-            <button @click="items = ['bar', 'foo']">click me</button>
-            <button @click="items = ['bar', 'baz', 'foo']">click me</button>
-            <button @click="items = ['baz', 'foo']">click me</button>
-            <template x-for="item in items" :key="item">
+            <button x-on:click="items = ['bar', 'foo']">click me</button>
+            <button x-on:click="items = ['bar', 'baz', 'foo']">click me</button>
+            <button x-on:click="items = ['baz', 'foo']">click me</button>
+            <template x-for="item in items" x-bind:key="item">
                 <template x-if="true">
                     <span x-text="item"></span>
                 </template>
@@ -582,7 +582,7 @@ test(
             <template x-for="(user, idx) in users">
                 <span x-text="users[idx].name"></span>
             </template>
-            <button @click="users = []">Reset</button>
+            <button x-on:click="users = []">Reset</button>
         </div>
     `,
     ({ get }) => {
@@ -617,8 +617,8 @@ test(
     html`
         <div x-data="{ items: [{x:0, k:1},{x:1, k:2}] }">
             <button x-on:click="items = [{x:3, k:1},{x:4, k:2}]">update</button>
-            <template x-for="item in items" :key="item.k">
-                <div :id="'item-' + item.k" x-data="{ inner: true }">
+            <template x-for="item in items" x-bind:key="item.k">
+                <div  x-bind:id="'item-' + item.k" x-data="{ inner: true }">
                     <span x-text="item.x.toString()"></span>:
                     <span x-text="item.k"></span>
                 </div>
@@ -653,7 +653,7 @@ test(
             },
         ]}"
         >
-            <template x-for="item in items" :key="item.doesntExist">
+            <template x-for="item in items" x-bind:key="item.doesntExist">
                 <span x-text="i"></span>
             </template>
         </div>

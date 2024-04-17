@@ -18,10 +18,10 @@ Things like input components, modals, listboxes, etc. will all benefit from this
 Suppose you have two input elements on a page, and you want them to have a unique ID from each other, you can do the following:
 
 ```alpine
-<input type="text" :id="$id('text-input')">
+<input type="text"  x-bind:id="$id('text-input')">
 <!-- id="text-input-1" -->
 
-<input type="text" :id="$id('text-input')">
+<input type="text"  x-bind:id="$id('text-input')">
 <!-- id="text-input-2" -->
 ```
 
@@ -38,13 +38,13 @@ Here is a way that you might think to accomplish this and is totally valid:
 
 ```alpine
 <div x-data="{ id: $id('text-input') }">
-    <label :for="id"> <!-- "text-input-1" -->
-    <input type="text" :id="id"> <!-- "text-input-1" -->
+    <label x-bind:for="id"> <!-- "text-input-1" -->
+    <input type="text"  x-bind:id="id"> <!-- "text-input-1" -->
 </div>
 
 <div x-data="{ id: $id('text-input') }">
-    <label :for="id"> <!-- "text-input-2" -->
-    <input type="text" :id="id"> <!-- "text-input-2" -->
+    <label x-bind:for="id"> <!-- "text-input-2" -->
+    <input type="text"  x-bind:id="id"> <!-- "text-input-2" -->
 </div>
 ```
 
@@ -54,13 +54,13 @@ To accomplish this same task in a more flexible way, you can use Alpine's `x-id`
 
 ```alpine
 <div x-id="['text-input']">
-    <label :for="$id('text-input')"> <!-- "text-input-1" -->
-    <input type="text" :id="$id('text-input')"> <!-- "text-input-1" -->
+    <label x-bind:for="$id('text-input')"> <!-- "text-input-1" -->
+    <input type="text"  x-bind:id="$id('text-input')"> <!-- "text-input-1" -->
 </div>
 
 <div x-id="['text-input']">
-    <label :for="$id('text-input')"> <!-- "text-input-2" -->
-    <input type="text" :id="$id('text-input')"> <!-- "text-input-2" -->
+    <label x-bind:for="$id('text-input')"> <!-- "text-input-2" -->
+    <input type="text"  x-bind:id="$id('text-input')"> <!-- "text-input-2" -->
 </div>
 ```
 
@@ -73,12 +73,12 @@ As you might have intuited, you can freely nest these `x-id` groups, like so:
 
 ```alpine
 <div x-id="['text-input']">
-    <label :for="$id('text-input')"> <!-- "text-input-1" -->
-    <input type="text" :id="$id('text-input')"> <!-- "text-input-1" -->
+    <label x-bind:for="$id('text-input')"> <!-- "text-input-1" -->
+    <input type="text"  x-bind:id="$id('text-input')"> <!-- "text-input-1" -->
 
     <div x-id="['text-input']">
-        <label :for="$id('text-input')"> <!-- "text-input-2" -->
-        <input type="text" :id="$id('text-input')"> <!-- "text-input-2" -->
+        <label x-bind:for="$id('text-input')"> <!-- "text-input-2" -->
+        <input type="text"  x-bind:id="$id('text-input')"> <!-- "text-input-2" -->
     </div>
 </div>
 ```
@@ -95,10 +95,10 @@ A common example of this need is something like a listbox component that uses th
 ```alpine
 <ul
     x-id="['list-item']"
-    :aria-activedescendant="$id('list-item', activeItem.id)"
+    x-bind:aria-activedescendant="$id('list-item', activeItem.id)"
 >
-    <template x-for="item in items" :key="item.id">
-        <li :id="$id('list-item', item.id)">...</li>
+    <template x-for="item in items" x-bind:key="item.id">
+        <li  x-bind:id="$id('list-item', item.id)">...</li>
     </template>
 </ul>
 ```

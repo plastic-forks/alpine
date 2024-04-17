@@ -80,7 +80,7 @@ export default function on(el, event, modifiers, callback) {
         })
     }
 
-    // Handle :keydown and :keyup listeners.
+    // Handle keydown and keyup listeners.
     handler = wrapHandler(handler, (next, e) => {
         if (isKeyEvent(event)) {
             if (isListeningForASpecificKeyThatHasntBeenPressed(e, modifiers)) {

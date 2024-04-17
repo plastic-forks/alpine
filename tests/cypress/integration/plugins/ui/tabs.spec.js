@@ -107,19 +107,19 @@ test(
         html`
             <div x-data x-tabs>
                 <div x-tabs:list>
-                    <button x-tabs:tab button-1 :class="$tab.isSelected && 'active'">
+                    <button x-tabs:tab button-1 x-bind:class="$tab.isSelected && 'active'">
                         First
                     </button>
-                    <button x-tabs:tab button-2 :class="$tab.isSelected && 'active'">
+                    <button x-tabs:tab button-2 x-bind:class="$tab.isSelected && 'active'">
                         Second
                     </button>
                 </div>
 
                 <div x-tabs:panels>
-                    <div x-tabs:panel panel-1 :class="$panel.isSelected && 'active'">
+                    <div x-tabs:panel panel-1 x-bind:class="$panel.isSelected && 'active'">
                         First Panel
                     </div>
-                    <div x-tabs:panel panel-2 :class="$panel.isSelected && 'active'">
+                    <div x-tabs:panel panel-2 x-bind:class="$panel.isSelected && 'active'">
                         Second Panel
                     </div>
                 </div>
@@ -150,7 +150,7 @@ test(
             <div x-data x-tabs>
                 <div x-tabs:list>
                     <button x-tabs:tab button-1>First</button>
-                    <button x-tabs:tab button-2 disabled :class="$tab.isDisabled && 'disabled'">
+                    <button x-tabs:tab button-2 disabled x-bind:class="$tab.isDisabled && 'disabled'">
                         Second
                     </button>
                     <button x-tabs:tab button-3>Third</button>
@@ -239,7 +239,7 @@ test(
     [
         html`
             <div x-data="{ selectedIndex: 1 }">
-                <button @click="selectedIndex = selectedIndex ? 0 : 1" button-toggle>
+                <button x-on:click="selectedIndex = selectedIndex ? 0 : 1" button-toggle>
                     Toggle tabs
                 </button>
 

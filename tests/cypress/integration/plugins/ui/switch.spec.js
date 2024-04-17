@@ -110,7 +110,7 @@ test(
                     <button
                         x-switch
                         default-checked
-                        :class="$switch.isChecked ? 'checked' : 'not-checked'"
+                        x-bind:class="$switch.isChecked ? 'checked' : 'not-checked'"
                     >
                         Enable notifications
                     </button>

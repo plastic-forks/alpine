@@ -150,7 +150,7 @@ function registerTransitionObject(el, setFunction, defaultValue = {}) {
 window.Element.prototype._x_toggleAndCascadeWithTransitions = function (el, value, show, hide) {
     // We are running this function after one tick to prevent
     // a race condition from happening where elements that have a
-    // @click.away always view themselves as shown on the page.
+    // x-on:click.away always view themselves as shown on the page.
     // If the tab is active, we prioritise requestAnimationFrame which plays
     // nicely with nested animations otherwise we use setTimeout to make sure
     // it keeps running in background. setTimeout has a lower priority in the
@@ -161,7 +161,7 @@ window.Element.prototype._x_toggleAndCascadeWithTransitions = function (el, valu
 
     if (value) {
         if (el._x_transition && (el._x_transition.enter || el._x_transition.leave)) {
-            // This fixes a bug where if you are only transitioning OUT and you are also using @click.outside
+            // This fixes a bug where if you are only transitioning OUT and you are also using x-on:click.outside
             // the element when shown immediately starts transitioning out. There is a test in the manual
             // transition test file for this: /tests/cypress/manual-transition-test.html
             el._x_transition.enter &&

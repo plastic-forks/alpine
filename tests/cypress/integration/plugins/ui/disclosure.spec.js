@@ -36,7 +36,7 @@ test(
                 <div x-disclosure:panel panel>
                     Content
 
-                    <button close-button type="button" @click="$disclosure.close()">Close</button>
+                    <button close-button type="button" x-on:click="$disclosure.close()">Close</button>
                 </div>
             </div>
         `,
@@ -57,10 +57,10 @@ test(
             <div x-data x-disclosure>
                 <button trigger x-disclosure:button>Trigger</button>
 
-                <div x-disclosure:panel panel :class="$disclosure.isOpen && 'open'">
+                <div x-disclosure:panel panel x-bind:class="$disclosure.isOpen && 'open'">
                     Content
 
-                    <button close-button type="button" @click="$disclosure.close()">Close</button>
+                    <button close-button type="button" x-on:click="$disclosure.close()">Close</button>
                 </div>
             </div>
         `,
@@ -78,13 +78,13 @@ test(
     'can set a default open state',
     [
         html`
-            <div x-data x-disclosure :default-open="true">
+            <div x-data x-disclosure x-bind:default-open="true">
                 <button trigger x-disclosure:button>Trigger</button>
 
                 <div x-disclosure:panel panel>
                     Content
 
-                    <button close-button type="button" @click="$disclosure.close()">Close</button>
+                    <button close-button type="button" x-on:click="$disclosure.close()">Close</button>
                 </div>
             </div>
         `,
@@ -106,7 +106,7 @@ test(
                 <div x-disclosure:panel panel>
                     Content
 
-                    <button close-button type="button" @click="$disclosure.close()">Close</button>
+                    <button close-button type="button" x-on:click="$disclosure.close()">Close</button>
                 </div>
             </div>
         `,

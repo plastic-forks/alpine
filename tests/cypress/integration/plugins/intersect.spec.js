@@ -189,8 +189,8 @@ test(
                     <div style="min-width: 250px;">first</div>
                     <div style="min-width: 250px" x-intersect.threshold.50="count++;">second</div>
                 </div>
-                <button @click="$refs.foo.scrollTo({ left: 15 })" id="1">first</button>
-                <button @click="$refs.foo.scrollTo({ left: 250 })" id="2">second</button>
+                <button x-on:click="$refs.foo.scrollTo({ left: 15 })" id="1">first</button>
+                <button x-on:click="$refs.foo.scrollTo({ left: 250 })" id="2">second</button>
                 <span x-text="count"></span>
             </div>
         `,

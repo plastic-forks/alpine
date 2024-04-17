@@ -5,7 +5,7 @@ test(
     [
         html`
             <div x-data="{ count: $persist(1) }">
-                <button @click="count++">Inc</button>
+                <button x-on:click="count++">Inc</button>
                 <span x-text="count"></span>
             </div>
         `,
@@ -44,7 +44,7 @@ test(
     [
         html`
             <div x-data="{ things: $persist(['foo', 'bar']) }">
-                <button @click="things.push('baz')"></button>
+                <button x-on:click="things.push('baz')"></button>
 
                 <span x-text="things.join('-')"></span>
             </div>
@@ -64,8 +64,8 @@ test(
     [
         html`
             <div x-data="{ something: $persist({foo: 'bar'}) }">
-                <button id="one" @click="something.foo = 'baz'"></button>
-                <button id="two" @click="something = {foo: 'bob'}"></button>
+                <button id="one" x-on:click="something.foo = 'baz'"></button>
+                <button id="two" x-on:click="something = {foo: 'bob'}"></button>
 
                 <span x-text="something.foo"></span>
             </div>
@@ -89,7 +89,7 @@ test(
     [
         html`
             <div x-data="{ show: $persist(false) }">
-                <button @click="show = true"></button>
+                <button x-on:click="show = true"></button>
 
                 <template x-if="show">
                     <span>Foo</span>
@@ -111,7 +111,7 @@ test(
     [
         html`
             <div x-data="{ duplicate: $persist('foo') }">
-                <button @click="duplicate = 'bar'"></button>
+                <button x-on:click="duplicate = 'bar'"></button>
                 <span id="one" x-text="duplicate"></span>
             </div>
             <div x-data="{ duplicate: $persist('foo') }">
@@ -140,7 +140,7 @@ test(
                 </template>
             </div>
             <div x-data="{ show: $persist(false).as('foo') }">
-                <button id="test" @click="show = true"></button>
+                <button id="test" x-on:click="show = true"></button>
 
                 <template x-if="show">
                     <span id="two">Foo</span>
@@ -165,7 +165,7 @@ test(
     [
         html`
             <div x-data="{ show: $persist(false).as('foo') }">
-                <button id="test" @click="show = true"></button>
+                <button id="test" x-on:click="show = true"></button>
 
                 <template x-if="show">
                     <span id="two">Foo</span>

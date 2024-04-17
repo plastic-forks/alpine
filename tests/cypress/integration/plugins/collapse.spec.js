@@ -5,7 +5,7 @@ test(
     [
         html`
             <div x-data="{ expanded: false }">
-                <button @click="expanded = ! expanded">toggle</button>
+                <button x-on:click="expanded = ! expanded">toggle</button>
                 <h1 x-show="expanded" x-collapse>contents <a href="#">focusable content</a></h1>
             </div>
         `,
@@ -29,7 +29,7 @@ test(
     [
         html`
             <div x-data="{ expanded: false }">
-                <button @click="expanded = ! expanded">toggle</button>
+                <button x-on:click="expanded = ! expanded">toggle</button>
                 <h1 x-show="expanded" x-collapse.min.25px>
                     contents <a href="#">focusable content</a>
                 </h1>
@@ -49,12 +49,12 @@ test(
 )
 
 test(
-    '@click.away with x-collapse (prevent race condition)',
+    'x-on:click.away with x-collapse (prevent race condition)',
     html`
         <div x-data="{ show: false }">
-            <button @click="show = true">Show</button>
+            <button x-on:click="show = true">Show</button>
 
-            <h1 x-show="show" @click.away="show = false" x-collapse>h1</h1>
+            <h1 x-show="show" x-on:click.away="show = false" x-collapse>h1</h1>
         </div>
     `,
     ({ get }) => {
@@ -65,12 +65,12 @@ test(
 )
 
 test(
-    '@click.away with x-collapse and borders (prevent race condition)',
+    'x-on:click.away with x-collapse and borders (prevent race condition)',
     html`
         <div x-data="{ show: false }">
-            <button @click="show = true">Show</button>
+            <button x-on:click="show = true">Show</button>
 
-            <h1 style="border: 1x solid" x-show="show" @click.away="show = false" x-collapse>
+            <h1 style="border: 1x solid" x-show="show" x-on:click.away="show = false" x-collapse>
                 h1
             </h1>
         </div>
@@ -88,7 +88,7 @@ test(
     [
         html`
             <div x-data="{ expanded: false }">
-                <button @click="expanded = ! expanded">toggle</button>
+                <button x-on:click="expanded = ! expanded">toggle</button>
                 <h1 x-show="expanded" x-collapse>contents</h1>
             </div>
         `,

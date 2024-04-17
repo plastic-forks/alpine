@@ -65,7 +65,7 @@ It is important to specify unique keys for each `x-for` iteration if you are goi
     { id: 2, label: 'Orange' },
     { id: 3, label: 'Yellow' },
 ]}">
-    <template x-for="color in colors" :key="color.id">
+    <template x-for="color in colors" x-bind:key="color.id">
         <li x-text="color.label"></li>
     </template>
 </ul>
@@ -92,7 +92,7 @@ If you need to access the index of each item in the iteration, you can do so usi
 You can also access the index inside a dynamic `:key` expression.
 
 ```alpine
-<template x-for="(color, index) in colors" :key="index">
+<template x-for="(color, index) in colors" x-bind:key="index">
 ```
 
 <a name="iterating-over-a-range"></a>

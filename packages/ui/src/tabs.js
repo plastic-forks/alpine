@@ -87,7 +87,7 @@ function handleTab(el, Alpine) {
             __tabEl: undefined,
             __isDisabled: false,
         }},
-        '@click'() {
+        'x-on:click'() {
             if (this.$el.__disabled) return
 
             this.$data.__selectTab(this.$el)

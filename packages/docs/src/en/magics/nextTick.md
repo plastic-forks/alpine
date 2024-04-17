@@ -11,7 +11,7 @@ title: nextTick
 ```alpine
 <div x-data="{ title: 'Hello' }">
     <button
-        @click="
+        x-on:click="
             title = 'Hello World!';
             $nextTick(() => { console.log($el.innerText) });
         "
@@ -31,7 +31,7 @@ In the above example, rather than logging "Hello" to the console, "Hello World!"
 ```alpine
 <div x-data="{ title: 'Hello' }">
     <button
-        @click="
+        x-on:click="
             title = 'Hello World!';
             await $nextTick();
             console.log($el.innerText);

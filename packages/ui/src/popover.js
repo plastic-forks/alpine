@@ -105,7 +105,7 @@ function handleButton(el, Alpine) {
 
             this.$data.__buttonEl = this.$el
         },
-        '@click'() { this.$data.__toggle() },
+        'x-on:click'() { this.$data.__toggle() },
         '@keydown.tab'(e) {
             if (! e.shiftKey && this.$data.__isOpen) {
                 let firstFocusableEl = this.$focus.within(this.$data.__panelEl).getFirst()

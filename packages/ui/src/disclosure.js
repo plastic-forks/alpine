@@ -51,7 +51,7 @@ function handleButton(el, Alpine) {
         'x-init'() {
             if (this.$el.tagName.toLowerCase() === 'button' && !this.$el.hasAttribute('type')) this.$el.type = 'button'
         },
-        '@click'() {
+        'x-on:click'() {
             this.$data.__isOpen = ! this.$data.__isOpen
         },
         ':aria-expanded'() {

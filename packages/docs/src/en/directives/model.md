@@ -396,7 +396,7 @@ You can access these utilities through a property called `_x_model` on the `x-mo
 <div x-data="{ username: 'calebporzio' }">
     <div x-ref="div" x-model="username"></div>
 
-    <button @click="$refs.div._x_model.set('phantomatrix')">
+    <button x-on:click="$refs.div._x_model.set('phantomatrix')">
         Change username to: 'phantomatrix'
     </button>
 
@@ -409,7 +409,7 @@ You can access these utilities through a property called `_x_model` on the `x-mo
     <div x-data="{ username: 'calebporzio' }">
         <div x-ref="div" x-model="username"></div>
 
-        <button @click="$refs.div._x_model.set('phantomatrix')">
+        <button x-on:click="$refs.div._x_model.set('phantomatrix')">
             Change username to: 'phantomatrix'
         </button>
 

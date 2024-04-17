@@ -56,7 +56,7 @@ function bindInputValue(el, value) {
             }
         }
     } else if (el.type === 'checkbox') {
-        // If we are explicitly binding a string to the :value, set the string,
+        // If we are explicitly binding a string to the x-bind:value, set the string,
         // If the value is a boolean/array/number/null/undefined, leave it alone, it will be set to "on"
         // automatically.
         if (Number.isInteger(value)) {

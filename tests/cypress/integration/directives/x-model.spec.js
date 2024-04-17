@@ -189,7 +189,7 @@ test(
             <input x-model="foo" />
 
             <span x-text="$root._x_model.get()"></span>
-            <button @click="$root._x_model.set('bob')">Set foo to bob</button>
+            <button x-on:click="$root._x_model.set('bob')">Set foo to bob</button>
         </div>
     `,
     ({ get }) => {

@@ -115,7 +115,7 @@ test(
     'boolean attribute values are set to their attribute name if true and removed if false',
     html`
         <div x-data="{ isSet: true }">
-            <span @click="isSet = false" id="setToFalse">Set To False</span>
+            <span x-on:click="isSet = false" id="setToFalse">Set To False</span>
 
             <input x-bind:disabled="isSet"></input>
             <input x-bind:checked="isSet"></input>
@@ -250,9 +250,9 @@ test(
     'checkbox values are set correctly',
     html`
         <div x-data="{ stringValue: 'foo', trueValue: true, falseValue: false }">
-            <input type="checkbox" name="stringCheckbox" :value="stringValue" />
-            <input type="checkbox" name="trueCheckbox" :value="trueValue" />
-            <input type="checkbox" name="falseCheckbox" :value="falseValue" />
+            <input type="checkbox" name="stringCheckbox" x-bind:value="stringValue" />
+            <input type="checkbox" name="trueCheckbox" x-bind:value="trueValue" />
+            <input type="checkbox" name="falseCheckbox" x-bind:value="falseValue" />
         </div>
     `,
     ({ get }) => {
@@ -266,12 +266,12 @@ test(
     'radio values are set correctly',
     html`
         <div x-data="{lists: [{id: 1}, {id: 8}], selectedListID: '8'}">
-            <template x-for="list in lists" :key="list.id">
+            <template x-for="list in lists" x-bind:key="list.id">
                 <input
                     x-model="selectedListID"
                     type="radio"
-                    :value="list.id.toString()"
-                    :id="'list-' + list.id"
+                    x-bind:value="list.id.toString()"
+                    x-bind:id="'list-' + list.id"
                 />
             </template>
             <input type="radio" id="list-test" value="test" x-model="selectedListID" />
@@ -301,7 +301,7 @@ test(
     'attribute binding names can contain numbers',
     html`
         <svg x-data>
-            <line x1="1" y1="2" :x2="3" x-bind:y2="4" />
+            <line x1="1" y1="2" x-bind:x2="3" x-bind:y2="4" />
         </svg>
     `,
     ({ get }) => {
@@ -314,10 +314,10 @@ test(
     'non-string and non-boolean attributes are cast to string when bound to checkbox',
     html`
         <div x-data="{ number: 100, zero: 0, bool: true, nullProp: null }">
-            <input type="checkbox" id="number" :value="number" />
-            <input type="checkbox" id="zero" :value="zero" />
-            <input type="checkbox" id="boolean" :value="bool" />
-            <input type="checkbox" id="null" :value="nullProp" />
+            <input type="checkbox" id="number" x-bind:value="number" />
+            <input type="checkbox" id="zero" x-bind:value="zero" />
+            <input type="checkbox" id="boolean" x-bind:value="bool" />
+            <input type="checkbox" id="null" x-bind:value="nullProp" />
         </div>
     `,
     ({ get }) => {
@@ -430,7 +430,7 @@ test(
                 return {
                     show: true,
                     outputClickExpression: {
-                        ['@click']() {
+                        ['x-on:click']() {
                             this.show = false
                         },
                         ['x-text']() {
@@ -468,7 +468,7 @@ test(
             window.data = () => {
                 return {
                     button: {
-                        ['@click'](event) {
+                        ['x-on:click'](event) {
                             this.$refs.span.innerText = event.currentTarget.id
                         },
                     },
@@ -495,7 +495,7 @@ test(
             window.data = () => {
                 return {
                     button: {
-                        ['@click']() {
+                        ['x-on:click']() {
                             this.$refs.span.innerText = this.$el.id
                         },
                     },
@@ -519,7 +519,7 @@ test(
     'Can retrieve Alpine bound data with global bound method',
     html`
         <div id="1" x-data foo="bar" x-text="Alpine.bound($el, 'foo')"></div>
-        <div id="2" x-data :foo="'bar'" x-text="Alpine.bound($el, 'foo')"></div>
+        <div id="2" x-data x-bind:foo="'bar'" x-text="Alpine.bound($el, 'foo')"></div>
         <div id="3" x-data foo x-text="Alpine.bound($el, 'foo')"></div>
         <div id="4" x-data disabled x-text="Alpine.bound($el, 'disabled')"></div>
         <div id="5" x-data x-text="Alpine.bound($el, 'foo')"></div>
@@ -542,12 +542,12 @@ test(
             <div
                 id="1"
                 x-data="{ init() { this.$el.textContent = Alpine.extractProp(this.$el, 'foo') }}"
-                :foo="foo"
+                x-bind:foo="foo"
             ></div>
             <div
                 id="2"
                 x-data="{ init() { this.$el.textContent = Alpine.extractProp(this.$el, 'foo', null, false) }}"
-                :foo="foo"
+                x-bind:foo="foo"
             ></div>
         </div>
     `,
@@ -563,11 +563,11 @@ test(
     'x-bind updates checked attribute and property after user interaction',
     html`
         <div x-data="{ checked: true }">
-            <button @click="checked = !checked">toggle</button>
+            <button x-on:click="checked = !checked">toggle</button>
             <input
                 type="checkbox"
                 x-bind:checked="checked"
-                @change="checked = $event.target.checked"
+                x-on:change="checked = $event.target.checked"
             />
         </div>
     `,

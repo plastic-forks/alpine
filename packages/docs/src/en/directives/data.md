@@ -13,7 +13,7 @@ Here's an example of a contrived dropdown component:
 
 ```alpine
 <div x-data="{ open: false }">
-    <button @click="open = ! open">Toggle Content</button>
+    <button x-on:click="open = ! open">Toggle Content</button>
 
     <div x-show="open">
         Content...
@@ -21,7 +21,7 @@ Here's an example of a contrived dropdown component:
 </div>
 ```
 
-Don't worry about the other directives in this example (`@click` and `x-show`), we'll get to those in a bit. For now, let's focus on `x-data`.
+Don't worry about the other directives in this example (`x-on:click` and `x-show`), we'll get to those in a bit. For now, let's focus on `x-data`.
 
 <a name="scope"></a>
 ## Scope
@@ -53,7 +53,7 @@ For example, let's extract the "Toggle Content" behavior into a method on  `x-da
 
 ```alpine
 <div x-data="{ open: false, toggle() { this.open = ! this.open } }">
-    <button @click="toggle()">Toggle Content</button>
+    <button x-on:click="toggle()">Toggle Content</button>
 
     <div x-show="open">
         Content...
@@ -69,10 +69,10 @@ If you prefer, you can leave the calling parenthesis off of the `toggle` method 
 
 ```alpine
 <!-- Before -->
-<button @click="toggle()">...</button>
+<button x-on:click="toggle()">...</button>
 
 <!-- After -->
-<button @click="toggle">...</button>
+<button x-on:click="toggle">...</button>
 ```
 
 <a name="getters"></a>
@@ -90,7 +90,7 @@ Let's refactor our component to use a getter called `isOpen` instead of accessin
     get isOpen() { return this.open },
     toggle() { this.open = ! this.open },
 }">
-    <button @click="toggle()">Toggle Content</button>
+    <button x-on:click="toggle()">Toggle Content</button>
 
     <div x-show="isOpen">
         Content...
@@ -126,14 +126,14 @@ Sometimes you may only have a single element inside your Alpine component, like 
 
 ```alpine
 <div x-data="{ open: true }">
-    <button @click="open = false" x-show="open">Hide Me</button>
+    <button x-on:click="open = false" x-show="open">Hide Me</button>
 </div>
 ```
 
 In these cases, you can declare `x-data` directly on that single element:
 
 ```alpine
-<button x-data="{ open: true }" @click="open = false" x-show="open">
+<button x-data="{ open: true }" x-on:click="open = false" x-show="open">
     Hide Me
 </button>
 ```
@@ -147,7 +147,7 @@ Here's a quick example:
 
 ```alpine
 <div x-data="dropdown">
-    <button @click="toggle">Toggle Content</button>
+    <button x-on:click="toggle">Toggle Content</button>
 
     <div x-show="open">
         Content...

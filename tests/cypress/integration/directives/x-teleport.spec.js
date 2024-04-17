@@ -5,7 +5,7 @@ test(
     [
         html`
             <div x-data="{ count: 1 }" id="a">
-                <button @click="count++">Inc</button>
+                <button x-on:click="count++">Inc</button>
 
                 <template x-teleport="#b">
                     <span x-text="count"></span>
@@ -27,7 +27,7 @@ test(
     [
         html`
             <div x-data="{ count: 1 }" id="a">
-                <button @click="count++">Inc</button>
+                <button x-on:click="count++">Inc</button>
 
                 <template x-teleport.append="#b">
                     <span x-text="count"></span>
@@ -49,7 +49,7 @@ test(
     [
         html`
             <div x-data="{ count: 1 }" id="a">
-                <button @click="count++">Inc</button>
+                <button x-on:click="count++">Inc</button>
 
                 <template x-teleport.prepend="#b">
                     <span x-text="count"></span>
@@ -71,7 +71,7 @@ test(
     [
         html`
             <div x-data="{ count: 1 }" id="a">
-                <button @click="count++">Inc</button>
+                <button x-on:click="count++">Inc</button>
 
                 <template x-teleport="#b">
                     <h1 x-text="count"></h1>
@@ -99,9 +99,9 @@ test(
     [
         html`
             <div x-data="{ count: 1 }" id="a">
-                <button @click="count++">Inc</button>
+                <button x-on:click="count++">Inc</button>
 
-                <template x-teleport="#b" @click="count++">
+                <template x-teleport="#b" x-on:click="count++">
                     <h1 x-text="count"></h1>
                 </template>
             </div>
@@ -123,9 +123,9 @@ test(
     [
         html`
             <div x-data="{ count: 1 }" id="a">
-                <button @click="$refs.template.remove()">Remove</button>
+                <button x-on:click="$refs.template.remove()">Remove</button>
 
-                <template x-teleport="#b" @click="count++" x-ref="template">
+                <template x-teleport="#b" x-on:click="count++" x-ref="template">
                     <h1 x-text="count"></h1>
                 </template>
             </div>
@@ -145,7 +145,7 @@ test(
     [
         html`
             <div x-data="{ count: 1 }" id="a">
-                <button @click="$refs.count.remove()">Remove</button>
+                <button x-on:click="$refs.count.remove()">Remove</button>
 
                 <template x-teleport="#b">
                     <h1 x-text="count" x-ref="count"></h1>

@@ -14,6 +14,7 @@ Alpine's Focus plugin allows you to manage focus on a page.
 > This plugin internally makes heavy use of the open source tool: [Tabbable](https://github.com/focus-trap/tabbable). Big thanks to that team for providing a much needed solution to this problem.
 
 <a name="installation"></a>
+
 ## Installation
 
 You can use this plugin by either including it from a `<script>` tag or installing it via NPM:
@@ -50,6 +51,7 @@ Alpine.plugin(focus)
 ```
 
 <a name="x-trap"></a>
+
 ## x-trap
 
 Focus offers a dedicated API for trapping focus within an element: the `x-trap` directive.
@@ -60,7 +62,7 @@ For example:
 
 ```alpine
 <div x-data="{ open: false }">
-    <button @click="open = true">Open Dialog</button>
+    <button x-on:click="open = true">Open Dialog</button>
 
     <span x-show="open" x-trap="open">
         <p>...</p>
@@ -69,18 +71,18 @@ For example:
 
         <input type="text" placeholder="Some other input...">
 
-        <button @click="open = false">Close Dialog</button>
+        <button x-on:click="open = false">Close Dialog</button>
     </span>
 </div>
 ```
 
 <!-- START_VERBATIM -->
 <div x-data="{ open: false }" class="demo">
-    <div :class="open && 'opacity-50'">
+    <div x-bind:class="open && 'opacity-50'">
         <button x-on:click="open = true">Open Dialog</button>
     </div>
 
-    <div x-show="open" x-trap="open" class="mt-4 space-y-4 p-4 border bg-yellow-100" @keyup.escape.window="open = false">
+    <div x-show="open" x-trap="open" class="mt-4 space-y-4 p-4 border bg-yellow-100" x-on:keyup.escape.window="open = false">
         <strong>
             <div>Focus is now "trapped" inside this dialog, meaning you can only click/focus elements within this yellow dialog. If you press tab repeatedly, the focus will stay within this dialog.</div>
         </strong>
@@ -94,13 +96,15 @@ For example:
         </div>
 
         <div>
-            <button @click="open = false">Close Dialog</button>
+            <button x-on:click="open = false">Close Dialog</button>
         </div>
     </div>
+
 </div>
 <!-- END_VERBATIM -->
 
 <a name="nesting"></a>
+
 ### Nesting dialogs
 
 Sometimes you may want to nest one dialog inside another. `x-trap` makes this trivial and handles it automatically.
@@ -113,35 +117,35 @@ Here is nesting in action:
 
 ```alpine
 <div x-data="{ open: false }">
-    <button @click="open = true">Open Dialog</button>
+    <button x-on:click="open = true">Open Dialog</button>
 
     <span x-show="open" x-trap="open">
 
         ...
 
         <div x-data="{ open: false }">
-            <button @click="open = true">Open Nested Dialog</button>
+            <button x-on:click="open = true">Open Nested Dialog</button>
 
             <span x-show="open" x-trap="open">
 
                 ...
 
-                <button @click="open = false">Close Nested Dialog</button>
+                <button x-on:click="open = false">Close Nested Dialog</button>
             </span>
         </div>
 
-        <button @click="open = false">Close Dialog</button>
+        <button x-on:click="open = false">Close Dialog</button>
     </span>
 </div>
 ```
 
 <!-- START_VERBATIM -->
 <div x-data="{ open: false }" class="demo">
-    <div :class="open && 'opacity-50'">
+    <div x-bind:class="open && 'opacity-50'">
         <button x-on:click="open = true">Open Dialog</button>
     </div>
 
-    <div x-show="open" x-trap="open" class="mt-4 space-y-4 p-4 border bg-yellow-100" @keyup.escape.window="open = false">
+    <div x-show="open" x-trap="open" class="mt-4 space-y-4 p-4 border bg-yellow-100" x-on:keyup.escape.window="open = false">
         <div>
             <input type="text" placeholder="Some input...">
         </div>
@@ -151,11 +155,11 @@ Here is nesting in action:
         </div>
 
         <div x-data="{ open: false }">
-            <div :class="open && 'opacity-50'">
+            <div x-bind:class="open && 'opacity-50'">
                 <button x-on:click="open = true">Open Nested Dialog</button>
             </div>
 
-            <div x-show="open" x-trap="open" class="mt-4 space-y-4 p-4 border border-gray-500 bg-yellow-200" @keyup.escape.window="open = false">
+            <div x-show="open" x-trap="open" class="mt-4 space-y-4 p-4 border border-gray-500 bg-yellow-200" x-on:keyup.escape.window="open = false">
                 <strong>
                     <div>Focus is now "trapped" inside this nested dialog. You cannot focus anything inside the outer dialog while this is open. If you close this dialog, focus will be returned to the last known active element.</div>
                 </strong>
@@ -169,22 +173,25 @@ Here is nesting in action:
                 </div>
 
                 <div>
-                    <button @click="open = false">Close Nested Dialog</button>
+                    <button x-on:click="open = false">Close Nested Dialog</button>
                 </div>
             </div>
         </div>
 
         <div>
-            <button @click="open = false">Close Dialog</button>
+            <button x-on:click="open = false">Close Dialog</button>
         </div>
     </div>
+
 </div>
 <!-- END_VERBATIM -->
 
 <a name="modifiers"></a>
+
 ### Modifiers
 
 <a name="inert"></a>
+
 #### .inert
 
 When building things like dialogs/modals, it's recommended to hide all the other elements on the page from screen readers when trapping focus.
@@ -216,6 +223,7 @@ By adding `.inert` to `x-trap`, when focus is trapped, all other elements on the
 ```
 
 <a name="noscroll"></a>
+
 #### .noscroll
 
 When building dialogs/modals with Alpine, it's recommended that you disable scrolling for the surrounding content when the dialog is open.
@@ -233,7 +241,7 @@ For example:
     <div x-show="open" x-trap.noscroll="open">
         Dialog Contents
 
-        <button @click="open = false">Close Dialog</button>
+        <button x-on:click="open = false">Close Dialog</button>
     </div>
 </div>
 ```
@@ -241,20 +249,22 @@ For example:
 <!-- START_VERBATIM -->
 <div class="demo">
     <div x-data="{ open: false }">
-        <button @click="open = true">Open Dialog</button>
+        <button x-on:click="open = true">Open Dialog</button>
 
         <div x-show="open" x-trap.noscroll="open" class="border mt-4 p-4">
             <div class="mb-4 text-bold">Dialog Contents</div>
 
             <p class="mb-4 text-gray-600 text-sm">Notice how you can no longer scroll on this page while this dialog is open.</p>
 
-            <button class="mt-4" @click="open = false">Close Dialog</button>
+            <button class="mt-4" x-on:click="open = false">Close Dialog</button>
         </div>
     </div>
+
 </div>
 <!-- END_VERBATIM -->
 
 <a name="noreturn"></a>
+
 #### .noreturn
 
 Sometimes you may not want focus to be returned to where it was previously. Consider a dropdown that's triggered upon focusing an input, returning focus to the input on close will just trigger the dropdown to open again.
@@ -272,7 +282,7 @@ For example:
     <div x-show="open">
         Search results
 
-        <button @click="open = false">Close</button>
+        <button x-on:click="open = false">Close</button>
     </div>
 </div>
 ```
@@ -282,12 +292,12 @@ For example:
     <div
         x-data="{ open: false }"
         x-trap.noreturn="open"
-        @click.outside="open = false"
-        @keyup.escape.prevent.stop="open = false"
+        x-on:click.outside="open = false"
+        x-on:keyup.escape.prevent.stop="open = false"
     >
         <input type="search" placeholder="search for something"
-            @focus="open = true"
-            @keyup.escape.prevent="$el.blur()"
+            x-on:focus="open = true"
+            x-on:keyup.escape.prevent="$el.blur()"
         />
 
         <div x-show="open">
@@ -295,13 +305,15 @@ For example:
 
             <p class="mb-4 text-gray-600 text-sm">Notice when closing this dropdown, focus is not returned to the input.</p>
 
-            <button class="mt-4" @click="open = false">Close Dialog</button>
+            <button class="mt-4" x-on:click="open = false">Close Dialog</button>
         </div>
     </div>
+
 </div>
 <!-- END_VERBATIM -->
 
 <a name="noautofocus"></a>
+
 #### .noautofocus
 
 By default, when `x-trap` traps focus within an element, it focuses the first focussable element within that element. This is a sensible default, however there are times where you may want to disable this behavior and not automatically focus any elements when `x-trap` engages.
@@ -309,35 +321,36 @@ By default, when `x-trap` traps focus within an element, it focuses the first fo
 By adding `.noautofocus`, Alpine will not automatically focus any elements when trapping focus.
 
 <a name="focus-magic"></a>
+
 ## $focus
 
 This plugin offers many smaller utilities for managing focus within a page. These utilities are exposed via the `$focus` magic.
 
-| Property | Description |
-| ---       | --- |
-| `focus(el)`   | Focus the passed element (handling annoyances internally: using nextTick, etc.) |
-| `focusable(el)`   | Detect whether or not an element is focusable |
-| `focusables()`   | Get all "focusable" elements within the current element |
-| `focused()`   | Get the currently focused element on the page |
-| `lastFocused()`   | Get the last focused element on the page |
-| `within(el)`   | Specify an element to scope the `$focus` magic to (the current element by default) |
-| `first()`   | Focus the first focusable element |
-| `last()`   | Focus the last focusable element |
-| `next()`   | Focus the next focusable element |
-| `previous()`   | Focus the previous focusable element |
-| `noscroll()`   | Prevent scrolling to the element about to be focused |
-| `wrap()`   | When retrieving "next" or "previous" use "wrap around" (ex. returning the first element if getting the "next" element of the last element) |
-| `getFirst()`   | Retrieve the first focusable element |
-| `getLast()`   | Retrieve the last focusable element |
-| `getNext()`   | Retrieve the next focusable element |
-| `getPrevious()`   | Retrieve the previous focusable element |
+| Property        | Description                                                                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `focus(el)`     | Focus the passed element (handling annoyances internally: using nextTick, etc.)                                                            |
+| `focusable(el)` | Detect whether or not an element is focusable                                                                                              |
+| `focusables()`  | Get all "focusable" elements within the current element                                                                                    |
+| `focused()`     | Get the currently focused element on the page                                                                                              |
+| `lastFocused()` | Get the last focused element on the page                                                                                                   |
+| `within(el)`    | Specify an element to scope the `$focus` magic to (the current element by default)                                                         |
+| `first()`       | Focus the first focusable element                                                                                                          |
+| `last()`        | Focus the last focusable element                                                                                                           |
+| `next()`        | Focus the next focusable element                                                                                                           |
+| `previous()`    | Focus the previous focusable element                                                                                                       |
+| `noscroll()`    | Prevent scrolling to the element about to be focused                                                                                       |
+| `wrap()`        | When retrieving "next" or "previous" use "wrap around" (ex. returning the first element if getting the "next" element of the last element) |
+| `getFirst()`    | Retrieve the first focusable element                                                                                                       |
+| `getLast()`     | Retrieve the last focusable element                                                                                                        |
+| `getNext()`     | Retrieve the next focusable element                                                                                                        |
+| `getPrevious()` | Retrieve the previous focusable element                                                                                                    |
 
 Let's walk through a few examples of these utilities in use. The example below allows the user to control focus within the group of buttons using the arrow keys. You can test this by clicking on a button, then using the arrow keys to move focus around:
 
 ```alpine
 <div
-    @keydown.right="$focus.next()"
-    @keydown.left="$focus.previous()"
+    x-on:keydown.right="$focus.next()"
+    x-on:keydown.left="$focus.previous()"
 >
     <button>First</button>
     <button>Second</button>
@@ -349,8 +362,8 @@ Let's walk through a few examples of these utilities in use. The example below a
 <div class="demo">
 <div
     x-data
-    @keydown.right="$focus.next()"
-    @keydown.left="$focus.previous()"
+    x-on:keydown.right="$focus.next()"
+    x-on:keydown.left="$focus.previous()"
 >
     <button class="focus:outline-none focus:ring-2 focus:ring-cyan-400">First</button>
     <button class="focus:outline-none focus:ring-2 focus:ring-cyan-400">Second</button>
@@ -364,8 +377,8 @@ Notice how if the last button is focused, pressing "right arrow" won't do anythi
 
 ```alpine
 <div
-    @keydown.right="$focus.wrap().next()"
-    @keydown.left="$focus.wrap().previous()"
+    x-on:keydown.right="$focus.wrap().next()"
+    x-on:keydown.left="$focus.wrap().previous()"
 >
     <button>First</button>
     <button>Second</button>
@@ -377,8 +390,8 @@ Notice how if the last button is focused, pressing "right arrow" won't do anythi
 <div class="demo">
 <div
     x-data
-    @keydown.right="$focus.wrap().next()"
-    @keydown.left="$focus.wrap().previous()"
+    x-on:keydown.right="$focus.wrap().next()"
+    x-on:keydown.left="$focus.wrap().previous()"
 >
     <button class="focus:outline-none focus:ring-2 focus:ring-cyan-400">First</button>
     <button class="focus:outline-none focus:ring-2 focus:ring-cyan-400">Second</button>
@@ -391,13 +404,13 @@ Notice how if the last button is focused, pressing "right arrow" won't do anythi
 Now, let's add two buttons, one to focus the first element in the button group, and another focus the last element:
 
 ```alpine
-<button @click="$focus.within($refs.buttons).first()">Focus "First"</button>
-<button @click="$focus.within($refs.buttons).last()">Focus "Last"</button>
+<button x-on:click="$focus.within($refs.buttons).first()">Focus "First"</button>
+<button x-on:click="$focus.within($refs.buttons).last()">Focus "Last"</button>
 
 <div
     x-ref="buttons"
-    @keydown.right="$focus.wrap().next()"
-    @keydown.left="$focus.wrap().previous()"
+    x-on:keydown.right="$focus.wrap().next()"
+    x-on:keydown.left="$focus.wrap().previous()"
 >
     <button>First</button>
     <button>Second</button>
@@ -407,15 +420,15 @@ Now, let's add two buttons, one to focus the first element in the button group, 
 
 <!-- START_VERBATIM -->
 <div class="demo" x-data>
-<button @click="$focus.within($refs.buttons).first()">Focus "First"</button>
-<button @click="$focus.within($refs.buttons).last()">Focus "Last"</button>
+<button x-on:click="$focus.within($refs.buttons).first()">Focus "First"</button>
+<button x-on:click="$focus.within($refs.buttons).last()">Focus "Last"</button>
 
 <hr class="mt-2 mb-2"/>
 
 <div
     x-ref="buttons"
-    @keydown.right="$focus.wrap().next()"
-    @keydown.left="$focus.wrap().previous()"
+    x-on:keydown.right="$focus.wrap().next()"
+    x-on:keydown.left="$focus.wrap().previous()"
 >
     <button class="focus:outline-none focus:ring-2 focus:ring-cyan-400">First</button>
     <button class="focus:outline-none focus:ring-2 focus:ring-cyan-400">Second</button>

@@ -33,7 +33,7 @@ function handleRoot(el, Alpine) {
                     this.__isOpen = true
 
                     // Safari needs more of a "tick" for focusing after x-show for some reason.
-                    // Probably because Alpine adds an extra tick when x-showing for @click.outside
+                    // Probably because Alpine adds an extra tick when x-showing for x-on:click.outside
                     let nextTick = callback => requestAnimationFrame(() => requestAnimationFrame(callback))
 
                     nextTick(() => {
@@ -70,7 +70,7 @@ function handleButton(el, Alpine) {
         ':aria-expanded'() { return this.$data.__isOpen },
         ':aria-controls'() { return this.$data.__isOpen && this.$id('alpine-menu-items') },
         'x-init'() { if (this.$el.tagName.toLowerCase() === 'button' && ! this.$el.hasAttribute('type')) this.$el.type = 'button' },
-        '@click'() { this.$data.__open() },
+        'x-on:click'() { this.$data.__open() },
         '@keydown.down.stop.prevent'() { this.$data.__open() },
         '@keydown.up.stop.prevent'() { this.$data.__open(dom.last) },
         '@keydown.space.stop.prevent'() { this.$data.__open() },
@@ -94,7 +94,7 @@ function handleItems(el, Alpine) {
         ':aria-activedescendant'() { return this.$data.__activeEl && this.$data.__activeEl.id },
         'x-show'() { return this.$data.__isOpen },
         'tabindex': '0',
-        '@click.outside'() { this.$data.__close() },
+        'x-on:click.outside'() { this.$data.__close() },
         '@keydown'(e) { dom.search(Alpine, this.$refs.__items, e.key, el => el.__activate()) },
         '@keydown.down.stop.prevent'() {
             if (this.$data.__activeEl) dom.next(Alpine, this.$data.__activeEl, el => el.__activate())

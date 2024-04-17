@@ -21,7 +21,7 @@
                   type="button"
                   class="btn btn-primary btn-block"
                   id="run"
-                  @click="run"
+                  x-on:click="run"
                 >
                   Create 1,000 rows
                 </button>
@@ -31,7 +31,7 @@
                   type="button"
                   class="btn btn-primary btn-block"
                   id="runlots"
-                  @click="runLots"
+                  x-on:click="runLots"
                 >
                   Create 10,000 rows
                 </button>
@@ -41,7 +41,7 @@
                   type="button"
                   class="btn btn-primary btn-block"
                   id="add"
-                  @click="add"
+                  x-on:click="add"
                 >
                   Append 1,000 rows
                 </button>
@@ -51,7 +51,7 @@
                   type="button"
                   class="btn btn-primary btn-block"
                   id="update"
-                  @click="update"
+                  x-on:click="update"
                 >
                   Update every 10th row
                 </button>
@@ -61,7 +61,7 @@
                   type="button"
                   class="btn btn-primary btn-block"
                   id="clear"
-                  @click="clear"
+                  x-on:click="clear"
                 >
                   Clear
                 </button>
@@ -71,7 +71,7 @@
                   type="button"
                   class="btn btn-primary btn-block"
                   id="swaprows"
-                  @click="swapRows"
+                  x-on:click="swapRows"
                 >
                   Swap Rows
                 </button>
@@ -82,14 +82,14 @@
       </div>
       <table class="table table-hover table-striped test-data">
         <tbody>
-          <template x-for="item in data" :key="item.id">
-            <tr :class="item.id === selected ? 'danger' : ''">
+          <template x-for="item in data" x-bind:key="item.id">
+            <tr x-bind:class="item.id === selected ? 'danger' : ''">
               <td class="col-md-1" x-text="item.id"></td>
               <td class="col-md-4">
-                <a @click="select(item.id)" x-text="item.label"></a>
+                <a x-on:click="select(item.id)" x-text="item.label"></a>
               </td>
               <td class="col-md-1">
-                <a @click="remove(item.id)" >x</a>
+                <a x-on:click="remove(item.id)" >x</a>
               </td>
               <td class="col-md-6"></td>
             </tr>

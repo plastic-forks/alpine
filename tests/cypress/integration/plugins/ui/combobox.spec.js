@@ -54,8 +54,8 @@ test(
                         <div>
                             <input
                                 x-combobox:input
-                                :display-value="person => person.name"
-                                @change="query = $event.target.value"
+                                x-bind:display-value="person => person.name"
+                                x-on:change="query = $event.target.value"
                                 placeholder="Search..."
                             />
 
@@ -66,14 +66,14 @@ test(
                             <ul>
                                 <template
                                     x-for="person in filteredPeople"
-                                    :key="person.id"
+                                    x-bind:key="person.id"
                                     hidden
                                 >
                                     <li
                                         x-combobox:option
-                                        :option="person.id"
-                                        :value="person"
-                                        :disabled="person.disabled"
+                                       x-bind:option="person.id"
+                                        x-bind:value="person"
+                                        x-bind:disabled="person.disabled"
                                         x-text="person.name"
                                     ></li>
                                 </template>
@@ -154,8 +154,8 @@ test(
                         <div>
                             <input
                                 x-combobox:input
-                                :display-value="person => person.name"
-                                @change="query = $event.target.value"
+                                x-bind:display-value="person => person.name"
+                                x-on:change="query = $event.target.value"
                                 placeholder="Search..."
                             />
 
@@ -166,14 +166,14 @@ test(
                             <ul>
                                 <template
                                     x-for="person in filteredPeople"
-                                    :key="person.id"
+                                    x-bind:key="person.id"
                                     hidden
                                 >
                                     <li
                                         x-combobox:option
-                                        :option="person.id"
-                                        :value="person"
-                                        :disabled="person.disabled"
+                                       x-bind:option="person.id"
+                                        x-bind:value="person"
+                                        x-bind:disabled="person.disabled"
                                         x-text="person.name"
                                     ></li>
                                 </template>
@@ -212,19 +212,19 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person.name" type="text" />
                 <button
                     x-combobox:button
                     x-text="$combobox.value ? $combobox.value.name : 'Select Person'"
                 ></button>
 
                 <ul x-combobox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person"
-                            :disabled="person.disabled"
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
                         >
                             <span x-text="person.name"></span>
                         </li>
@@ -268,7 +268,7 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person.name" type="text" />
                 <button
                     x-combobox:button
                     x-text="$combobox.value ? $combobox.value.name : 'Select Person'"
@@ -278,13 +278,13 @@ test(
                 <article x-text="$combobox.activeOption?.name"></article>
 
                 <ul x-combobox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                             'disabled': $comboboxOption.isDisabled,
@@ -335,20 +335,20 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person.name" type="text" />
                 <button
                     x-combobox:button
                     x-text="$combobox.value ? $combobox.value : 'Select Person'"
                 ></button>
 
                 <ul x-combobox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person.id"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person.id"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
@@ -416,8 +416,8 @@ test(
                         <div>
                             <input
                                 x-combobox:input
-                                :display-value="person => person.name"
-                                @change="query = $event.target.value"
+                                x-bind:display-value="person => person.name"
+                                x-on:change="query = $event.target.value"
                                 placeholder="Search..."
                             />
 
@@ -428,14 +428,14 @@ test(
                             <ul>
                                 <template
                                     x-for="person in filteredPeople"
-                                    :key="person.id"
+                                    x-bind:key="person.id"
                                     hidden
                                 >
                                     <li
                                         x-combobox:option
-                                        :option="person.id"
-                                        :value="person"
-                                        :disabled="person.disabled"
+                                       x-bind:option="person.id"
+                                        x-bind:value="person"
+                                        x-bind:disabled="person.disabled"
                                     >
                                         <span x-text="person.name"></span>
                                         <span x-show="$comboboxOption.isActive">*</span>
@@ -510,8 +510,8 @@ test(
                         <div>
                             <input
                                 x-combobox:input
-                                :display-value="person => person.name"
-                                @change="query = $event.target.value"
+                                x-bind:display-value="person => person.name"
+                                x-on:change="query = $event.target.value"
                                 placeholder="Search..."
                             />
 
@@ -522,14 +522,14 @@ test(
                             <ul>
                                 <template
                                     x-for="person in filteredPeople"
-                                    :key="person.id"
+                                    x-bind:key="person.id"
                                     hidden
                                 >
                                     <li
                                         x-combobox:option
-                                        :option="person.id"
-                                        :value="person"
-                                        :disabled="person.disabled"
+                                       x-bind:option="person.id"
+                                        x-bind:value="person"
+                                        x-bind:disabled="person.disabled"
                                     >
                                         <span x-text="person.name"></span>
                                         <span x-show="$comboboxOption.isActive">*</span>
@@ -582,7 +582,7 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person.name" type="text" />
 
                 <button
                     x-combobox:button
@@ -590,13 +590,13 @@ test(
                 ></button>
 
                 <ul x-combobox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
@@ -658,20 +658,20 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person.name" type="text" />
                 <button
                     x-combobox:button
                     x-text="$combobox.value ? $combobox.value : 'Select Person'"
                 ></button>
 
                 <ul x-combobox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person.id"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person.id"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
@@ -722,13 +722,13 @@ test(
                 ></button>
 
                 <ul x-combobox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person.id"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person.id"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
@@ -784,20 +784,20 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person.name" type="text" />
                 <button
                     x-combobox:button
                     x-text="$combobox.value ? $combobox.value.map(p => p.id).join(',') : 'Select People'"
                 ></button>
 
                 <ul x-combobox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
@@ -884,20 +884,20 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person" type="text" />
                 <button
                     x-combobox:button
                     x-text="$combobox.value ? $combobox.value : 'Select People'"
                 ></button>
 
                 <ul x-combobox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person.id"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person.id"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
@@ -967,20 +967,20 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person?.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person?.name" type="text" />
                 <button
                     x-combobox:button
                     x-text="$combobox.value ? $combobox.value.name : 'Select People'"
                 ></button>
 
                 <ul x-combobox:options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
@@ -1046,20 +1046,20 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person.name" type="text" />
                 <button
                     x-combobox:button
                     x-text="active ? active.name : 'Select Person'"
                 ></button>
 
                 <ul x-combobox:options options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
@@ -1120,23 +1120,23 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person.name" type="text" />
                 <button
                     toggle
                     x-combobox:button
                     x-text="$combobox.value ? $combobox.value : 'Select Person'"
                 ></button>
 
-                <button select-tim @click="active = 4">Select Tim</button>
+                <button select-tim x-on:click="active = 4">Select Tim</button>
 
                 <ul x-combobox:options options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person.id"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person.id"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
@@ -1178,20 +1178,20 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person.name" type="text" />
                 <button
                     x-combobox:button
                     x-text="active ? active.name : 'Select Person'"
                 ></button>
 
                 <ul x-combobox:options options>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person"
-                            :disabled="person.disabled"
-                            :class="{
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
+                            x-bind:class="{
                             'selected': $comboboxOption.isSelected,
                             'active': $comboboxOption.isActive,
                         }"
@@ -1279,22 +1279,22 @@ test(
             >
                 <label x-combobox:label>Assigned to</label>
 
-                <input x-combobox:input :display-value="(person) => person.name" type="text" />
+                <input x-combobox:input x-bind:display-value="(person) => person.name" type="text" />
                 <button
                     normal-toggle
                     x-combobox:button
                     x-text="active ? active.name : 'Select Person'"
                 ></button>
 
-                <button real-toggle @click="show = ! show">Toggle</button>
+                <button real-toggle x-on:click="show = ! show">Toggle</button>
 
                 <ul x-combobox:options x-show="show" static>
-                    <template x-for="person in people" :key="person.id">
+                    <template x-for="person in people" x-bind:key="person.id">
                         <li
-                            :option="person.id"
+                           x-bind:option="person.id"
                             x-combobox:option
-                            :value="person"
-                            :disabled="person.disabled"
+                            x-bind:value="person"
+                            x-bind:disabled="person.disabled"
                         >
                             <span x-text="person.name"></span>
                         </li>
@@ -1351,8 +1351,8 @@ test(
                         <div>
                             <input
                                 x-combobox:input
-                                :display-value="person => person.name"
-                                @change="query = $event.target.value"
+                                x-bind:display-value="person => person.name"
+                                x-on:change="query = $event.target.value"
                                 placeholder="Search..."
                             />
 
@@ -1363,14 +1363,14 @@ test(
                             <ul>
                                 <template
                                     x-for="person in filteredPeople"
-                                    :key="person.id"
+                                    x-bind:key="person.id"
                                     hidden
                                 >
                                     <li
                                         x-combobox:option
-                                        :option="person.id"
-                                        :value="person"
-                                        :disabled="person.disabled"
+                                       x-bind:option="person.id"
+                                        x-bind:value="person"
+                                        x-bind:disabled="person.disabled"
                                         x-text="person.name"
                                     ></li>
                                 </template>
@@ -1483,8 +1483,8 @@ test(
                         <div>
                             <input
                                 x-combobox:input
-                                :display-value="person => person.name"
-                                @change="query = $event.target.value"
+                                x-bind:display-value="person => person.name"
+                                x-on:change="query = $event.target.value"
                                 placeholder="Search..."
                             />
 
@@ -1495,14 +1495,14 @@ test(
                             <ul>
                                 <template
                                     x-for="person in filteredPeople"
-                                    :key="person.id"
+                                    x-bind:key="person.id"
                                     hidden
                                 >
                                     <li
                                         x-combobox:option
-                                        :option="person.id"
-                                        :value="person"
-                                        :disabled="person.disabled"
+                                       x-bind:option="person.id"
+                                        x-bind:value="person"
+                                        x-bind:disabled="person.disabled"
                                         x-text="person.name"
                                     ></li>
                                 </template>
@@ -1587,8 +1587,8 @@ test(
                         <div>
                             <input
                                 x-combobox:input
-                                :display-value="person => person.name"
-                                @change="query = $event.target.value"
+                                x-bind:display-value="person => person.name"
+                                x-on:change="query = $event.target.value"
                                 placeholder="Search..."
                             />
 
@@ -1599,15 +1599,15 @@ test(
                             <ul>
                                 <template
                                     x-for="person in filteredPeople"
-                                    :key="person.id"
+                                    x-bind:key="person.id"
                                     hidden
                                 >
                                     <li
                                         x-combobox:option
-                                        :option="person.id"
-                                        :value="person"
-                                        :disabled="person.disabled"
-                                        :class="$comboboxOption.isActive ? 'active' : ''"
+                                       x-bind:option="person.id"
+                                        x-bind:value="person"
+                                        x-bind:disabled="person.disabled"
+                                        x-bind:class="$comboboxOption.isActive ? 'active' : ''"
                                         x-text="person.name"
                                     ></li>
                                 </template>
@@ -1682,10 +1682,10 @@ test(
         >
             <div x-combobox x-model="selected" by="id" multiple>
                 <div x-show="selected.length">
-                    <template x-for="selectedFramework in selected" :key="selectedFramework.id">
+                    <template x-for="selectedFramework in selected" x-bind:key="selectedFramework.id">
                         <button
                             x-on:click.prevent="remove(selectedFramework)"
-                            :remove-option="selectedFramework.id"
+                            x-bind:remove-option="selectedFramework.id"
                         >
                             <span x-text="selectedFramework.name"></span>
                         </button>
@@ -1696,7 +1696,7 @@ test(
                     <div>
                         <input
                             x-combobox:input
-                            @change="query = $event.target.value;"
+                            x-on:change="query = $event.target.value;"
                             placeholder="Search..."
                         />
                         <button x-combobox:button>Show options</button>
@@ -1706,20 +1706,20 @@ test(
                         <ul>
                             <template
                                 x-for="framework in filteredFrameworks"
-                                :key="framework.id"
+                                x-bind:key="framework.id"
                                 hidden
                             >
                                 <li
                                     x-combobox:option
-                                    :option="framework.id"
-                                    :value="framework"
-                                    :disabled="framework.disabled"
+                                   x-bind:option="framework.id"
+                                    x-bind:value="framework"
+                                    x-bind:disabled="framework.disabled"
                                 >
                                     <span x-text="framework.name"></span>
 
                                     <span
                                         x-show="$comboboxOption.isSelected"
-                                        :check="framework.id"
+                                        x-bind:check="framework.id"
                                         >&check;</span
                                     >
                                 </li>
@@ -1803,8 +1803,8 @@ test(
                         <li
                             option="boolean-true"
                             x-combobox:option
-                            :value="true"
-                            :class="{
+                            x-bind:value="true"
+                            x-bind:class="{
                         'selected': $comboboxOption.isSelected,
                         'active': $comboboxOption.isActive,
                     }"
@@ -1814,8 +1814,8 @@ test(
                         <li
                             option="boolean-false"
                             x-combobox:option
-                            :value="false"
-                            :class="{
+                            x-bind:value="false"
+                            x-bind:class="{
                         'selected': $comboboxOption.isSelected,
                         'active': $comboboxOption.isActive,
                     }"
@@ -1867,8 +1867,8 @@ test(
                         <li
                             option="0"
                             x-combobox:option
-                            :value="0"
-                            :class="{
+                            x-bind:value="0"
+                            x-bind:class="{
                         'selected': $comboboxOption.isSelected,
                         'active': $comboboxOption.isActive,
                     }"
@@ -1878,8 +1878,8 @@ test(
                         <li
                             option="1"
                             x-combobox:option
-                            :value="1"
-                            :class="{
+                            x-bind:value="1"
+                            x-bind:class="{
                         'selected': $comboboxOption.isSelected,
                         'active': $comboboxOption.isActive,
                     }"
@@ -1889,8 +1889,8 @@ test(
                         <li
                             option="2"
                             x-combobox:option
-                            :value="2"
-                            :class="{
+                            x-bind:value="2"
+                            x-bind:class="{
                         'selected': $comboboxOption.isSelected,
                         'active': $comboboxOption.isActive,
                     }"

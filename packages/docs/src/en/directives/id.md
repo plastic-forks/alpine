@@ -14,18 +14,18 @@ Here's a brief example of this directive in use:
 
 ```alpine
 <div x-id="['text-input']">
-    <label :for="$id('text-input')">Username</label>
+    <label x-bind:for="$id('text-input')">Username</label>
     <!-- for="text-input-1" -->
 
-    <input type="text" :id="$id('text-input')">
+    <input type="text"  x-bind:id="$id('text-input')">
     <!-- id="text-input-1" -->
 </div>
 
 <div x-id="['text-input']">
-    <label :for="$id('text-input')">Username</label>
+    <label x-bind:for="$id('text-input')">Username</label>
     <!-- for="text-input-2" -->
 
-    <input type="text" :id="$id('text-input')">
+    <input type="text"  x-bind:id="$id('text-input')">
     <!-- id="text-input-2" -->
 </div>
 ```

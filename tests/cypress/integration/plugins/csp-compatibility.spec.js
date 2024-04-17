@@ -7,7 +7,7 @@ test.csp(
             <div x-data="test">
                 <span x-text="foo"></span>
 
-                <button @click="change">Change Foo</button>
+                <button x-on:click="change">Change Foo</button>
             </div>
         `,
         `

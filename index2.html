@@ -11,6 +11,6 @@
     <div x-data="{ count: 1 }" x-navigate:persist="foo">
         <span x-text="count"></span>
 
-        <button @click="count++">+</button>
+        <button x-on:click="count++">+</button>
     </div>
 </html>

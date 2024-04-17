@@ -143,8 +143,8 @@ test(
     '$watch ignores other dependencies',
     html`
         <div x-data="{ a: 0, b: 0, c: 0 }" x-init="$watch('a', () => { c = a + b })">
-            <button @click="a++" id="a">a</button>
-            <button @click="b++" id="b">b</button>
+            <button x-on:click="a++" id="a">a</button>
+            <button x-on:click="b++" id="b">b</button>
             <span x-text="c"></span>
         </div>
     `,

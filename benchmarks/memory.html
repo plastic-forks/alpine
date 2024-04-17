@@ -6,7 +6,7 @@
             <h1>hi</h1>
         </template>
 
-        <button @click="items.length === 0 ? items.push('ggoo') : items = []" x-text="'ghjghj'">delete</button>
+        <button x-on:click="items.length === 0 ? items.push('ggoo') : items = []" x-text="'ghjghj'">delete</button>
     </div>
 
     <script>

@@ -100,7 +100,7 @@ test(
         <div x-data="{ foo: 'bar' }">
             <button x-on:click="foo = 'baz'">
                 <h1>h1</h1>
-                <h2 @click.stop>h2</h2>
+                <h2 x-on:click.stop>h2</h2>
             </button>
         </div>
     `,
@@ -119,7 +119,7 @@ test(
         <div x-data="{ foo: 'bar' }">
             <button x-on:click="foo = 'baz'">
                 <h1>h1</h1>
-                <h2 @click.stop.throttle>h2</h2>
+                <h2 x-on:click.stop.throttle>h2</h2>
             </button>
         </div>
     `,
@@ -137,9 +137,9 @@ test(
     '.capture modifier',
     html`
         <div x-data="{ foo: 'bar', count: 0 }">
-            <button @click.capture="count = count + 1; foo = 'baz'">
+            <button x-on:click.capture="count = count + 1; foo = 'baz'">
                 <h1>h1</h1>
-                <h2 @click="foo = 'bob'">h2</h2>
+                <h2 x-on:click="foo = 'bob'">h2</h2>
             </button>
         </div>
     `,
@@ -152,11 +152,11 @@ test(
 )
 
 test(
-    '.capture modifier with @keyup',
+    '.capture modifier with x-on:keyup',
     html`
         <div x-data="{ foo: 'bar', count: 0 }">
-            <span @keyup.capture="count = count + 1; foo = 'span'">
-                <input type="text" @keyup="foo = 'input'" />
+            <span x-on:keyup.capture="count = count + 1; foo = 'span'">
+                <input type="text" x-on:keyup="foo = 'input'" />
             </span>
         </div>
     `,
@@ -169,11 +169,11 @@ test(
 )
 
 test(
-    '.capture modifier with @keyup and specified key',
+    '.capture modifier with x-on:keyup and specified key',
     html`
         <div x-data="{ foo: 'bar', count: 0 }">
-            <span @keyup.enter.capture="count = count + 1; foo = 'span'">
-                <input type="text" @keyup.enter="foo = 'input'" />
+            <span x-on:keyup.enter.capture="count = count + 1; foo = 'span'">
+                <input type="text" x-on:keyup.enter="foo = 'input'" />
             </span>
         </div>
     `,
@@ -253,7 +253,7 @@ test(
     'expressions can start with if',
     html`
         <div x-data="{ foo: 'bar' }">
-            <button @click="if (foo === 'bar') foo = 'baz'">click</button>
+            <button x-on:click="if (foo === 'bar') foo = 'baz'">click</button>
             <span x-text="foo"></span>
         </div>
     `,
@@ -270,7 +270,7 @@ test(
         <div x-data="{ count: 0 }">
             <div x-on:click.window="count++" x-ref="rmMe"></div>
 
-            <button @click="$refs.rmMe.remove()">click</button>
+            <button x-on:click="$refs.rmMe.remove()">click</button>
             <span x-text="count"></span>
         </div>
     `,
@@ -316,7 +316,7 @@ test(
 )
 
 test(
-    '.once modifier with @keyup',
+    '.once modifier with x-on:keyup',
     html`
         <div x-data="{ count: 0 }">
             <input type="text" x-on:keyup.once="count = count+1" />
@@ -334,7 +334,7 @@ test(
 )
 
 test(
-    '.once modifier with @keyup and specified key',
+    '.once modifier with x-on:keyup and specified key',
     html`
         <div x-data="{ count: 0 }">
             <input type="text" x-on:keyup.enter.once="count = count+1" />
@@ -511,10 +511,10 @@ test(
 )
 
 test(
-    '@click.away',
+    'x-on:click.away',
     html`
         <div x-data="{ foo: 'bar' }">
-            <h1 @click.away="foo = 'baz'">h1</h1>
+            <h1 x-on:click.away="foo = 'baz'">h1</h1>
 
             <h2>h2</h2>
 
@@ -531,12 +531,12 @@ test(
 )
 
 test(
-    '@click.away with x-show (prevent race condition)',
+    'x-on:click.away with x-show (prevent race condition)',
     html`
         <div x-data="{ show: false }">
-            <button @click="show = true">Show</button>
+            <button x-on:click="show = true">Show</button>
 
-            <h1 x-show="show" @click.away="show = false">h1</h1>
+            <h1 x-show="show" x-on:click.away="show = false">h1</h1>
 
             <h2>h2</h2>
         </div>
@@ -555,7 +555,7 @@ test(
             <div x-on:my:event.document="foo = 'baz'"></div>
 
             <button
-                @click="document.dispatchEvent(new CustomEvent('my:event', { bubbles: true }))"
+                x-on:click="document.dispatchEvent(new CustomEvent('my:event', { bubbles: true }))"
             >
                 click
             </button>
@@ -670,7 +670,7 @@ test(
     html`
         <div x-data="{ text: 'original' }">
             <button
-                @click="let value = 'new string'; text = await Promise.resolve(value)"
+                x-on:click="let value = 'new string'; text = await Promise.resolve(value)"
             ></button>
             <span x-text="text"></span>
         </div>

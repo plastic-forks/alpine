@@ -15,11 +15,11 @@ test(
         html`
             <div x-data="{ open: false }">
                 <input type="text" id="1" />
-                <button id="2" @click="open = true">open</button>
+                <button id="2" x-on:click="open = true">open</button>
                 <div>
                     <div x-trap="open">
                         <input type="text" id="3" />
-                        <button @click="open = false" id="4">close</button>
+                        <button x-on:click="open = false" id="4">close</button>
                     </div>
                 </div>
             </div>
@@ -60,11 +60,11 @@ test(
             }
         }"
             >
-                <button id="one" @click="open = true">Trap</button>
+                <button id="one" x-on:click="open = true">Trap</button>
 
                 <div x-trap="open">
                     <input type="text" />
-                    <button id="two" @click="triggerClone()">Test</button>
+                    <button id="two" x-on:click="triggerClone()">Test</button>
                 </div>
             </div>
         `,
@@ -81,10 +81,10 @@ test(
     [
         html`
             <div x-data="{ open: false }">
-                <button id="1" @click="open = true">open</button>
+                <button id="1" x-on:click="open = true">open</button>
                 <template x-if="open">
                     <div x-trap="open">
-                        <button @click="open = false" id="2">close</button>
+                        <button x-on:click="open = false" id="2">close</button>
                     </div>
                 </template>
             </div>
@@ -105,10 +105,10 @@ test(
             <div x-data="{ open: false }">
                 <h1>I should have aria-hidden when outside trap</h1>
 
-                <button id="open" @click="open = true">open</button>
+                <button id="open" x-on:click="open = true">open</button>
 
                 <div x-trap.inert="open">
-                    <button @click="open = false" id="close">close</button>
+                    <button x-on:click="open = false" id="close">close</button>
                 </div>
             </div>
         `,
@@ -148,7 +148,7 @@ test(
             }"
                 >
                     <input type="text" id="timesApplied" x-model="timesApplied" />
-                    <button id="trigger" @click="open = true">open</button>
+                    <button id="trigger" x-on:click="open = true">open</button>
                     <div x-trap.inert="open">Hello, I'm a friendly modal!</div>
                 </div>
             </div>
@@ -165,10 +165,10 @@ test(
     [
         html`
             <div x-data="{ open: false }">
-                <button id="open" @click="open = true">open</button>
+                <button id="open" x-on:click="open = true">open</button>
 
                 <div x-trap.noscroll="open">
-                    <button @click="open = false" id="close">close</button>
+                    <button x-on:click="open = false" id="close">close</button>
                 </div>
 
                 <div style="height: 100vh">&nbsp;</div>
@@ -195,9 +195,9 @@ test(
     [
         html`
             <div x-data="{ open: false }" x-trap.noreturn="open">
-                <input id="input" @focus="open = true" />
+                <input id="input" x-on:focus="open = true" />
                 <div x-show="open">
-                    <button @click="open = false" id="close">close</button>
+                    <button x-on:click="open = false" id="close">close</button>
                 </div>
             </div>
         `,
@@ -215,7 +215,7 @@ test(
     [
         html`
             <div x-data>
-                <button id="press-me" @click="$focus.focus(document.querySelector('#focus-me'))">
+                <button id="press-me" x-on:click="$focus.focus(document.querySelector('#focus-me'))">
                     Focus Other
                 </button>
 
@@ -270,7 +270,7 @@ test(
     [
         html`
             <div x-data>
-                <button @click="$el.textContent = $el.isSameNode($focus.focused())">
+                <button x-on:click="$el.textContent = $el.isSameNode($focus.focused())">
                     im-focused
                 </button>
             </div>
@@ -290,7 +290,7 @@ test(
                 <button id="1" x-ref="first">first-focused</button>
                 <button
                     id="2"
-                    @click="$el.textContent = $refs.first.isSameNode($focus.lastFocused())"
+                    x-on:click="$el.textContent = $refs.first.isSameNode($focus.lastFocused())"
                 >
                     second-focused
                 </button>
@@ -337,7 +337,7 @@ test(
                 <div x-ref="first">
                     <button
                         id="1"
-                        @click="$focus.within($refs.first).next(); $nextTick(() => $el.textContent = $focus.focused().textContent)"
+                        x-on:click="$focus.within($refs.first).next(); $nextTick(() => $el.textContent = $focus.focused().textContent)"
                     >
                         1
                     </button>
@@ -361,7 +361,7 @@ test(
                     <button>2</button>
                     <button
                         id="1"
-                        @click="$focus.within($refs.first).prev(); $nextTick(() => $el.textContent = $focus.focused().textContent)"
+                        x-on:click="$focus.within($refs.first).prev(); $nextTick(() => $el.textContent = $focus.focused().textContent)"
                     >
                         1
                     </button>
@@ -384,7 +384,7 @@ test(
                     <button>2</button>
                     <button
                         id="1"
-                        @click="$focus.within($refs.first).wrap().next(); $nextTick(() => $el.textContent = $focus.focused().textContent)"
+                        x-on:click="$focus.within($refs.first).wrap().next(); $nextTick(() => $el.textContent = $focus.focused().textContent)"
                     >
                         1
                     </button>
@@ -405,7 +405,7 @@ test(
             <div x-data>
                 <button
                     id="1"
-                    @click="$focus.within($refs.first).first(); $nextTick(() => $el.textContent = $focus.focused().textContent)"
+                    x-on:click="$focus.within($refs.first).first(); $nextTick(() => $el.textContent = $focus.focused().textContent)"
                 >
                     1
                 </button>
@@ -430,7 +430,7 @@ test(
             <div x-data>
                 <button
                     id="1"
-                    @click="$focus.within($refs.first).last(); $nextTick(() => $el.textContent = $focus.focused().textContent)"
+                    x-on:click="$focus.within($refs.first).last(); $nextTick(() => $el.textContent = $focus.focused().textContent)"
                 >
                     1
                 </button>
@@ -454,12 +454,12 @@ test(
         html`
             <div x-data="{ open: false }">
                 <input type="text" id="1" />
-                <button id="2" @click="open = true">open</button>
+                <button id="2" x-on:click="open = true">open</button>
                 <div>
                     <div x-trap="open">
                         <input type="text" id="3" />
                         <input autofocus type="text" id="4" />
-                        <button @click="open = false" id="5">close</button>
+                        <button x-on:click="open = false" id="5">close</button>
                     </div>
                 </div>
             </div>
@@ -483,12 +483,12 @@ test(
         html`
             <div x-data="{ open: false }">
                 <input type="text" id="1" />
-                <button id="2" @click="open = true">open</button>
+                <button id="2" x-on:click="open = true">open</button>
                 <div>
                     <div x-trap.noautofocus="open">
                         <input type="text" id="3" />
                         <input autofocus type="text" id="4" />
-                        <button @click="open = false" id="5">close</button>
+                        <button x-on:click="open = false" id="5">close</button>
                     </div>
                 </div>
             </div>
