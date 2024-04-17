@@ -56,8 +56,8 @@ function allTopLevelComponents() {
     return Array.from(document.querySelectorAll(selectors)).filter(isTopLevelComponent)
 }
 
-let rootSelectorCallbacks = []
-let initSelectorCallbacks = []
+const rootSelectorCallbacks = []
+const initSelectorCallbacks = []
 
 export function rootSelectors() {
     return rootSelectorCallbacks.map((fn) => fn())
@@ -103,7 +103,7 @@ export function isRoot(el) {
     return rootSelectors().some((selector) => el.matches(selector))
 }
 
-let initInterceptors = []
+const initInterceptors = []
 
 export function interceptInit(callback) {
     initInterceptors.push(callback)
