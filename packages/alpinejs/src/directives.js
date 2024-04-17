@@ -26,10 +26,16 @@ export function directive(name, callback) {
                 )
                 return
             }
-            const pos = directiveOrder.indexOf(directive)
-            directiveOrder.splice(pos >= 0 ? pos : directiveOrder.indexOf('DEFAULT'), 0, name)
+
+            let index = directiveOrder.indexOf(directive)
+            index = index >= 0 ? index : directiveOrder.indexOf('DEFAULT')
+            insertElementToArray(directiveOrder, index, name)
         },
     }
+}
+
+function insertElementToArray(array, index, element) {
+    array.splice(index, 0, element)
 }
 
 export function directives(el, attributes, originalAttributeOverride) {
